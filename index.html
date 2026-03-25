@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreeSoo 秀 | 비공식 홈페이지</title>
+  <meta name="description" content="FreeSoo 비공식 홈페이지 - 무공설명서, 공지, 이벤트, 가이드, 다운로드, 문의" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --bg-2: #121218;
+      --panel: rgba(22, 22, 29, 0.92);
+      --panel-2: rgba(31, 31, 40, 0.92);
+      --line: rgba(255, 215, 130, 0.18);
+      --gold: #d7b06a;
+      --gold-2: #f0d39a;
+      --red: #a41e24;
+      --red-2: #dc4f55;
+      --text: #f4efe6;
+      --muted: #b8b0a4;
+      --ok: #88c97a;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+      --container: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(164, 30, 36, 0.16), transparent 26%),
+        radial-gradient(circle at 80% 10%, rgba(215, 176, 106, 0.12), transparent 24%),
+        linear-gradient(180deg, #0b0b0f 0%, #131319 46%, #0d0d12 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(calc(100% - 32px), var(--container)); margin: 0 auto; }
+    .section { padding: 72px 0; }
+    .section-title {
+      display: flex; align-items: center; gap: 12px; margin: 0 0 14px;
+      font-size: clamp(28px, 4vw, 38px); font-weight: 800; letter-spacing: -0.03em;
+    }
+    .section-title::before {
+      content: ""; width: 6px; height: 28px; border-radius: 999px;
+      background: linear-gradient(180deg, var(--gold-2), var(--red-2));
+      box-shadow: 0 0 18px rgba(240, 211, 154, 0.3);
+    }
+    .section-desc { margin: 0 0 28px; color: var(--muted); font-size: 15px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
+      border: 1px solid rgba(240, 211, 154, 0.2); background: rgba(255, 255, 255, 0.03);
+      border-radius: 999px; color: var(--gold-2); font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+    }
+    .topbar {
+      position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(14px);
+      background: rgba(8, 8, 11, 0.74); border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .topbar-inner {
+      display: flex; align-items: center; justify-content: space-between; min-height: 74px; gap: 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .brand-mark {
+      width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
+      font-size: 26px; font-weight: 800; color: #111; background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 8px 24px rgba(215, 176, 106, 0.28); flex-shrink: 0;
+    }
+    .brand-title { font-size: 20px; font-weight: 800; letter-spacing: -0.03em; }
+    .brand-sub { color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav { display: flex; align-items: center; gap: 8px; }
+    .nav a {
+      padding: 10px 14px; border-radius: 12px; color: #eee4d4; font-size: 14px; font-weight: 700; transition: 0.2s ease;
+    }
+    .nav a:hover { background: rgba(255,255,255,0.05); color: var(--gold-2); }
+    .menu-toggle {
+      display: none; width: 46px; height: 46px; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+      background: rgba(255,255,255,0.03); color: var(--text); font-size: 20px; cursor: pointer;
+    }
+    .hero { position: relative; overflow: hidden; padding: 88px 0 66px; }
+    .hero::before, .hero::after {
+      content: ""; position: absolute; inset: auto; border-radius: 999px; filter: blur(60px); pointer-events: none;
+    }
+    .hero::before { width: 240px; height: 240px; top: 28px; left: 5%; background: rgba(164,30,36,0.18); }
+    .hero::after { width: 320px; height: 320px; right: -50px; top: 0; background: rgba(215,176,106,0.12); }
+    .hero-wrap { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 28px; align-items: stretch; }
+    .hero-main, .hero-side {
+      position: relative; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(24,24,31,0.95), rgba(14,14,19,0.95));
+      border-radius: 28px; box-shadow: var(--shadow);
+    }
+    .hero-main { padding: 38px; overflow: hidden; }
+    .hero-main::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        linear-gradient(120deg, rgba(255,255,255,0.02), transparent 30%),
+        radial-gradient(circle at 82% 22%, rgba(215,176,106,0.12), transparent 18%),
+        radial-gradient(circle at 15% 18%, rgba(164,30,36,0.18), transparent 20%);
+      pointer-events: none;
+    }
+    .hero-kicker {
+      margin-top: 20px; margin-bottom: 12px; font-size: clamp(36px, 6vw, 68px); line-height: 1.04;
+      letter-spacing: -0.05em; font-weight: 900; position: relative;
+    }
+    .hero-kicker span { color: var(--gold-2); text-shadow: 0 0 20px rgba(240,211,154,0.16); }
+    .hero-text { position: relative; margin: 0 0 24px; color: #dbd2c4; font-size: 17px; max-width: 720px; }
+    .cta-row { position: relative; display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 18px;
+      border-radius: 14px; font-weight: 800; font-size: 15px; transition: 0.2s ease; border: 1px solid transparent;
+      cursor: pointer;
+    }
+    .btn-primary { color: #111; background: linear-gradient(135deg, var(--gold-2), var(--gold)); box-shadow: 0 10px 26px rgba(215,176,106,0.22); }
+    .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.03); }
+    .btn-secondary { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); color: var(--text); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(240,211,154,0.18); }
+    .hero-meta { position: relative; display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-pill {
+      padding: 10px 14px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; color: #d9d0c3; font-size: 14px;
+    }
+    .hero-side { padding: 28px; display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+    .hero-side-card { padding: 18px; border-radius: 18px; background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.06); }
+    .hero-side-card h3 { margin: 0 0 10px; font-size: 17px; }
+    .hero-side-card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .grid-5, .grid-3, .grid-2, .jobs-grid, .skills-grid, .download-grid, .footer-grid, .contact-grid { display: grid; gap: 18px; }
+    .grid-5 { grid-template-columns: repeat(5, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: linear-gradient(180deg, rgba(23,23,29,0.95), rgba(16,16,21,0.95)); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .quick-card { padding: 22px; transition: 0.2s ease; min-height: 148px; display: flex; flex-direction: column; justify-content: space-between; }
+    .quick-card:hover, .job-card:hover, .skill-card:hover, .contact-card:hover { transform: translateY(-2px); }
+    .quick-icon {
+      width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 22px;
+      background: rgba(215,176,106,0.12); border: 1px solid rgba(240,211,154,0.15); color: var(--gold-2);
+    }
+    .quick-title { margin: 14px 0 8px; font-size: 19px; font-weight: 800; letter-spacing: -0.03em; }
+    .quick-desc { color: var(--muted); font-size: 14px; }
+    .news-card { padding: 22px; }
+    .news-card h3 { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 14px; font-size: 22px; }
+    .news-card small { color: var(--gold-2); font-weight: 700; }
+    .news-list { display: grid; gap: 12px; padding: 0; margin: 0; list-style: none; }
+    .news-list li a {
+      display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 14px 16px;
+      border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); transition: 0.2s ease;
+    }
+    .news-list li a:hover { background: rgba(255,255,255,0.06); }
+    .news-list strong { font-size: 15px; line-height: 1.4; }
+    .news-list span { color: var(--muted); font-size: 13px; white-space: nowrap; }
+    .jobs-grid { grid-template-columns: repeat(6, 1fr); }
+    .job-card { padding: 20px; transition: 0.2s ease; text-align: left; }
+    .job-badge {
+      width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; font-size: 24px;
+      background: rgba(164, 30, 36, 0.14); border: 1px solid rgba(220, 79, 85, 0.2); margin-bottom: 14px;
+    }
+    .job-card h3 { margin: 0 0 8px; font-size: 20px; }
+    .job-card p { margin: 0; color: var(--muted); font-size: 14px; min-height: 66px; }
+    .job-link { margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; color: var(--gold-2); font-size: 14px; font-weight: 800; }
+    .skills-grid { grid-template-columns: repeat(3, 1fr); }
+    .skill-card { overflow: hidden; transition: 0.2s ease; }
+    .skill-thumb {
+      aspect-ratio: 16 / 9;
+      background: radial-gradient(circle at 30% 30%, rgba(215,176,106,0.16), transparent 25%), radial-gradient(circle at 70% 25%, rgba(164,30,36,0.2), transparent 25%), linear-gradient(135deg, #1a1a22, #101015);
+      border-bottom: 1px solid rgba(255,255,255,0.05); display: grid; place-items: center; color: var(--gold-2); font-weight: 900; font-size: 24px; letter-spacing: -0.04em;
+    }
+    .skill-body { padding: 18px; }
+    .skill-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+    .skill-top h3 { margin: 0; font-size: 20px; letter-spacing: -0.03em; }
+    .skill-tag { padding: 6px 10px; border-radius: 999px; background: rgba(240,211,154,0.1); color: var(--gold-2); font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .skill-body p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+    .skill-body .btn { width: 100%; }
+    .download-wrap { padding: 28px; position: relative; overflow: hidden; }
+    .download-wrap::before {
+      content: ""; position: absolute; width: 300px; height: 300px; right: -70px; top: -90px;
+      background: radial-gradient(circle, rgba(215,176,106,0.12), transparent 60%); pointer-events: none;
+    }
+    .download-grid { grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 24px; }
+    .download-wrap h2 { margin: 14px 0 10px; font-size: clamp(28px, 4vw, 42px); line-height: 1.15; letter-spacing: -0.04em; }
+    .download-wrap p { margin: 0 0 20px; color: #d7cec1; }
+    .download-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .download-box { padding: 22px; border-radius: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.06); }
+    .download-box h3 { margin: 0 0 8px; font-size: 20px; }
+    .download-box ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .contact-grid { grid-template-columns: repeat(3, 1fr); }
+    .contact-card { padding: 22px; transition: 0.2s ease; }
+    .contact-card h3 { margin: 0 0 10px; font-size: 20px; }
+    .contact-card p { margin: 0 0 16px; color: var(--muted); font-size: 14px; min-height: 66px; }
+    .status-ok { color: var(--ok); font-weight: 800; }
+    .footer {
+      padding: 44px 0 56px; border-top: 1px solid rgba(255,255,255,0.06); background: rgba(8,8,11,0.65);
+    }
+    .footer-grid { grid-template-columns: 1.2fr 0.8fr 0.8fr; align-items: start; }
+    .footer-title { margin: 0 0 10px; font-size: 22px; }
+    .footer p, .footer li, .footer a { color: var(--muted); font-size: 14px; }
+    .footer-links, .footer-meta { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .floating-top {
+      position: fixed; right: 18px; bottom: 18px; z-index: 1000; width: 52px; height: 52px; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1); background: rgba(17,17,23,0.88); color: var(--gold-2); box-shadow: var(--shadow);
+      cursor: pointer; display: grid; place-items: center; font-size: 20px;
+    }
+    .mini-note { margin-top: 12px; color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 1100px) {
+      .grid-5 { grid-template-columns: repeat(3, 1fr); }
+      .jobs-grid { grid-template-columns: repeat(3, 1fr); }
+      .hero-wrap, .download-grid, .footer-grid, .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .nav {
+        position: fixed; top: 74px; left: 16px; right: 16px; display: none; flex-direction: column; align-items: stretch;
+        padding: 12px; border-radius: 20px; background: rgba(15,15,19,0.96); border: 1px solid rgba(255,255,255,0.08); box-shadow: var(--shadow);
+      }
+      .nav.open { display: flex; }
+      .nav a { padding: 14px; }
+      .menu-toggle { display: inline-grid; place-items: center; }
+      .hero { padding-top: 42px; }
+      .hero-main, .hero-side, .download-wrap { padding: 22px; }
+      .grid-3, .grid-2, .skills-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .section { padding: 58px 0; }
+      .container { width: min(calc(100% - 24px), var(--container)); }
+      .topbar-inner { min-height: 68px; }
+      .brand-mark { width: 42px; height: 42px; font-size: 22px; }
+      .brand-title { font-size: 18px; }
+      .hero-kicker { margin-top: 14px; }
+      .hero-text { font-size: 15px; }
+      .grid-5, .jobs-grid { grid-template-columns: 1fr 1fr; }
+      .job-card p, .contact-card p { min-height: auto; }
+      .news-list li a { grid-template-columns: 1fr; }
+      .cta-row, .download-actions { flex-direction: column; }
+      .btn { width: 100%; }
+    }
+    @media (max-width: 420px) {
+      .grid-5, .jobs-grid { grid-template-columns: 1fr; }
+      .quick-card { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const SITE_CONFIG = {
+  siteName: "FreeSoo",
+  siteNameDisplay: "FreeSoo 秀",
+  heroTitle: "전장의 흐름을 바꾸는 무공의 세계",
+  heroText: "프리수의 공지, 이벤트, 다운로드, 문의, 그리고 무공설명서를 하나의 비공식 홈페이지로 정리한 운영용 페이지입니다.",
+
+  // 실제 링크가 없으면 빈 문자열 유지
+  downloadUrl: "",
+  installGuideUrl: "",
+  skillGuideUrl: "https://freesoo-skillinfo.netlify.app/",
+  kakaotalkUrl: "https://open.kakao.com/o/gfMHLwci",
+  discordUrl: "",
+  inquiryUrl: "",
+
+  // 별도 게시판이 없으면 그대로 둠
+  noticeBoardUrl: "#news",
+  eventBoardUrl: "#news",
+
+  copyrightText: "© FreeSoo All Rights Reserved"
+};
+
+/*******************************************************
+ * 공지 / 이벤트는 notices.json 에서 불러옴
+ *******************************************************/
+const NOTICE_LIST = [];
+const EVENT_LIST = [];
+
+const JOB_LIST = [
+  {
+    name: "전사",
+    icon: "🛡",
+    desc: "강한 근접 전투와 안정적인 생존력을 바탕으로 전장의 중심을 잡는 직업.",
+    url: "https://freesoo-skillinfo.netlify.app/#warrior"
+  },
+  {
+    name: "도사",
+    icon: "🪄",
+    desc: "보조와 생존, 운영 능력이 뛰어나며 파티 안정성을 높여주는 핵심 직업.",
+    url: "https://freesoo-skillinfo.netlify.app/#taoist"
+  },
+  {
+    name: "술사",
+    icon: "🔥",
+    desc: "폭발적인 마법 화력과 광역 제압 능력으로 사냥과 전투의 흐름을 만든다.",
+    url: "https://freesoo-skillinfo.netlify.app/#wizard"
+  },
+  {
+    name: "자객",
+    icon: "🗡",
+    desc: "순간 폭발력과 기동성을 바탕으로 적의 빈틈을 찌르는 암살 특화 직업.",
+    url: "https://freesoo-skillinfo.netlify.app/#assassin"
+  },
+  {
+    name: "궁사",
+    icon: "🏹",
+    desc: "안정적인 원거리 압박과 지속 화력을 바탕으로 전장을 제어하는 직업.",
+    url: "https://freesoo-skillinfo.netlify.app/#archer"
+  },
+  {
+    name: "원사",
+    icon: "✨",
+    desc: "아군 버프와 적 약화, 몬스터 광역 대응에 특화된 프리수만의 지원형 직업.",
+    url: "https://freesoo-skillinfo.netlify.app/#wonsa"
+  }
+];
+
+
+    const SKILL_PREVIEW_LIST = [
+      { title: "백강사자후", job: "전사", thumb: "전사 무공", desc: "4초간 상대방을 제압 - 특정무공 사용불가, 이동만 가능.", url: SITE_CONFIG.skillGuideUrl },
+      { title: "만효부", job: "도사", thumb: "도사 무공", desc: "아군 : 범위 정화&선천, 적군 : 일정확률 피해감소 일정수치 무력화", url: SITE_CONFIG.skillGuideUrl },
+      { title: "흡마염풍", job: "술사", thumb: "술사 무공", desc: "화마의 기운을 회오리 형태로 구현하여 타겟을 끌어당깁니다.", url: SITE_CONFIG.skillGuideUrl },
+      { title: "영화연격", job: "자객", thumb: "자객 무공", desc: "일시적으로 피해를 받지 않고, 타겟을 피격 (타겟 주변 1칸 랜덤 착지)", url: SITE_CONFIG.skillGuideUrl },
+      { title: "낙뢰살", job: "궁사", thumb: "궁사 무공", desc: "타겟과 주변 범위에 낙뢰를 발생시킵니다.", url: SITE_CONFIG.skillGuideUrl },
+      { title: "압수", job: "원사", thumb: "원사 무공", desc: "회풍강막 해체&사취 해체, 타겟으로 이동", url: SITE_CONFIG.skillGuideUrl }
+    ];
+  </script>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#home" class="brand" aria-label="홈으로 이동">
+	<div class="brand-mark">秀</div>
+	<div class="brand-text">
+          <div class="brand-title" id="brandTitle">FreeSoo</div>
+          <div class="brand-sub">비공식 홈페이지 · 무공설명서 · 공지 · 다운로드 · 문의</div>
+        </div>
+      </a>
+
+      <nav class="nav" id="siteNav" aria-label="주요 메뉴">
+        <a href="#home">홈</a>
+        <a href="#skills">무공설명서</a>
+        <a href="#news">공지/이벤트</a>
+        <a href="#guide">가이드</a>
+        <a href="#download">다운로드</a>
+        <a href="#contact">문의</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="siteNav">☰</button>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-main">
+          <span class="badge">FreeSoo 비공식 포털</span>
+          <h1 class="hero-kicker"><span id="heroSiteName">FreeSoo 秀</span><br /><span id="heroTitleText">전장의 흐름을 바꾸는 무공의 세계</span></h1>
+          <p class="hero-text" id="heroText">
+            프리수의 공지, 이벤트, 다운로드, 문의, 그리고 무공설명서를 하나의 공식 홈페이지로 정리한 운영용 시작 버전입니다.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" id="downloadBtnTop" href="#">클라이언트 다운로드</a>
+            <a class="btn btn-secondary" id="skillGuideBtnTop" href="#">무공설명서 바로가기</a>
+            <a class="btn btn-secondary" id="installGuideBtnTop" href="#">설치 방법 보기</a>
+          </div>
+
+          <div class="hero-meta">
+            <div class="hero-pill">모바일 반응형 지원</div>
+            <div class="hero-pill">무공설명서 즉시 연결 가능</div>
+            <div class="hero-pill">PWA / 앱 확장 가능</div>
+          </div>
+        </div>
+
+        <aside class="hero-side">
+          <div class="hero-side-card">
+            <h3>처음 온 유저용</h3>
+            <p>다운로드 → 설치 방법 → 문의 채널까지 한 번에 안내할 수 있는 구조로 구성했습니다.</p>
+          </div>
+          <div class="hero-side-card">
+            <h3>기존 유저용</h3>
+            <p>무공설명서, 공지, 이벤트, 가이드로 빠르게 이동할 수 있어 운영 편의성이 좋습니다.</p>
+          </div>
+          <div class="hero-side-card">
+            <h3>운영자용</h3>
+            <p><span class="status-ok">링크만 교체하면 바로 실사용 가능</span>한 구조로 작성되어 있습니다.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">빠른 이동</h2>
+        <p class="section-desc">유저가 가장 많이 누르게 될 핵심 기능을 첫 화면에 배치했습니다.</p>
+
+        <div class="grid-5">
+          <a class="card quick-card" id="quickSkillLink" href="#skills">
+            <div class="quick-icon">⚔</div>
+            <div>
+              <div class="quick-title">무공설명서</div>
+              <div class="quick-desc">직업별 무공과 설명, 영상 안내로 바로 이동합니다.</div>
+            </div>
+          </a>
+          <a class="card quick-card" id="quickNoticeLink" href="#news">
+            <div class="quick-icon">📢</div>
+            <div>
+              <div class="quick-title">공지사항</div>
+              <div class="quick-desc">점검, 운영 공지, 업데이트 안내를 빠르게 확인합니다.</div>
+            </div>
+          </a>
+          <a class="card quick-card" id="quickEventLink" href="#news">
+            <div class="quick-icon">🎁</div>
+            <div>
+              <div class="quick-title">이벤트</div>
+              <div class="quick-desc">진행 중 이벤트, 보상, 참여 방식을 확인합니다.</div>
+            </div>
+          </a>
+          <a class="card quick-card" href="#guide">
+            <div class="quick-icon">📘</div>
+            <div>
+              <div class="quick-title">가이드</div>
+              <div class="quick-desc">초보자 가이드, 직업 소개, FAQ를 제공합니다.</div>
+            </div>
+          </a>
+          <a class="card quick-card" href="#download">
+            <div class="quick-icon">⬇</div>
+            <div>
+              <div class="quick-title">다운로드</div>
+              <div class="quick-desc">클라이언트 다운로드와 설치 방법으로 이동합니다.</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="news">
+      <div class="container">
+        <h2 class="section-title">최신 소식</h2>
+        <p class="section-desc">공지와 이벤트 영역은 배열만 수정하면 쉽게 교체할 수 있게 구성했습니다.</p>
+
+        <div class="grid-2">
+          <article class="card news-card">
+            <h3>공지사항 <small>NOTICE</small></h3>
+            <ul class="news-list" id="noticeList"></ul>
+          </article>
+
+          <article class="card news-card">
+            <h3>이벤트 <small>EVENT</small></h3>
+            <ul class="news-list" id="eventList"></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guide">
+      <div class="container">
+        <h2 class="section-title">직업 소개</h2>
+        <p class="section-desc">직업 카드는 현재 무공설명서 주소로 연결됩니다. 나중에 직업별 상세 페이지로 분리할 수 있습니다.</p>
+        <div class="jobs-grid" id="jobList"></div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="container">
+        <h2 class="section-title">무공설명서 바로가기</h2>
+        <p class="section-desc">현재 미리보기 카드 형태이며, 카드 클릭 시 실제 무공설명서로 이동하게 구성해두었습니다.</p>
+        <div class="skills-grid" id="skillPreviewList"></div>
+        <p class="mini-note">팁: 지금은 카드 전체가 같은 무공설명서 주소로 연결되지만, 나중에는 직업별/무공별 상세 링크로 바꿀 수 있습니다.</p>
+      </div>
+    </section>
+
+    <section class="section" id="download">
+      <div class="container">
+        <div class="card download-wrap">
+          <div class="download-grid">
+            <div>
+              <span class="badge">지금 바로 시작</span>
+              <h2>프리수 클라이언트 다운로드와<br />설치 안내를 한 번에 제공합니다.</h2>
+              <p>
+                아래 버튼에 실제 다운로드 링크와 설치 가이드 링크를 연결해두면, 처음 방문한 유저도 바로 게임 시작까지 이어질 수 있습니다.
+              </p>
+              <div class="download-actions">
+                <a class="btn btn-primary" id="downloadBtnBottom" href="#">클라이언트 다운로드</a>
+                <a class="btn btn-secondary" id="installGuideBtnBottom" href="#">설치 방법 보기</a>
+                <a class="btn btn-secondary" id="inquiryBtnBottom" href="#">문의하기</a>
+              </div>
+            </div>
+            <div class="download-box">
+              <h3>다운로드 전 안내</h3>
+              <ul>
+                <li>압축 해제 위치를 미리 확인해 주세요.</li>
+                <li>보안 프로그램 차단 시 예외 등록이 필요할 수 있습니다.</li>
+                <li>설치 중 오류가 나면 문의 채널로 스크린샷과 함께 접수해 주세요.</li>
+                <li>최신 패치 및 점검 일정은 공지사항에서 확인할 수 있습니다.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <h2 class="section-title">문의 / 커뮤니티</h2>
+        <p class="section-desc">운영용으로 바로 쓸 수 있게 문의 동선도 따로 배치했습니다.</p>
+
+        <div class="contact-grid">
+          <article class="card contact-card">
+            <h3>카카오톡 오픈채팅</h3>
+            <p>빠른 문의, 설치 문제, 접속 문제, 간단한 질문 대응용으로 가장 쓰기 좋은 채널입니다.</p>
+            <a class="btn btn-secondary" id="kakaoLinkBtn" href="#">카카오톡 바로가기</a>
+          </article>
+
+          <article class="card contact-card">
+            <h3>디스코드</h3>
+            <p>공지 확인, 유저 커뮤니티 운영, 이벤트 홍보, 실시간 소통용 채널로 활용하기 좋습니다.</p>
+            <a class="btn btn-secondary" id="discordLinkBtn" href="#">디스코드 바로가기</a>
+          </article>
+
+          <article class="card contact-card">
+            <h3>문의 접수 폼</h3>
+            <p>버그 제보, 건의, 신고, 복구 요청 같은 내용을 기록형으로 남기고 싶을 때 사용하면 좋습니다.</p>
+            <a class="btn btn-secondary" id="inquiryLinkBtn" href="#">문의 폼 바로가기</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container footer-grid">
+      <div>
+        <h3 class="footer-title" id="footerSiteName">FreeSoo 秀</h3>
+        <p>
+          FreeSoo 비공식 홈페이지 운영용 기본형입니다. 현재 구조는 정적 HTML 기반이며,
+          추후 공지 게시판, 이벤트 게시판, 다운로드 자료실, 무공설명서 세부 페이지로 자연스럽게 확장할 수 있습니다.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="footer-title">바로가기</h3>
+        <ul class="footer-links">
+          <li><a id="footerSkillLink" href="#">무공설명서</a></li>
+          <li><a id="footerNoticeLink" href="#">공지사항</a></li>
+          <li><a id="footerEventLink" href="#">이벤트</a></li>
+          <li><a href="#download">다운로드</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer-title">문의 / 커뮤니티</h3>
+        <ul class="footer-meta">
+          <li><a id="footerKakaoLink" href="#">카카오톡 오픈채팅</a></li>
+          <li><a id="footerDiscordLink" href="#">디스코드</a></li>
+          <li><a id="footerInquiryLink" href="#">문의 폼</a></li>
+          <li id="copyrightText">© FreeSoo All Rights Reserved</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-top" id="scrollTopBtn" aria-label="맨 위로 이동">↑</button>
+
+  <script>
+    function setLink(id, href, newTab = true) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  if (!href) {
+    el.href = "#";
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+    });
+    return;
+  }
+
+  el.href = href;
+  if (newTab && href !== "#") {
+    el.target = "_blank";
+    el.rel = "noopener noreferrer";
+  }
+}
+
+function renderNews(listId, items) {
+  const root = document.getElementById(listId);
+  if (!root) return;
+
+  if (!items || items.length === 0) {
+    root.innerHTML = `
+      <li>
+        <a href="#" onclick="return false;">
+          <strong>등록된 내용이 없습니다.</strong>
+          <span>-</span>
+        </a>
+      </li>
+    `;
+    return;
+  }
+
+  root.innerHTML = items.map(item => `
+    <li>
+      <a href="${item.url || '#'}" ${item.url ? 'target="_blank" rel="noopener noreferrer"' : 'onclick="return false;"'}>
+        <strong>${item.title}</strong>
+        <span>${item.date}</span>
+      </a>
+    </li>
+  `).join('');
+}
+
+async function loadNotices() {
+  try {
+    const res = await fetch('./notices.json');
+    const data = await res.json();
+    renderNews('noticeList', data.notices || []);
+    renderNews('eventList', data.events || []);
+  } catch (e) {
+    console.error('notices.json 불러오기 실패:', e);
+    renderNews('noticeList', []);
+    renderNews('eventList', []);
+  }
+}
+
+function renderJobs() {
+  const root = document.getElementById('jobList');
+  if (!root) return;
+
+  root.innerHTML = JOB_LIST.map(job => `
+    <a class="card job-card" href="${job.url || '#'}" ${job.url ? 'target="_blank" rel="noopener noreferrer"' : 'onclick="return false;"'}>
+      <div class="job-badge">${job.icon}</div>
+      <h3>${job.name}</h3>
+      <p>${job.desc}</p>
+      <span class="job-link">무공 보기 →</span>
+    </a>
+  `).join('');
+}
+
+function renderSkillPreview() {
+  const root = document.getElementById('skillPreviewList');
+  if (!root) return;
+
+  root.innerHTML = SKILL_PREVIEW_LIST.map(skill => `
+    <article class="card skill-card">
+      <div class="skill-thumb">${skill.thumb}</div>
+      <div class="skill-body">
+        <div class="skill-top">
+          <h3>${skill.title}</h3>
+          <span class="skill-tag">${skill.job}</span>
+        </div>
+        <p>${skill.desc}</p>
+        <a class="btn btn-secondary" href="${skill.url || '#'}" ${skill.url ? 'target="_blank" rel="noopener noreferrer"' : 'onclick="return false;"'}>
+          상세 보기
+        </a>
+      </div>
+    </article>
+  `).join('');
+}
+
+function applySiteConfig() {
+  document.title = `${SITE_CONFIG.siteNameDisplay} | 비공식 홈페이지`;
+
+  const brandTitle = document.getElementById('brandTitle');
+  const heroSiteName = document.getElementById('heroSiteName');
+  const heroTitleText = document.getElementById('heroTitleText');
+  const heroText = document.getElementById('heroText');
+  const footerSiteName = document.getElementById('footerSiteName');
+  const copyrightText = document.getElementById('copyrightText');
+
+  if (brandTitle) brandTitle.textContent = SITE_CONFIG.siteName;
+  if (heroSiteName) heroSiteName.textContent = SITE_CONFIG.siteNameDisplay;
+  if (heroTitleText) heroTitleText.textContent = SITE_CONFIG.heroTitle;
+  if (heroText) heroText.textContent = SITE_CONFIG.heroText;
+  if (footerSiteName) footerSiteName.textContent = SITE_CONFIG.siteNameDisplay;
+  if (copyrightText) copyrightText.textContent = SITE_CONFIG.copyrightText;
+
+  setLink('downloadBtnTop', SITE_CONFIG.downloadUrl);
+  setLink('downloadBtnBottom', SITE_CONFIG.downloadUrl);
+  setLink('installGuideBtnTop', SITE_CONFIG.installGuideUrl);
+  setLink('installGuideBtnBottom', SITE_CONFIG.installGuideUrl);
+  setLink('skillGuideBtnTop', SITE_CONFIG.skillGuideUrl);
+  setLink('quickSkillLink', SITE_CONFIG.skillGuideUrl);
+  setLink('quickNoticeLink', SITE_CONFIG.noticeBoardUrl, false);
+  setLink('quickEventLink', SITE_CONFIG.eventBoardUrl, false);
+  setLink('inquiryBtnBottom', SITE_CONFIG.inquiryUrl);
+
+  setLink('kakaoLinkBtn', SITE_CONFIG.kakaotalkUrl);
+  setLink('discordLinkBtn', SITE_CONFIG.discordUrl);
+  setLink('inquiryLinkBtn', SITE_CONFIG.inquiryUrl);
+
+  setLink('footerSkillLink', SITE_CONFIG.skillGuideUrl);
+  setLink('footerNoticeLink', SITE_CONFIG.noticeBoardUrl, false);
+  setLink('footerEventLink', SITE_CONFIG.eventBoardUrl, false);
+  setLink('footerKakaoLink', SITE_CONFIG.kakaotalkUrl);
+  setLink('footerDiscordLink', SITE_CONFIG.discordUrl);
+  setLink('footerInquiryLink', SITE_CONFIG.inquiryUrl);
+}
+
+const menuToggle = document.getElementById('menuToggle');
+const siteNav = document.getElementById('siteNav');
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+if (menuToggle && siteNav) {
+  menuToggle.addEventListener('click', function () {
+    const isOpen = siteNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.textContent = isOpen ? '✕' : '☰';
+  });
+
+  siteNav.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      siteNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.textContent = '☰';
+    });
+  });
+}
+
+if (scrollTopBtn) {
+  scrollTopBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .catch(err => console.error('서비스워커 등록 실패:', err));
+  });
+}
+
+applySiteConfig();
+loadNotices();
+renderJobs();
+renderSkillPreview();
+
+  </script>
+</body>
+</html>
