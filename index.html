@@ -714,12 +714,19 @@ if (scrollTopBtn) {
   });
 }
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .catch(err => console.error('서비스워커 등록 실패:', err));
-  });
-}
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', async () => {
+      try {
+        const reg = await navigator.serviceWorker.register('./sw.js');
+        console.log('서비스워커 등록 완료:', reg.scope);
+
+        // 수동 업데이트 체크
+        reg.update();
+      } catch (err) {
+        console.error('서비스워커 등록 실패:', err);
+      }
+    });
+  }
 
 applySiteConfig();
 loadNotices();
