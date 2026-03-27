@@ -1,7 +1,7 @@
 {
   "notices": [
     {
-      "title": "[공략] 단체미로 공략",
+      "title": "[공략] 단체미로 공략 - 주 1회(월요일 00시 초기화)",
       "date": "2026-03-28",
       "url": "guide.html?id=maze"
     },
@@ -11,9 +11,14 @@
       "url": "guide.html?id=sagok"
     },
     {
-      "title": "[개인미로] 클리어 공략 영상(w.케이크장인)",
+      "title": "[공략] 개인미로 공략 영상(w.케이크장인)",
       "date": "2026-03-26",
       "url": "https://youtu.be/I1qPVdBdrf8?si=woCBtMosUJOKcMAn"
+    },
+    {
+      "title": "[공략] 마방진 - 주 1회 (월요일 00시 초기화)",
+      "date": "2026-03-28",
+      "url": "guide.html?id=mabang"
     }
   ],
   
