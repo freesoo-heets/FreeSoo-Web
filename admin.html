@@ -220,6 +220,22 @@
       .form-grid{grid-template-columns:1fr}
     }
   </style>
+  <script>
+(function () {
+  const ADMIN_PASSWORD = "zxc0160!@";
+  const saved = sessionStorage.getItem("admin_ok");
+
+  if (saved === "yes") return;
+
+  const input = prompt("관리자 비밀번호를 입력하세요.");
+  if (input === ADMIN_PASSWORD) {
+    sessionStorage.setItem("admin_ok", "yes");
+  } else {
+    alert("접근 권한이 없습니다.");
+    location.href = "./index.html";
+  }
+})();
+</script>
 </head>
 <body>
   <header class="topbar">
