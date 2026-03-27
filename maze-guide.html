@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>단체미로 공략 | FreeSoo 秀</title>
+  <meta name="description" content="단체미로 통로별 이동 경로와 핵심 위치를 순서대로 정리한 공략 페이지" />
+  <style>
+    :root {
+      --bg: #0b0b0f;
+      --bg-2: #121218;
+      --panel: rgba(22, 22, 29, 0.92);
+      --panel-2: rgba(31, 31, 40, 0.92);
+      --line: rgba(255, 215, 130, 0.18);
+      --gold: #d7b06a;
+      --gold-2: #f0d39a;
+      --red: #a41e24;
+      --red-2: #dc4f55;
+      --text: #f4efe6;
+      --muted: #b8b0a4;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+      --container: 1100px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(164, 30, 36, 0.16), transparent 26%),
+        radial-gradient(circle at 80% 10%, rgba(215, 176, 106, 0.12), transparent 24%),
+        linear-gradient(180deg, #0b0b0f 0%, #131319 46%, #0d0d12 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(calc(100% - 28px), var(--container)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 1000;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 8, 11, 0.76);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .topbar-inner {
+      display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:70px;
+    }
+    .brand { display:flex; align-items:center; gap:14px; min-width:0; }
+    .brand-mark {
+      width: 46px; height: 46px; border-radius: 14px; display:grid; place-items:center;
+      font-size: 24px; font-weight: 800; color: #111;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 8px 24px rgba(215,176,106,0.28);
+      flex-shrink: 0;
+    }
+    .brand-title { font-size: 19px; font-weight: 800; letter-spacing: -0.03em; }
+    .brand-sub { color: var(--muted); font-size: 12px; }
+    .top-links { display:flex; flex-wrap:wrap; gap:10px; }
+    .top-links a {
+      padding: 10px 14px; border-radius: 12px; font-size: 14px; font-weight: 700;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero { padding: 48px 0 24px; }
+    .hero-card {
+      background: linear-gradient(180deg, rgba(24,24,31,0.95), rgba(14,14,19,0.95));
+      border: 1px solid var(--line); border-radius: 28px; box-shadow: var(--shadow);
+      padding: 34px; position: relative; overflow: hidden;
+    }
+    .hero-card::before {
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(120deg, rgba(255,255,255,0.02), transparent 30%),
+                  radial-gradient(circle at 82% 22%, rgba(215,176,106,0.12), transparent 18%),
+                  radial-gradient(circle at 15% 18%, rgba(164,30,36,0.18), transparent 20%);
+      pointer-events:none;
+    }
+    .badge {
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(240,211,154,0.2); background:rgba(255,255,255,0.03);
+      color: var(--gold-2); font-size: 13px; font-weight: 700;
+    }
+    h1 {
+      position:relative; margin:18px 0 12px; font-family: "Noto Serif KR", "Nanum Myeongjo", serif;
+      font-size: clamp(32px, 5vw, 52px); line-height: 1.2; letter-spacing: -0.03em;
+    }
+    .hero p { position:relative; margin:0; color:#dbd2c4; font-size:16px; max-width: 760px; }
+    .summary {
+      margin-top:18px; display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; position:relative;
+    }
+    .summary-item {
+      padding:16px 18px; border-radius:16px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);
+    }
+    .summary-item strong { display:block; font-size:16px; margin-bottom:4px; }
+    .summary-item span { color: var(--muted); font-size:14px; }
+    .section { padding: 22px 0 54px; }
+    .section-title {
+      display:flex; align-items:center; gap:12px; margin:0 0 14px; font-size: clamp(26px,4vw,36px); font-weight:800;
+    }
+    .section-title::before {
+      content:""; width:6px; height:26px; border-radius:999px; background:linear-gradient(180deg, var(--gold-2), var(--red-2));
+      box-shadow: 0 0 18px rgba(240, 211, 154, 0.3);
+    }
+    .section-desc { margin:0 0 22px; color: var(--muted); font-size:15px; }
+    .toc {
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;
+    }
+    .toc a {
+      padding:16px 18px; border-radius:16px; background: linear-gradient(180deg, rgba(23,23,29,0.95), rgba(16,16,21,0.95));
+      border: 1px solid rgba(255,255,255,0.06); box-shadow: var(--shadow); font-weight: 800;
+    }
+    .toc small { display:block; margin-top:6px; color: var(--muted); font-weight: 500; }
+    .guide-list { display:grid; gap:20px; }
+    .guide-card {
+      background: linear-gradient(180deg, rgba(23,23,29,0.95), rgba(16,16,21,0.95));
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 22px; overflow:hidden; box-shadow: var(--shadow);
+    }
+    .guide-meta { padding: 20px 22px 0; }
+    .guide-number {
+      display:inline-flex; align-items:center; justify-content:center; min-width:64px; height:34px; padding:0 12px;
+      border-radius:999px; font-size:13px; font-weight:800; color:#111;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+    }
+    .guide-card h3 { margin:14px 0 8px; font-size: 28px; letter-spacing:-0.03em; }
+    .guide-card p { margin:0 0 18px; color: var(--muted); font-size:15px; }
+    .image-btn {
+      width:100%; border:0; padding:0; margin:0; display:block; background:transparent; cursor: zoom-in;
+    }
+    .image-wrap { padding: 0 22px 22px; }
+    .image-box {
+      border-radius: 18px; overflow:hidden; border: 1px solid rgba(255,255,255,0.06); background:#050506;
+    }
+    .image-box img { width:100%; height:auto; }
+    .caption {
+      padding: 12px 14px; background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted); font-size: 13px;
+    }
+    .footer-note {
+      padding: 20px; border-radius: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted); font-size:14px;
+    }
+    .floating-top {
+      position: fixed; right: 18px; bottom: 18px; z-index: 1000; width: 52px; height: 52px; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1); background: rgba(17,17,23,0.88); color: var(--gold-2);
+      box-shadow: var(--shadow); cursor: pointer; display:grid; place-items:center; font-size:20px;
+    }
+    .lightbox {
+      position: fixed; inset: 0; z-index: 2000; display:none; align-items:center; justify-content:center;
+      background: rgba(0,0,0,0.86); padding: 24px;
+    }
+    .lightbox.open { display:flex; }
+    .lightbox-inner { position:relative; max-width:min(1200px, 100%); max-height:100%; }
+    .lightbox img { max-width:100%; max-height: calc(100vh - 90px); border-radius: 16px; box-shadow: var(--shadow); }
+    .lightbox-close {
+      position:absolute; top:-12px; right:-12px; width:42px; height:42px; border-radius:999px; border:0;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold)); color:#111; font-size:20px; font-weight:800; cursor:pointer;
+    }
+    @media (max-width: 900px) {
+      .summary, .toc { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .topbar-inner { align-items:flex-start; flex-direction:column; padding:12px 0; }
+      .top-links { width:100%; }
+      .top-links a { flex: 1 1 calc(50% - 10px); text-align:center; }
+      .hero-card { padding:24px; }
+      .guide-meta, .image-wrap { padding-left:16px; padding-right:16px; }
+      .guide-card h3 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="./index.html" class="brand" aria-label="홈으로 이동">
+        <div class="brand-mark">秀</div>
+        <div>
+          <div class="brand-title">FreeSoo 秀</div>
+          <div class="brand-sub">단체미로 공략 페이지</div>
+        </div>
+      </a>
+      <div class="top-links">
+        <a href="./index.html">홈으로</a>
+        <a href="#toc">바로가기</a>
+        <a href="#guide-list">공략 보기</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-card">
+          <span class="badge">공지 연결용 상세 페이지</span>
+          <h1>단체미로 공략</h1>
+          <p>단체미로 관련 자료를 순서대로 정리한 안내 페이지입니다. 통로별 이동 경로, 용문 위치, 시작·도착 구조를 한 번에 확인할 수 있게 구성했습니다.</p>
+          <div class="summary">
+            <div class="summary-item"><strong>총 7개 자료</strong><span>공지에서 바로 진입 가능한 이미지형 공략</span></div>
+            <div class="summary-item"><strong>모바일 대응</strong><span>휴대폰에서도 세로로 순서대로 보기 쉽게 구성</span></div>
+            <div class="summary-item"><strong>이미지 확대 지원</strong><span>이미지를 누르면 크게 열어 세부 경로 확인 가능</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="toc">
+      <div class="container">
+        <h2 class="section-title">빠른 이동</h2>
+        <p class="section-desc">원하는 구간으로 바로 이동할 수 있게 순서별 링크를 넣었습니다.</p>
+        <div class="toc">
+          <a href="#item-1">01. 4번 통로<small>입구에서 출구 방향 경로 확인</small></a>
+          <a href="#item-2">02. 용문 위치<small>좌표와 핵심 위치 참고용 지도</small></a>
+          <a href="#item-3">03. 1번 통로<small>입구 기준 1번 이동 루트</small></a>
+          <a href="#item-4">04. 중앙 이동 경로<small>중간 연결 구간 참고용</small></a>
+          <a href="#item-5">05. 2번 통로<small>입구 기준 2번 이동 루트</small></a>
+          <a href="#item-6">06. 3번 통로<small>입구 기준 3번 이동 루트</small></a>
+          <a href="#item-7">07. 시작 · 도착 구조<small>미로 기본 배치와 목표 지점 확인</small></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guide-list">
+      <div class="container">
+        <h2 class="section-title">공략 자료</h2>
+        <p class="section-desc">위에서 아래로 보면 자연스럽게 흐름을 파악할 수 있도록 배치했습니다.</p>
+        <div class="guide-list">
+
+          <article class="guide-card" id="item-1">
+            <div class="guide-meta">
+              <span class="guide-number">01</span>
+              <h3>4번 통로</h3>
+              <p>4번 통로 기준 이동 경로를 표시한 자료입니다. 출구 방향까지 이어지는 흐름을 먼저 익힐 때 보기 좋습니다.</p>
+            </div>
+            <div class="image-wrap">
+              <button class="image-btn" data-full="assets/maze/01-route-4.jpg"><div class="image-box"><img src="assets/maze/01-route-4.jpg" alt="단체미로 4번 통로 공략 이미지" /><div class="caption">클릭 시 확대</div></div></button>
+            </div>
+          </article>
+
+          <article class="guide-card" id="item-2">
+            <div class="guide-meta">
+              <span class="guide-number">02</span>
+              <h3>용문 위치</h3>
+              <p>좌표별 핵심 위치와 용문 위치를 확인할 수 있는 참고 지도입니다. 동선 파악 전 전체 위치를 먼저 볼 때 유용합니다.</p>
+            </div>
+            <div class="image-wrap">
+              <button class="image-btn" data-full="assets/maze/02-yongmun-location.jpg"><div class="image-box"><img src="assets/maze/02-yongmun-location.jpg" alt="단체미로 용문 위치 지도" /><div class="caption">클릭 시 확대</div></div></button>
+            </div>
+          </article>
+
+          <article class="guide-card" id="item-3">
+            <div class="guide-meta">
+              <span class="guide-number">03</span>
+              <h3>1번 통로</h3>
+              <p>1번 통로 기준 이동 경로를 정리한 자료입니다. 입구와 출구 방향을 연결해서 보기에 편한 순서로 배치했습니다.</p>
+            </div>
+            <div class="image-wrap">
+              <button class="image-btn" data-full="assets/maze/03-route-1.jpg"><div class="image-box"><img src="assets/maze/03-route-1.jpg" alt="단체미로 1번 통로 공략 이미지" /><div class="caption">클릭 시 확대</div></div></button>
+            </div>
+          </article>
+
+          <article class="guide-card" id="item-4">
+            <div class="guide-meta">
+              <span class="guide-number">04</span>
+              <h3>중앙 이동 경로</h3>
+              <p>중간 연결 지점 중심으로 이어지는 경로를 표시한 자료입니다. 통로 간 이어지는 흐름을 볼 때 참고하면 좋습니다.</p>
+            </div>
+            <div class="image-wrap">
+              <button class="image-btn" data-full="assets/maze/04-central-route.jpg"><div class="image-box"><img src="assets/maze/04-central-route.jpg" alt="단체미로 중앙 이동 경로 이미지" /><div class="caption">클릭 시 확대</div></div></button>
+            </div>
+          </article>
+
+          <article class="guide-card" id="item-5">
+            <div class="guide-meta">
+              <span class="guide-number">05</span>
+              <h3>2번 통로</h3>
+              <p>2번 통로 이동 경로를 정리한 자료입니다. 다른 통로와 헷갈리지 않게 순서형으로 확인할 수 있습니다.</p>
+            </div>
+            <div class="image-wrap">
+              <button class="image-btn" data-full="assets/maze/05-route-2.jpg"><div class="image-box"><img src="assets/maze/05-route-2.jpg" alt="단체미로 2번 통로 공략 이미지" /><div class="caption">클릭 시 확대</div></div></button>
+            </div>
+          </article>
+
+          <article class="guide-card" id="item-6">
+            <div class="guide-meta">
+              <span class="guide-number">06</span>
+              <h3>3번 통로</h3>
+              <p>3번 통로 기준으로 입구에서 진행하는 동선을 정리한 자료입니다. 좌측 방향 진입 흐름을 확인하기 좋습니다.</p>
+            </div>
+            <div class="image-wrap">
+              <button class="image-btn" data-full="assets/maze/06-route-3.jpg"><div class="image-box"><img src="assets/maze/06-route-3.jpg" alt="단체미로 3번 통로 공략 이미지" /><div class="caption">클릭 시 확대</div></div></button>
+            </div>
+          </article>
+
+          <article class="guide-card" id="item-7">
+            <div class="guide-meta">
+              <span class="guide-number">07</span>
+              <h3>시작 · 도착 구조</h3>
+              <p>단체미로의 시작 지점과 도착 지점을 확인할 수 있는 전체 구조 자료입니다. 처음 보는 유저에게 기본 배치를 설명할 때 적합합니다.</p>
+            </div>
+            <div class="image-wrap">
+              <button class="image-btn" data-full="assets/maze/07-start-finish.jpg"><div class="image-box"><img src="assets/maze/07-start-finish.jpg" alt="단체미로 시작 도착 구조 이미지" /><div class="caption">클릭 시 확대</div></div></button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="footer-note">이 페이지는 <strong>notices.json</strong>에서 직접 연결할 수 있도록 만든 정적 상세 페이지입니다. 기본 경로는 <strong>maze-guide.html</strong> 기준으로 작성했습니다.</div>
+      </div>
+    </section>
+  </main>
+
+  <button class="floating-top" id="scrollTopBtn" aria-label="맨 위로 이동">↑</button>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" aria-label="확대 이미지 닫기">×</button>
+      <img id="lightboxImage" src="" alt="확대 이미지" />
+    </div>
+  </div>
+
+  <script>
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    if (scrollTopBtn) {
+      scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    document.querySelectorAll('.image-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const src = btn.getAttribute('data-full');
+        lightboxImage.src = src;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+      document.body.style.overflow = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
+  </script>
+</body>
+</html>
