@@ -2,8 +2,13 @@
   "notices": [
     {
       "title": "[공략] 단체미로 공략",
-      "date": "2026-03-27",
-      "url": "maze-guide.html"
+      "date": "2026-03-28",
+      "url": "guide.html?id=maze"
+    },
+    {
+      "title": "[공략] 사곡왕릉 가는법",
+      "date": "2026-03-28",
+      "url": "guide.html?id=sagok"
     },
     {
       "title": "[개인미로] 클리어 공략 영상(w.케이크장인)",
