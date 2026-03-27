@@ -50,5 +50,13 @@
     "description": "STEP 1~10 순서대로 진행하면 사곡왕릉까지 이동할 수 있습니다.",
     "thumbnail": "assets/guides/sagok/main.png",
     "image": "assets/guides/sagok/main.png"
+  },
+  {
+    "id": "mabang",
+    "title": "마방진 - 매주 1회(월요일 00시 초기화)",
+    "type": "single",
+    "description": "마방진 클리어를 위한 가이드",
+    "thumbnail": "assets/guides/mabang/mabang.png",
+    "image": "assets/guides/mabang/mabang.png"
   }
 ]
