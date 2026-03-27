@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공략 보기 | FreeSoo 秀</title>
+  <meta name="description" content="FreeSoo 공략 상세 페이지" />
+  <style>
+    :root{
+      --bg:#090909;
+      --panel:#121212;
+      --panel-2:#181818;
+      --line:#ff7a00;
+      --gold:#d8a24a;
+      --gold-soft:#f2c16f;
+      --text:#f3e7d0;
+      --muted:#b9a98e;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+      --wrap:1100px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at top right, rgba(255,122,0,.08), transparent 18%),
+        linear-gradient(180deg,#0a0707 0%, #0b0b0b 100%);
+      color:var(--text);
+      font-family:"Noto Sans KR","Malgun Gothic",sans-serif;
+    }
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    .wrap{width:min(calc(100% - 24px), var(--wrap));margin:0 auto}
+    .topbar{
+      position:sticky;top:0;z-index:1000;
+      background:rgba(10,10,10,.88);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,122,0,.18);
+    }
+    .topbar-inner{
+      min-height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .brand-mark{
+      width:42px;height:42px;border-radius:12px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+      color:#1b1103;font-weight:900;font-size:22px;
+      box-shadow:0 8px 24px rgba(216,162,74,.22);
+      flex-shrink:0;
+    }
+    .brand-text strong{display:block;font-size:17px}
+    .brand-text span{display:block;font-size:12px;color:var(--muted)}
+    .nav-links{display:flex;gap:8px;flex-wrap:wrap}
+    .nav-links a{
+      background:#161616;
+      border:1px solid rgba(255,122,0,.18);
+      color:var(--gold-soft);
+      padding:10px 14px;
+      border-radius:10px;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .hero{padding:28px 0 20px}
+    .hero-card{
+      background:linear-gradient(180deg, rgba(24,24,24,.96), rgba(14,14,14,.96));
+      border:1px solid rgba(255,122,0,.22);
+      border-radius:24px;
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+    .badge{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(255,122,0,.08);
+      border:1px solid rgba(255,122,0,.25);
+      color:var(--gold-soft);
+      font-size:12px;
+      font-weight:800;
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size:clamp(28px,4vw,44px);
+      line-height:1.2;
+      color:var(--gold-soft);
+      font-family:"Noto Serif KR","Nanum Myeongjo",serif;
+    }
+    .hero-desc{
+      margin:0;
+      color:#d7c8af;
+      font-size:15px;
+      line-height:1.7;
+    }
+
+    .content{padding:8px 0 50px}
+    .section-title{
+      margin:0 0 14px;
+      font-size:28px;
+      color:var(--gold-soft);
+      font-family:"Noto Serif KR","Nanum Myeongjo",serif;
+    }
+
+    .toc{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+      margin-bottom:24px;
+    }
+    .toc a{
+      background:linear-gradient(180deg,#171717,#111);
+      border:1px solid rgba(255,122,0,.18);
+      border-radius:14px;
+      padding:14px;
+      box-shadow:var(--shadow);
+    }
+    .toc strong{
+      display:block;
+      color:var(--gold-soft);
+      margin-bottom:6px;
+      font-size:15px;
+    }
+    .toc span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .single-card,
+    .guide-card{
+      background:linear-gradient(180deg,#171717,#101010);
+      border:1px solid rgba(255,122,0,.18);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .single-card{padding:18px}
+    .guide-list{
+      display:grid;
+      gap:18px;
+    }
+    .guide-meta{
+      padding:18px 18px 0;
+    }
+    .guide-no{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:60px;
+      height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+      color:#1d1204;
+      font-size:13px;
+      font-weight:900;
+    }
+    .guide-card h3,
+    .single-card h3{
+      margin:12px 0 8px;
+      font-size:26px;
+      color:var(--gold-soft);
+      font-family:"Noto Serif KR","Nanum Myeongjo",serif;
+    }
+    .guide-card p,
+    .single-card p{
+      margin:0 0 16px;
+      color:#d5c6ad;
+      font-size:15px;
+      line-height:1.7;
+    }
+    .image-wrap{
+      padding:0 18px 18px;
+    }
+    .image-btn{
+      width:100%;
+      padding:0;
+      border:0;
+      background:transparent;
+      cursor:zoom-in;
+    }
+    .image-box{
+      background:#050505;
+      border:1px solid rgba(255,122,0,.18);
+      border-radius:16px;
+      overflow:hidden;
+    }
+    .image-box img{width:100%;height:auto}
+    .caption{
+      padding:10px 12px;
+      font-size:13px;
+      color:var(--muted);
+      border-top:1px solid rgba(255,122,0,.14);
+      background:rgba(255,122,0,.03);
+    }
+
+    .empty-box{
+      background:#171717;
+      border:1px dashed rgba(255,122,0,.28);
+      border-radius:18px;
+      padding:26px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .footer-note{
+      margin-top:28px;
+      padding:16px 18px;
+      border-radius:16px;
+      background:#141414;
+      border:1px solid rgba(255,122,0,.14);
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .scroll-top{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:999;
+      width:50px;height:50px;
+      border:1px solid rgba(255,122,0,.24);
+      background:#141414;
+      color:var(--gold-soft);
+      border-radius:14px;
+      font-size:18px;
+      cursor:pointer;
+      box-shadow:var(--shadow);
+    }
+
+    .lightbox{
+      position:fixed;
+      inset:0;
+      z-index:2000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,.92);
+      padding:20px;
+    }
+    .lightbox.open{display:flex}
+    .lightbox-inner{
+      position:relative;
+      width:min(1400px, 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .lightbox img{
+      max-width:100%;
+      max-height:90vh;
+      border-radius:14px;
+      box-shadow:var(--shadow);
+    }
+    .lightbox-close{
+      position:absolute;
+      top:-10px;
+      right:-10px;
+      width:42px;height:42px;
+      border:0;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+      color:#1c1204;
+      font-size:22px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    @media (max-width: 900px){
+      .toc{grid-template-columns:1fr}
+    }
+    @media (max-width: 640px){
+      .topbar-inner{flex-direction:column;align-items:flex-start;padding:12px 0}
+      .hero-card{padding:22px}
+      .guide-card h3,.single-card h3{font-size:22px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a href="./index.html" class="brand">
+        <div class="brand-mark">秀</div>
+        <div class="brand-text">
+          <strong>FreeSoo 秀</strong>
+          <span>공략 상세 페이지</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="./index.html">홈으로</a>
+        <a href="./guide-select.html">공략집</a>
+        <a href="#guideContent">공략 보기</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <span class="badge">GUIDE DETAIL</span>
+        <h1 id="guideTitle">공략 불러오는 중...</h1>
+        <p class="hero-desc" id="guideDescription">guides.json 데이터를 불러와 화면에 표시합니다.</p>
+      </div>
+    </section>
+
+    <section class="content">
+      <div id="guideContent"></div>
+      <div class="footer-note">
+        이 페이지는 <strong>guides.json</strong>의 데이터를 기준으로 자동 렌더링됩니다.
+        공지에서는 <strong>guide.html?id=가이드ID</strong> 형식으로 연결하면 됩니다.
+      </div>
+    </section>
+  </main>
+
+  <button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로">↑</button>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" aria-label="닫기">×</button>
+      <img id="lightboxImage" src="" alt="확대 이미지" />
+    </div>
+  </div>
+
+  <script>
+    const $title = document.getElementById('guideTitle');
+    const $desc = document.getElementById('guideDescription');
+    const $content = document.getElementById('guideContent');
+    const $scrollTopBtn = document.getElementById('scrollTopBtn');
+    const $lightbox = document.getElementById('lightbox');
+    const $lightboxImage = document.getElementById('lightboxImage');
+    const $lightboxClose = document.getElementById('lightboxClose');
+
+    function getGuideId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    function openLightbox(src, altText = '확대 이미지') {
+      $lightboxImage.src = src;
+      $lightboxImage.alt = altText;
+      $lightbox.classList.add('open');
+      $lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      $lightbox.classList.remove('open');
+      $lightbox.setAttribute('aria-hidden', 'true');
+      $lightboxImage.src = '';
+      document.body.style.overflow = '';
+    }
+
+    function escapeHtml(text = '') {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function renderEmpty(message) {
+      $content.innerHTML = `
+        <div class="empty-box">
+          <strong style="display:block;color:var(--gold-soft);margin-bottom:8px;">공략을 찾을 수 없습니다.</strong>
+          <div>${message}</div>
+        </div>
+      `;
+    }
+
+    function renderSingle(guide) {
+      $content.innerHTML = `
+        <h2 class="section-title">공략 자료</h2>
+        <div class="single-card">
+          <h3>${escapeHtml(guide.title)}</h3>
+          <p>${escapeHtml(guide.description || '')}</p>
+          <button class="image-btn" type="button" data-full="${escapeHtml(guide.image)}" data-alt="${escapeHtml(guide.title)}">
+            <div class="image-box">
+              <img src="${escapeHtml(guide.image)}" alt="${escapeHtml(guide.title)}" />
+              <div class="caption">클릭 시 확대</div>
+            </div>
+          </button>
+        </div>
+      `;
+      bindImageButtons();
+    }
+
+    function renderMulti(guide) {
+      const items = Array.isArray(guide.items) ? guide.items : [];
+
+      const tocHtml = items.map((item, idx) => `
+        <a href="#item-${idx + 1}">
+          <strong>${idx + 1}. ${escapeHtml(item.title || `자료 ${idx + 1}`)}</strong>
+          <span>${escapeHtml(item.desc || '이미지 공략 자료')}</span>
+        </a>
+      `).join('');
+
+      const listHtml = items.map((item, idx) => `
+        <article class="guide-card" id="item-${idx + 1}">
+          <div class="guide-meta">
+            <span class="guide-no">${String(idx + 1).padStart(2, '0')}</span>
+            <h3>${escapeHtml(item.title || `자료 ${idx + 1}`)}</h3>
+            <p>${escapeHtml(item.desc || '')}</p>
+          </div>
+          <div class="image-wrap">
+            <button class="image-btn" type="button" data-full="${escapeHtml(item.image)}" data-alt="${escapeHtml(item.title || `자료 ${idx + 1}`)}">
+              <div class="image-box">
+                <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title || `자료 ${idx + 1}`)}" />
+                <div class="caption">클릭 시 확대</div>
+              </div>
+            </button>
+          </div>
+        </article>
+      `).join('');
+
+      $content.innerHTML = `
+        <h2 class="section-title">빠른 이동</h2>
+        <div class="toc">${tocHtml}</div>
+
+        <h2 class="section-title">공략 자료</h2>
+        <div class="guide-list">${listHtml}</div>
+      `;
+      bindImageButtons();
+    }
+
+    function bindImageButtons() {
+      document.querySelectorAll('.image-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const full = btn.getAttribute('data-full');
+          const alt = btn.getAttribute('data-alt') || '확대 이미지';
+          openLightbox(full, alt);
+        });
+      });
+    }
+
+    async function init() {
+      const guideId = getGuideId();
+
+      if (!guideId) {
+        $title.textContent = '공략 ID가 없습니다';
+        $desc.textContent = '주소 뒤에 ?id=가이드ID 형식으로 접근해야 합니다.';
+        renderEmpty('예시: guide.html?id=maze');
+        return;
+      }
+
+      try {
+        const res = await fetch('./guides.json', { cache: 'no-store' });
+        const guides = await res.json();
+        const guide = Array.isArray(guides) ? guides.find(item => item.id === guideId) : null;
+
+        if (!guide) {
+          $title.textContent = '공략을 찾을 수 없습니다';
+          $desc.textContent = `요청한 ID: ${guideId}`;
+          renderEmpty(`guides.json 안에 <strong>${escapeHtml(guideId)}</strong> 항목이 있는지 확인해주세요.`);
+          return;
+        }
+
+        document.title = `${guide.title} | FreeSoo 秀`;
+        $title.textContent = guide.title || '제목 없음';
+        $desc.textContent = guide.description || '설명이 없습니다.';
+
+        if (guide.type === 'single') {
+          renderSingle(guide);
+        } else {
+          renderMulti(guide);
+        }
+      } catch (err) {
+        $title.textContent = '데이터 불러오기 실패';
+        $desc.textContent = 'guides.json 파일 경로 또는 JSON 문법을 확인해주세요.';
+        renderEmpty('guides.json 파일을 불러오는 중 오류가 발생했습니다.');
+        console.error(err);
+      }
+    }
+
+    $scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    $lightboxClose.addEventListener('click', closeLightbox);
+    $lightbox.addEventListener('click', (e) => {
+      if (e.target === $lightbox) closeLightbox();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && $lightbox.classList.contains('open')) {
+        closeLightbox();
+      }
+    });
+
+    init();
+  </script>
+</body>
+</html>
