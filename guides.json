@@ -10,37 +10,37 @@
       {
         "title": "1번 통로",
         "text": "입구 기준 첫 번째 이동 루트로 기본 동선 파악에 중요한 구간입니다.",
-        "image": "assets/guides/maze/1.jpg"
+        "img": "assets/guides/maze/1.jpg"
       },
       {
         "title": "1번통로 → 2번통로 지름길",
         "text": "다음 통로 이동을 빠르게 이어주는 핵심 지름길 구간입니다.",
-        "image": "assets/guides/maze/2.jpg"
+        "img": "assets/guides/maze/2.jpg"
       },
       {
         "title": "2번 통로",
         "text": "두 번째 주요 이동 경로로 다른 통로와 연결되는 중간 단계입니다.",
-        "image": "assets/guides/maze/3.jpg"
+        "img": "assets/guides/maze/3.jpg"
       },
       {
         "title": "3번 통로",
         "text": "중앙에서 이어지는 이동 경로로 방향 혼동이 많은 구간입니다.",
-        "image": "assets/guides/maze/4.jpg"
+        "img": "assets/guides/maze/4.jpg"
       },
       {
         "title": "미로수렵지",
         "text": "사냥 및 이동이 동시에 이루어지는 핵심 지역입니다.",
-        "image": "assets/guides/maze/5.jpg"
+        "img": "assets/guides/maze/5.jpg"
       },
       {
         "title": "4번 통로",
         "text": "후반 이동 루트로 출구 방향과 연결되는 중요한 통로입니다.",
-        "image": "assets/guides/maze/6.jpg"
+        "img": "assets/guides/maze/6.jpg"
       },
       {
         "title": "미로마룡 위치",
         "text": "최종 목표 위치로 보스 및 핵심 도착 지점입니다.",
-        "image": "assets/guides/maze/7.jpg"
+        "img": "assets/guides/maze/7.jpg"
       }
     ]
   },
@@ -64,13 +64,13 @@
     "title": "마방진 - 매주 1회(월요일 00시 초기화)",
     "category": "컨텐츠 공략",
     "thumbnail": "assets/guides/mabang/mabang.png",
-    "updatedAt": "2026-0328",
+    "updatedAt": "2026-03-28",
     "description": "마방진 클리어를 위한 가이드 문서",
     "steps": [
       {
         "title": "마방진 클리어를 위한 참고",
-        "text": "1번~40번 방까지 미션을 해결하고 40번 방에서 보상을 획득"
-        "image": "assets/guides/mabang/mabang.png"
+        "text": "1번~40번 방까지 미션을 해결하고 40번 방에서 보상을 획득",
+        "img": "assets/guides/mabang/mabang.png"
       }
     ]
   }

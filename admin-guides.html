@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FreeSoo 가이드 관리</title>
+<style>
+:root{--bg:#120d09;--panel:rgba(31,20,13,.95);--line:rgba(255,182,98,.18);--text:#f8ead6;--muted:#d5b592;--shadow:0 18px 42px rgba(0,0,0,.35);--radius:18px}
+*{box-sizing:border-box}body{margin:0;font-family:"Noto Serif KR","Malgun Gothic",serif;color:var(--text);background:linear-gradient(180deg,#17110d 0%,#090705 100%)}
+.wrap{width:min(calc(100% - 32px), 1240px);margin:0 auto;padding:28px 0 40px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.panel{background:linear-gradient(180deg, rgba(31,20,13,.94), rgba(17,12,9,.98));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+label{display:block;margin:14px 0 8px;font-weight:700}input,textarea,select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:var(--text);font:inherit}
+textarea{min-height:100px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.step-card{padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.03);margin-top:12px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:12px;border:1px solid rgba(255,165,72,.24);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer}.primary{background:linear-gradient(135deg, rgba(255,154,61,.22), rgba(255,84,36,.24))}
+pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.25);padding:16px;border-radius:14px;min-height:280px;overflow:auto}
+.small{color:var(--muted);font-size:.92rem;line-height:1.7}.list{display:grid;gap:10px}
+.item{padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+@media (max-width:900px){.grid,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="grid">
+    <section class="panel">
+      <h1 style="margin-top:0">가이드 관리 페이지</h1>
+      <p class="small">정적 사이트용이라 서버에 바로 저장되지는 않지만, 입력만으로 <strong>guides.json용 JSON</strong>을 생성해서 복사/다운로드할 수 있습니다.</p>
+
+      <div class="row">
+        <div>
+          <label>공략 ID</label>
+          <input id="guideId" placeholder="예: maze" />
+        </div>
+        <div>
+          <label>카테고리</label>
+          <input id="category" placeholder="예: 컨텐츠 공략" />
+        </div>
+      </div>
+
+      <label>공략 제목</label>
+      <input id="title" placeholder="예: 단체미로 공략" />
+
+      <div class="row">
+        <div>
+          <label>업데이트 날짜</label>
+          <input id="updatedAt" placeholder="예: 2026-03-29" />
+        </div>
+        <div>
+          <label>썸네일 경로</label>
+          <input id="thumbnail" placeholder="예: assets/guides/maze/1.jpg" />
+        </div>
+      </div>
+
+      <label>설명</label>
+      <textarea id="description" placeholder="공략 소개 문구"></textarea>
+
+      <div class="btns">
+        <button class="btn" type="button" id="addStepBtn">STEP 추가</button>
+        <button class="btn primary" type="button" id="makeJsonBtn">JSON 생성</button>
+      </div>
+
+      <div id="stepList"></div>
+    </section>
+
+    <section class="panel">
+      <h2 style="margin-top:0">생성 결과</h2>
+      <p class="small">생성된 블록을 복사해서 <strong>guides.json 배열 안</strong>에 넣으면 됩니다.</p>
+      <pre id="output">아직 생성된 JSON이 없습니다.</pre>
+      <div class="btns">
+        <button class="btn" type="button" id="copyBtn">복사</button>
+        <button class="btn" type="button" id="downloadBtn">guide-item.json 다운로드</button>
+      </div>
+
+      <h3>관리 팁</h3>
+      <div class="list">
+        <div class="item">STEP 이미지 키는 <strong>img</strong>로 통일하세요.</div>
+        <div class="item">가이드 수정 시 <strong>id는 그대로 유지</strong>하고 title, text, img만 바꾸는 편이 안전합니다.</div>
+        <div class="item">이미지는 <strong>assets/guides/공략ID/파일명</strong> 규칙으로 맞추면 찾기 쉽습니다.</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+const stepList = document.getElementById('stepList');
+const output = document.getElementById('output');
+let stepCount = 0;
+
+function addStep(data = {}){
+  stepCount += 1;
+  const card = document.createElement('div');
+  card.className = 'step-card';
+  card.innerHTML = `
+    <div class="row">
+      <div>
+        <label>STEP 제목</label>
+        <input class="step-title" placeholder="예: 1번 통로" value="${data.title || ''}">
+      </div>
+      <div>
+        <label>이미지 경로</label>
+        <input class="step-img" placeholder="예: assets/guides/maze/1.jpg" value="${data.img || ''}">
+      </div>
+    </div>
+    <label>설명</label>
+    <textarea class="step-text" placeholder="STEP 설명">${data.text || ''}</textarea>
+    <div class="btns">
+      <button class="btn remove-step" type="button">이 STEP 삭제</button>
+    </div>
+  `;
+  card.querySelector('.remove-step').addEventListener('click', () => card.remove());
+  stepList.appendChild(card);
+}
+
+function collect(){
+  return {
+    id: document.getElementById('guideId').value.trim(),
+    title: document.getElementById('title').value.trim(),
+    category: document.getElementById('category').value.trim(),
+    thumbnail: document.getElementById('thumbnail').value.trim(),
+    updatedAt: document.getElementById('updatedAt').value.trim(),
+    description: document.getElementById('description').value.trim(),
+    steps: [...document.querySelectorAll('.step-card')].map(card => ({
+      title: card.querySelector('.step-title').value.trim(),
+      text: card.querySelector('.step-text').value.trim(),
+      img: card.querySelector('.step-img').value.trim()
+    })).filter(step => step.title || step.text || step.img)
+  };
+}
+
+document.getElementById('addStepBtn').addEventListener('click', () => addStep());
+document.getElementById('makeJsonBtn').addEventListener('click', () => {
+  const data = collect();
+  output.textContent = JSON.stringify(data, null, 2);
+});
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  const text = output.textContent;
+  if (!text || text.includes('아직 생성')) return;
+  await navigator.clipboard.writeText(text);
+  alert('복사되었습니다.');
+});
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  const text = output.textContent;
+  if (!text || text.includes('아직 생성')) return;
+  const blob = new Blob([text], {type:'application/json;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'guide-item.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+addStep();
+</script>
+</body>
+</html>
