@@ -1,62 +1,47 @@
 [
   {
     "id": "maze",
-    "title": "단체미로 공략",
-    "type": "multi",
-    "description": "단체미로 주요 통로와 핵심 위치를 순서대로 정리한 공략입니다.",
+    "title": "미로 수렵지 가는법",
+    "category": "길찾기",
     "thumbnail": "assets/guides/maze/1.jpg",
-    "items": [
+    "updatedAt": "2026-03-28",
+    "description": "미로 수렵지로 이동하는 기본 동선 예시입니다. 실제 이미지 파일만 교체해도 같은 템플릿으로 반복 사용 가능합니다.",
+    "steps": [
       {
         "title": "1번 통로",
-        "desc": "입구 기준 첫 번째 이동 루트로 기본 동선 파악에 중요한 구간입니다.",
-        "image": "assets/guides/maze/1.jpg"
+        "text": "첫 번째 진입 지점입니다.",
+        "img": "assets/guides/maze/1.jpg"
       },
       {
-        "title": "지름길 통로",
-        "desc": "다음 통로 이동을 빠르게 이어주는 핵심 지름길 구간입니다.",
-        "image": "assets/guides/maze/2.jpg"
+        "title": "지름길",
+        "text": "다음 통로 이동을 위한 지름길입니다.",
+        "img": "assets/guides/maze/2.jpg"
       },
       {
         "title": "2번 통로",
-        "desc": "두 번째 주요 이동 경로로 다른 통로와 연결되는 중간 단계입니다.",
-        "image": "assets/guides/maze/3.jpg"
-      },
-      {
-        "title": "3번 통로",
-        "desc": "중앙에서 이어지는 이동 경로로 방향 혼동이 많은 구간입니다.",
-        "image": "assets/guides/maze/4.jpg"
-      },
-      {
-        "title": "미로수렵지",
-        "desc": "사냥 및 이동이 동시에 이루어지는 핵심 지역입니다.",
-        "image": "assets/guides/maze/5.jpg"
-      },
-      {
-        "title": "4번 통로",
-        "desc": "후반 이동 루트로 출구 방향과 연결되는 중요한 통로입니다.",
-        "image": "assets/guides/maze/6.jpg"
-      },
-      {
-        "title": "미로마룡 위치",
-        "desc": "최종 목표 위치로 보스 및 핵심 도착 지점입니다.",
-        "image": "assets/guides/maze/7.jpg"
+        "text": "두 번째 통로 위치입니다.",
+        "img": "assets/guides/maze/3.jpg"
       }
     ]
   },
   {
-    "id": "sagok",
+    "id": "sagok-tomb",
     "title": "사곡왕릉 가는법",
-    "type": "single",
-    "description": "STEP 1~10 순서대로 진행하면 사곡왕릉까지 이동할 수 있습니다.",
-    "thumbnail": "assets/guides/sagok/main.png",
-    "image": "assets/guides/sagok/main.png"
-  },
-  {
-    "id": "mabang",
-    "title": "마방진 - 매주 1회(월요일 00시 초기화)",
-    "type": "single",
-    "description": "마방진 클리어를 위한 가이드",
-    "thumbnail": "assets/guides/mabang/mabang.png",
-    "image": "assets/guides/mabang/mabang.png"
+    "category": "던전",
+    "thumbnail": "assets/guides/sagok-tomb/1.jpg",
+    "updatedAt": "2026-03-28",
+    "description": "사곡왕릉 진입 경로를 단계별 이미지로 정리하는 예시 구조입니다.",
+    "steps": [
+      {
+        "title": "출발 지점",
+        "text": "사곡왕릉 진입을 위한 시작 위치입니다.",
+        "img": "assets/guides/sagok-tomb/1.jpg"
+      },
+      {
+        "title": "중간 이동",
+        "text": "중간 경유 지점을 따라 이동합니다.",
+        "img": "assets/guides/sagok-tomb/2.jpg"
+      }
+    ]
   }
 ]

@@ -3,532 +3,208 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>공략 등록 도우미 | FreeSoo 秀</title>
-  <meta name="description" content="guides.json / notices.json 생성 도우미" />
+  <title>FreeSoo 관리자 보조 페이지</title>
   <style>
-    :root{
-      --bg:#090909;
-      --panel:#141414;
-      --panel-2:#1b1b1b;
-      --line:#ff7a00;
-      --gold:#d8a24a;
-      --gold-soft:#f2c16f;
-      --text:#f3e7d0;
-      --muted:#baa98a;
-      --shadow:0 10px 30px rgba(0,0,0,.35);
-      --wrap:1200px;
-    }
+    :root{--bg:#0f0a07;--panel:rgba(28,18,12,.94);--line:rgba(255,182,98,.18);--text:#f8ead6;--muted:#d5b592;--shadow:0 18px 42px rgba(0,0,0,.35);--radius:20px;--max:1240px}
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      color:var(--text);
-      font-family:"Noto Sans KR","Malgun Gothic",sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(255,122,0,.08), transparent 20%),
-        linear-gradient(180deg,#090707 0%, #0a0a0a 100%);
-    }
-    a{text-decoration:none;color:inherit}
-    .wrap{width:min(calc(100% - 24px), var(--wrap));margin:0 auto}
-    .topbar{
-      position:sticky;top:0;z-index:1000;
-      background:rgba(10,10,10,.88);
-      border-bottom:1px solid rgba(255,122,0,.18);
-      backdrop-filter:blur(10px);
-    }
-    .topbar-inner{
-      min-height:68px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand-mark{
-      width:42px;height:42px;border-radius:12px;
-      display:grid;place-items:center;
-      background:linear-gradient(135deg,var(--gold-soft),var(--gold));
-      color:#1b1103;font-weight:900;font-size:22px;
-    }
-    .brand-text strong{display:block;font-size:17px}
-    .brand-text span{display:block;font-size:12px;color:var(--muted)}
-    .nav-links{display:flex;gap:8px;flex-wrap:wrap}
-    .nav-links a{
-      background:#161616;
-      border:1px solid rgba(255,122,0,.18);
-      color:var(--gold-soft);
-      padding:10px 14px;
-      border-radius:10px;
-      font-size:14px;
-      font-weight:700;
-    }
-
-    .hero{padding:30px 0 16px}
-    .hero-card{
-      background:linear-gradient(180deg,#171717,#101010);
-      border:1px solid rgba(255,122,0,.22);
-      border-radius:24px;
-      padding:28px;
-      box-shadow:var(--shadow);
-    }
-    .badge{
-      display:inline-block;
-      padding:7px 12px;
-      border-radius:999px;
-      background:rgba(255,122,0,.08);
-      border:1px solid rgba(255,122,0,.25);
-      color:var(--gold-soft);
-      font-size:12px;
-      font-weight:800;
-    }
-    h1{
-      margin:14px 0 10px;
-      font-size:clamp(28px,4vw,42px);
-      color:var(--gold-soft);
-      font-family:"Noto Serif KR","Nanum Myeongjo",serif;
-    }
-    .hero p{
-      margin:0;
-      color:#d7c8af;
-      line-height:1.7;
-      font-size:15px;
-    }
-
-    .layout{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:18px;
-      padding:12px 0 50px;
-    }
-    .panel{
-      background:linear-gradient(180deg,#171717,#111);
-      border:1px solid rgba(255,122,0,.2);
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      padding:18px;
-    }
-    .panel h2{
-      margin:0 0 14px;
-      color:var(--gold-soft);
-      font-size:24px;
-      font-family:"Noto Serif KR","Nanum Myeongjo",serif;
-    }
-    .panel-desc{
-      margin:0 0 16px;
-      color:#d7c8af;
-      font-size:14px;
-      line-height:1.7;
-    }
-
-    .form-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    .form-group{display:flex;flex-direction:column;gap:8px}
-    .form-group.full{grid-column:1 / -1}
-    label{
-      color:var(--gold-soft);
-      font-weight:700;
-      font-size:14px;
-    }
-    input, select, textarea{
-      width:100%;
-      background:#0f0f0f;
-      color:var(--text);
-      border:1px solid rgba(255,122,0,.18);
-      border-radius:12px;
-      padding:12px 14px;
-      font-size:14px;
-      outline:none;
-    }
-    textarea{min-height:120px;resize:vertical}
-    .btn-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:16px;
-    }
-    button{
-      border:0;
-      border-radius:12px;
-      padding:12px 16px;
-      cursor:pointer;
-      font-size:14px;
-      font-weight:800;
-    }
-    .btn-primary{
-      background:linear-gradient(135deg,var(--gold-soft),var(--gold));
-      color:#1b1103;
-    }
-    .btn-dark{
-      background:#1a1a1a;
-      border:1px solid rgba(255,122,0,.2);
-      color:var(--gold-soft);
-    }
-
-    .help-box{
-      background:#131313;
-      border:1px dashed rgba(255,122,0,.22);
-      border-radius:16px;
-      padding:14px;
-      color:var(--muted);
-      line-height:1.7;
-      font-size:13px;
-      margin-top:14px;
-    }
-    .preview-list{
-      display:grid;
-      gap:8px;
-      margin-top:8px;
-      color:#d7c8af;
-      font-size:13px;
-    }
-    .preview-item{
-      background:#101010;
-      border:1px solid rgba(255,122,0,.12);
-      border-radius:12px;
-      padding:10px 12px;
-    }
-
-    .output-title{
-      margin:18px 0 10px;
-      color:var(--gold-soft);
-      font-size:18px;
-      font-weight:800;
-    }
-    .code-box{
-      width:100%;
-      min-height:160px;
-      background:#0c0c0c;
-      color:#f0e0c4;
-      border:1px solid rgba(255,122,0,.18);
-      border-radius:14px;
-      padding:14px;
-      font-family:Consolas, Monaco, monospace;
-      font-size:13px;
-      line-height:1.6;
-      white-space:pre-wrap;
-      word-break:break-word;
-    }
-
-    @media (max-width: 980px){
-      .layout{grid-template-columns:1fr}
-    }
-    @media (max-width: 640px){
-      .topbar-inner{flex-direction:column;align-items:flex-start;padding:12px 0}
-      .hero-card{padding:22px}
-      .form-grid{grid-template-columns:1fr}
-    }
+    body{margin:0;font-family:"Noto Serif KR","Malgun Gothic",serif;color:var(--text);background:radial-gradient(circle at top, rgba(255,130,38,.14), transparent 28%), linear-gradient(180deg,#17110d 0%,#090705 100%)}
+    .wrap{width:min(calc(100% - 32px), var(--max));margin:0 auto;padding:30px 0 40px}
+    a{color:inherit;text-decoration:none}
+    .panel{background:linear-gradient(180deg, rgba(31,20,13,.94), rgba(17,12,9,.98));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .row{display:grid;gap:10px;margin-top:14px}
+    input,textarea,select{width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);color:var(--text);border-radius:14px;padding:12px 14px;font:inherit}
+    textarea{min-height:110px;resize:vertical}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,165,72,.24);background:rgba(255,255,255,.03);cursor:pointer;color:var(--text)}
+    .primary{background:linear-gradient(135deg, rgba(255,154,61,.22), rgba(255,84,36,.24))}
+    pre{white-space:pre-wrap;word-break:break-word;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;color:#ffd7b3}
+    .help{color:var(--muted);line-height:1.8}
+    .step-list{display:grid;gap:10px;margin-top:10px}
+    .step-item{padding:12px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
   </style>
-  <script>
-(function () {
-  const ADMIN_PASSWORD = "zxc0160!@";
-  const saved = sessionStorage.getItem("admin_ok");
-
-  if (saved === "yes") return;
-
-  const input = prompt("관리자 비밀번호를 입력하세요.");
-  if (input === ADMIN_PASSWORD) {
-    sessionStorage.setItem("admin_ok", "yes");
-  } else {
-    alert("접근 권한이 없습니다.");
-    location.href = "./index.html";
-  }
-})();
-</script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a href="./index.html" class="brand">
-        <div class="brand-mark">秀</div>
-        <div class="brand-text">
-          <strong>FreeSoo 秀</strong>
-          <span>공략 등록 도우미</span>
-        </div>
-      </a>
-      <div class="nav-links">
-        <a href="./index.html">홈으로</a>
-        <a href="./guide-select.html">공략집</a>
+  <div class="wrap">
+    <div class="panel" style="margin-bottom:18px">
+      <h1 style="margin:0 0 10px">FreeSoo 관리자 보조 페이지</h1>
+      <p class="help">
+        이 페이지는 <strong>정적 사이트에서 JSON 파일을 쉽게 생성</strong>하기 위한 도구입니다.
+        Netlify/GitHub 정적 구조에서는 브라우저가 서버 파일을 직접 덮어쓸 수 없기 때문에,
+        여기서 만든 JSON을 <strong>다운로드 → GitHub 업로드</strong> 방식으로 운영해야 합니다.
+      </p>
+      <div class="btns">
+        <a class="btn primary" href="index.html">메인으로</a>
+        <a class="btn" href="guide-select.html">공략집으로</a>
       </div>
     </div>
-  </header>
 
-  <main class="wrap">
-    <section class="hero">
-      <div class="hero-card">
-        <span class="badge">ADMIN HELPER</span>
-        <h1>공략 등록 도우미</h1>
-        <p>이미지 파일명 규칙과 공략 정보를 입력하면 <strong>guides.json</strong> 항목과 <strong>notices.json</strong> 항목을 자동으로 생성해줍니다. 정적 사이트 운영용 반자동 관리 페이지입니다.</p>
-      </div>
-    </section>
-
-    <section class="layout">
+    <div class="grid">
       <div class="panel">
-        <h2>입력 정보</h2>
-        <p class="panel-desc">아래 내용을 입력하고 생성 버튼을 누르면 복붙용 JSON이 아래에 출력됩니다.</p>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="guideType">공략 타입</label>
-            <select id="guideType">
-              <option value="multi">다중 이미지형</option>
-              <option value="single">단일 이미지형</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="guideId">가이드 ID</label>
-            <input id="guideId" type="text" placeholder="예: maze, sagok, boss-route" />
-          </div>
-
-          <div class="form-group">
-            <label for="guideTitle">공략 제목</label>
-            <input id="guideTitle" type="text" placeholder="예: 단체미로 공략" />
-          </div>
-
-          <div class="form-group">
-            <label for="guideDate">공지 날짜</label>
-            <input id="guideDate" type="date" />
-          </div>
-
-          <div class="form-group full">
-            <label for="guideDesc">공략 설명</label>
-            <textarea id="guideDesc" placeholder="예: 단체미로 주요 통로와 핵심 위치를 순서대로 정리한 공략입니다."></textarea>
-          </div>
-
-          <div class="form-group full">
-            <label for="basePath">이미지 기본 경로</label>
-            <input id="basePath" type="text" placeholder="예: assets/guides/maze/" />
-          </div>
-
-          <div class="form-group full" id="singleImageWrap" style="display:none;">
-            <label for="singleImage">단일 이미지 파일명</label>
-            <input id="singleImage" type="text" placeholder="예: main.png" />
-          </div>
-
-          <div class="form-group full" id="multiTextWrap">
-            <label for="multiItems">다중 이미지 목록</label>
-            <textarea id="multiItems" placeholder="한 줄에 하나씩 입력&#10;형식: 제목 | 설명 | 파일명&#10;예: 1번 통로 | 입구 기준 첫 번째 이동 루트입니다. | 1.jpg"></textarea>
-          </div>
+        <h2 style="margin-top:0">notices.json 생성</h2>
+        <div class="row">
+          <select id="noticeType">
+            <option value="notice">공지</option>
+            <option value="event">이벤트</option>
+          </select>
+          <input id="noticeTitle" placeholder="제목">
+          <input id="noticeDate" placeholder="날짜 예: 2026-03-28">
+          <input id="noticeTag" placeholder="태그 예: 점검 / 업데이트 / 이벤트">
+          <textarea id="noticeSummary" placeholder="요약"></textarea>
+          <label class="help"><input type="checkbox" id="noticePin"> 고정(pin)</label>
         </div>
-
-        <div class="btn-row">
-          <button class="btn-primary" id="generateBtn" type="button">JSON 생성</button>
-          <button class="btn-dark" id="copyGuideBtn" type="button">guides.json 복사</button>
-          <button class="btn-dark" id="copyNoticeBtn" type="button">notices.json 복사</button>
-          <button class="btn-dark" id="fillSampleBtn" type="button">단체미로 샘플 넣기</button>
+        <div class="btns">
+          <button class="btn primary" id="addNoticeBtn">항목 추가</button>
+          <button class="btn" id="downloadNoticeBtn">notices.json 다운로드</button>
+          <button class="btn" id="copyNoticeBtn">복사</button>
+          <button class="btn" id="resetNoticeBtn">초기화</button>
         </div>
-
-        <div class="help-box">
-          <strong style="color:var(--gold-soft);display:block;margin-bottom:6px;">운영 팁</strong>
-          1) 이미지 파일은 먼저 GitHub에 업로드<br>
-          2) 그 다음 여기서 JSON 생성<br>
-          3) 생성된 guides.json 항목을 <strong>guides.json</strong>에 추가<br>
-          4) 생성된 notices.json 항목을 <strong>notices.json</strong> 맨 위에 추가
-        </div>
+        <div class="help" style="margin-top:14px">현재 작성 데이터</div>
+        <pre id="noticeOutput">{ "notices": [], "events": [] }</pre>
       </div>
 
       <div class="panel">
-        <h2>미리보기</h2>
-        <p class="panel-desc">입력한 기준으로 어떤 경로와 항목이 생성되는지 확인할 수 있습니다.</p>
-        <div id="previewBox" class="preview-list">
-          <div class="preview-item">아직 생성되지 않았습니다.</div>
+        <h2 style="margin-top:0">guides.json 생성</h2>
+        <div class="row">
+          <input id="guideId" placeholder="공략 ID 예: sagok-tomb">
+          <input id="guideTitle" placeholder="공략 제목">
+          <input id="guideCategory" placeholder="카테고리 예: 던전 / 길찾기 / 보스">
+          <input id="guideThumb" placeholder="썸네일 경로 예: assets/guides/sagok-tomb/1.jpg">
+          <input id="guideUpdated" placeholder="업데이트 날짜 예: 2026-03-28">
+          <textarea id="guideDesc" placeholder="공략 설명"></textarea>
         </div>
 
-        <div class="output-title">guides.json 추가용 항목</div>
-        <div id="guideOutput" class="code-box"></div>
-
-        <div class="output-title">notices.json 추가용 항목</div>
-        <div id="noticeOutput" class="code-box"></div>
+        <div class="step-list" id="stepList"></div>
+        <div class="btns">
+          <button class="btn" id="addStepBtn">STEP 추가</button>
+          <button class="btn primary" id="addGuideBtn">공략 추가</button>
+          <button class="btn" id="downloadGuideBtn">guides.json 다운로드</button>
+          <button class="btn" id="copyGuideBtn">복사</button>
+          <button class="btn" id="resetGuideBtn">초기화</button>
+        </div>
+        <div class="help" style="margin-top:14px">현재 작성 데이터</div>
+        <pre id="guideOutput">[]</pre>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
 
   <script>
-    const $guideType = document.getElementById('guideType');
-    const $guideId = document.getElementById('guideId');
-    const $guideTitle = document.getElementById('guideTitle');
-    const $guideDate = document.getElementById('guideDate');
-    const $guideDesc = document.getElementById('guideDesc');
-    const $basePath = document.getElementById('basePath');
-    const $singleImage = document.getElementById('singleImage');
-    const $multiItems = document.getElementById('multiItems');
-    const $singleImageWrap = document.getElementById('singleImageWrap');
-    const $multiTextWrap = document.getElementById('multiTextWrap');
-    const $previewBox = document.getElementById('previewBox');
-    const $guideOutput = document.getElementById('guideOutput');
-    const $noticeOutput = document.getElementById('noticeOutput');
+    const noticeState = { notices: [], events: [] };
+    const guideState = [];
+    const stepList = document.getElementById('stepList');
 
-    const $generateBtn = document.getElementById('generateBtn');
-    const $copyGuideBtn = document.getElementById('copyGuideBtn');
-    const $copyNoticeBtn = document.getElementById('copyNoticeBtn');
-    const $fillSampleBtn = document.getElementById('fillSampleBtn');
+    function downloadText(filename, text){
+      const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
 
-    function updateFormMode() {
-      const type = $guideType.value;
-      if (type === 'single') {
-        $singleImageWrap.style.display = '';
-        $multiTextWrap.style.display = 'none';
-      } else {
-        $singleImageWrap.style.display = 'none';
-        $multiTextWrap.style.display = '';
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        alert('복사되었습니다.');
+      }catch{
+        alert('복사에 실패했습니다. 수동으로 복사해 주세요.');
       }
     }
 
-    function parseMultiItems(text) {
-      return text
-        .split('\n')
-        .map(line => line.trim())
-        .filter(Boolean)
-        .map(line => {
-          const parts = line.split('|').map(v => v.trim());
-          return {
-            title: parts[0] || '',
-            desc: parts[1] || '',
-            file: parts[2] || ''
-          };
-        })
-        .filter(item => item.title && item.file);
+    function refreshNoticeOutput(){
+      document.getElementById('noticeOutput').textContent = JSON.stringify(noticeState, null, 2);
+    }
+    function refreshGuideOutput(){
+      document.getElementById('guideOutput').textContent = JSON.stringify(guideState, null, 2);
     }
 
-    function safeJoinPath(base, file) {
-      if (!base) return file;
-      return base.endsWith('/') ? `${base}${file}` : `${base}/${file}`;
+    function createStepItem(){
+      const div = document.createElement('div');
+      div.className = 'step-item';
+      div.innerHTML = `
+        <input placeholder="STEP 제목 예: 1번 통로">
+        <textarea placeholder="STEP 설명"></textarea>
+        <input placeholder="이미지 경로 예: assets/guides/maze/1.jpg">
+        <div class="btns"><button class="btn">삭제</button></div>
+      `;
+      div.querySelector('button').addEventListener('click', () => div.remove());
+      stepList.appendChild(div);
     }
 
-    function buildJson() {
-      const type = $guideType.value;
-      const id = $guideId.value.trim();
-      const title = $guideTitle.value.trim();
-      const date = $guideDate.value.trim();
-      const description = $guideDesc.value.trim();
-      const basePath = $basePath.value.trim();
+    document.getElementById('addStepBtn').addEventListener('click', createStepItem);
+    createStepItem();
 
-      if (!id || !title || !date || !description || !basePath) {
-        alert('가이드 ID, 제목, 날짜, 설명, 이미지 기본 경로는 필수입니다.');
+    document.getElementById('addNoticeBtn').addEventListener('click', () => {
+      const item = {
+        title: document.getElementById('noticeTitle').value.trim(),
+        date: document.getElementById('noticeDate').value.trim(),
+        tag: document.getElementById('noticeTag').value.trim(),
+        summary: document.getElementById('noticeSummary').value.trim(),
+        pin: document.getElementById('noticePin').checked
+      };
+      const type = document.getElementById('noticeType').value;
+      if(!item.title){
+        alert('제목을 입력해 주세요.');
         return;
       }
+      if(type === 'event') noticeState.events.unshift(item);
+      else noticeState.notices.unshift(item);
+      refreshNoticeOutput();
+    });
 
-      let guideItem = null;
-      let previewHtml = '';
+    document.getElementById('downloadNoticeBtn').addEventListener('click', () => {
+      downloadText('notices.json', JSON.stringify(noticeState, null, 2));
+    });
+    document.getElementById('copyNoticeBtn').addEventListener('click', () => copyText(JSON.stringify(noticeState, null, 2)));
+    document.getElementById('resetNoticeBtn').addEventListener('click', () => {
+      noticeState.notices = [];
+      noticeState.events = [];
+      refreshNoticeOutput();
+    });
 
-      if (type === 'single') {
-        const singleImage = $singleImage.value.trim();
-        if (!singleImage) {
-          alert('단일 이미지 파일명을 입력해주세요.');
-          return;
-        }
-
-        const fullPath = safeJoinPath(basePath, singleImage);
-
-        guideItem = {
-          id,
-          title,
-          type: 'single',
-          description,
-          thumbnail: fullPath,
-          image: fullPath
+    document.getElementById('addGuideBtn').addEventListener('click', () => {
+      const steps = [...stepList.children].map(item => {
+        const [titleEl, textEl, imgEl] = item.querySelectorAll('input, textarea');
+        return {
+          title: titleEl.value.trim(),
+          text: textEl.value.trim(),
+          img: imgEl.value.trim()
         };
+      }).filter(step => step.title || step.text || step.img);
 
-        previewHtml = `
-          <div class="preview-item"><strong>타입:</strong> 단일 이미지형</div>
-          <div class="preview-item"><strong>가이드 링크:</strong> guide.html?id=${id}</div>
-          <div class="preview-item"><strong>이미지 경로:</strong> ${fullPath}</div>
-        `;
-      } else {
-        const items = parseMultiItems($multiItems.value);
-        if (!items.length) {
-          alert('다중 이미지 목록을 한 줄 이상 입력해주세요.');
-          return;
-        }
-
-        const mappedItems = items.map(item => ({
-          title: item.title,
-          desc: item.desc,
-          image: safeJoinPath(basePath, item.file)
-        }));
-
-        guideItem = {
-          id,
-          title,
-          type: 'multi',
-          description,
-          thumbnail: mappedItems[0].image,
-          items: mappedItems
-        };
-
-        previewHtml = `
-          <div class="preview-item"><strong>타입:</strong> 다중 이미지형</div>
-          <div class="preview-item"><strong>가이드 링크:</strong> guide.html?id=${id}</div>
-          <div class="preview-item"><strong>대표 썸네일:</strong> ${mappedItems[0].image}</div>
-          ${mappedItems.map((item, idx) => `
-            <div class="preview-item"><strong>${idx + 1}. ${item.title}</strong><br>${item.image}</div>
-          `).join('')}
-        `;
-      }
-
-      const noticeItem = {
-        title: `[공략] ${title}`,
-        date,
-        url: `guide.html?id=${id}`
+      const guide = {
+        id: document.getElementById('guideId').value.trim(),
+        title: document.getElementById('guideTitle').value.trim(),
+        category: document.getElementById('guideCategory').value.trim(),
+        thumbnail: document.getElementById('guideThumb').value.trim(),
+        updatedAt: document.getElementById('guideUpdated').value.trim(),
+        description: document.getElementById('guideDesc').value.trim(),
+        steps
       };
 
-      $previewBox.innerHTML = previewHtml;
-      $guideOutput.textContent = JSON.stringify(guideItem, null, 2) + ',';
-      $noticeOutput.textContent = JSON.stringify(noticeItem, null, 2) + ',';
-    }
-
-    async function copyText(text) {
-      try {
-        await navigator.clipboard.writeText(text);
-        alert('복사 완료');
-      } catch (err) {
-        alert('복사 실패. 직접 복사해주세요.');
-      }
-    }
-
-    function fillMazeSample() {
-      $guideType.value = 'multi';
-      updateFormMode();
-
-      $guideId.value = 'maze';
-      $guideTitle.value = '단체미로 공략';
-      $guideDate.value = '2026-03-28';
-      $guideDesc.value = '단체미로 주요 통로와 핵심 위치를 순서대로 정리한 공략입니다.';
-      $basePath.value = 'assets/guides/maze/';
-      $multiItems.value =
-`1번 통로 | 입구 기준 첫 번째 이동 루트로 기본 동선 파악에 중요한 구간입니다. | 1.jpg
-지름길 통로 | 다음 통로 이동을 빠르게 이어주는 핵심 지름길 구간입니다. | 2.jpg
-2번 통로 | 두 번째 주요 이동 경로로 다른 통로와 연결되는 중간 단계입니다. | 3.jpg
-3번 통로 | 중앙에서 이어지는 이동 경로로 방향 혼동이 많은 구간입니다. | 4.jpg
-미로수렵지 | 사냥 및 이동이 동시에 이루어지는 핵심 지역입니다. | 5.jpg
-4번 통로 | 후반 이동 루트로 출구 방향과 연결되는 중요한 통로입니다. | 6.jpg
-미로마룡 위치 | 최종 목표 위치로 보스 및 핵심 도착 지점입니다. | 7.jpg`;
-    }
-
-    $guideType.addEventListener('change', updateFormMode);
-    $generateBtn.addEventListener('click', buildJson);
-
-    $copyGuideBtn.addEventListener('click', () => {
-      if (!$guideOutput.textContent.trim()) {
-        alert('먼저 JSON 생성 버튼을 눌러주세요.');
+      if(!guide.id || !guide.title){
+        alert('공략 ID와 제목은 필수입니다.');
         return;
       }
-      copyText($guideOutput.textContent);
+      guideState.unshift(guide);
+      refreshGuideOutput();
     });
 
-    $copyNoticeBtn.addEventListener('click', () => {
-      if (!$noticeOutput.textContent.trim()) {
-        alert('먼저 JSON 생성 버튼을 눌러주세요.');
-        return;
-      }
-      copyText($noticeOutput.textContent);
+    document.getElementById('downloadGuideBtn').addEventListener('click', () => {
+      downloadText('guides.json', JSON.stringify(guideState, null, 2));
+    });
+    document.getElementById('copyGuideBtn').addEventListener('click', () => copyText(JSON.stringify(guideState, null, 2)));
+    document.getElementById('resetGuideBtn').addEventListener('click', () => {
+      guideState.length = 0;
+      refreshGuideOutput();
     });
 
-    $fillSampleBtn.addEventListener('click', fillMazeSample);
-
-    updateFormMode();
+    refreshNoticeOutput();
+    refreshGuideOutput();
   </script>
 </body>
 </html>
