@@ -12,13 +12,10 @@
     .panel{padding:28px}.head-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 16px;border-radius:14px;border:1px solid rgba(255,165,72,.24);background:rgba(255,255,255,.03)}
     .primary{background:linear-gradient(135deg, rgba(255,154,61,.22), rgba(255,84,36,.24))}
-    .steps{display:grid;gap:16px;margin-top:18px}
-    .step{padding:18px;transition:.2s ease}.step:hover{transform:translateY(-3px);box-shadow:0 0 24px rgba(255,132,40,.12), var(--shadow)}
+    .steps{display:grid;gap:16px;margin-top:18px}.step{padding:18px;transition:.2s ease}.step:hover{transform:translateY(-3px);box-shadow:0 0 24px rgba(255,132,40,.12), var(--shadow)}
     .step img{width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.06);cursor:zoom-in}
     .step .num{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:rgba(255,146,63,.1);border:1px solid rgba(255,165,72,.2);margin-bottom:12px}
-    .empty{color:var(--muted)}
-    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.86);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1000}
-    .lightbox img{max-width:min(1200px,96vw);max-height:90vh;border-radius:18px;border:1px solid rgba(255,255,255,.12)}
+    .empty{color:var(--muted)}.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.86);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1000}.lightbox img{max-width:min(1200px,96vw);max-height:90vh;border-radius:18px;border:1px solid rgba(255,255,255,.12)}
   </style>
 </head>
 <body>
@@ -37,7 +34,7 @@
       return String(value ?? '')
         .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
     }
-
+    function getStepImage(step){ return step?.img || step?.image || ''; }
     function lightbox(src){
       const viewer = document.createElement('div');
       viewer.className = 'lightbox';
@@ -46,15 +43,8 @@
       document.body.appendChild(viewer);
     }
 
-    function getStepImage(step){
-      return step?.img || step?.image || '';
-    }
-
-    fetch('./guides.json')
-      .then(res => {
-        if(!res.ok) throw new Error('guides.json 로드 실패');
-        return res.json();
-      })
+    fetch('guides.json')
+      .then(res => { if(!res.ok) throw new Error('guides.json 로드 실패'); return res.json(); })
       .then(data => {
         const guides = Array.isArray(data) ? data : [];
         const item = guides.find(g => String(g.id) === String(guideId));
@@ -65,11 +55,9 @@
             <div class="head-actions">
               <a class="btn primary" href="guide-select.html">공략집으로</a>
               <a class="btn" href="index.html">메인으로</a>
-            </div>
-          `;
+            </div>`;
           return;
         }
-
         guideRoot.innerHTML = `
           <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
             <span class="btn">${esc(item.category || 'GUIDE')}</span>
@@ -85,23 +73,20 @@
             ${(Array.isArray(item.steps) ? item.steps : []).map((step, idx) => {
               const img = getStepImage(step);
               return `
-                <article class="step">
-                  <div class="num">${idx + 1}</div>
-                  <h3 style="margin:0 0 8px">${esc(step.title || `STEP ${idx + 1}`)}</h3>
-                  <p style="color:#d5b592;line-height:1.8">${esc(step.text || '')}</p>
-                  ${img ? `<img src="${esc(img)}" alt="${esc(step.title || `step-${idx+1}`)}" data-src="${esc(img)}">` : ''}
-                </article>
-              `;
+              <article class="step">
+                <div class="num">${idx + 1}</div>
+                <h3 style="margin:0 0 8px">${esc(step.title || `STEP ${idx + 1}`)}</h3>
+                <p style="color:#d5b592;line-height:1.8">${esc(step.text || '')}</p>
+                ${img ? `<img src="${esc(img)}" alt="${esc(step.title || `step-${idx+1}`)}" data-src="${esc(img)}">` : ''}
+              </article>`;
             }).join('') || '<div class="empty">등록된 단계가 없습니다.</div>'}
-          </div>
-        `;
+          </div>`;
 
         guideRoot.querySelectorAll('img[data-src]').forEach(img => {
           img.addEventListener('click', () => lightbox(img.dataset.src));
         });
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         guideRoot.innerHTML = '<div class="empty">guides.json을 불러오지 못했습니다. 파일 경로 또는 JSON 문법을 확인해 주세요.</div>';
       });
   </script>

@@ -4,188 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FreeSoo 공략집</title>
-  <meta name="description" content="프리수 공략집 목록, 검색, 카테고리 필터" />
+  <meta name="description" content="프리수 공략집 검색, 카테고리 필터, 썸네일 카드형 UI" />
   <style>
-    :root{
-      --bg:#0f0a07;
-      --bg2:#18100c;
-      --panel:rgba(30,19,12,.92);
-      --panel-2:rgba(23,15,10,.96);
-      --line:rgba(255,182,98,.18);
-      --line-strong:rgba(255,175,86,.32);
-      --text:#f8ead6;
-      --muted:#d5b592;
-      --accent:#ff9b37;
-      --accent-2:#ff5f2e;
-      --accent-3:#ffd2a7;
-      --shadow:0 18px 42px rgba(0,0,0,.35);
-      --radius:20px;
-      --max:1260px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:"Noto Serif KR","Malgun Gothic",serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(255,130,38,.16), transparent 28%),
-        radial-gradient(circle at 20% 18%, rgba(255,96,46,.08), transparent 24%),
-        linear-gradient(180deg, #17110d 0%, #0b0806 100%);
-    }
-    body::before{
-      content:"";
-      position:fixed; inset:0; pointer-events:none; opacity:.18;
-      background:
-        linear-gradient(transparent 97%, rgba(255,170,90,.03) 100%),
-        linear-gradient(90deg, transparent 97%, rgba(255,170,90,.02) 100%);
-      background-size:100% 4px, 4px 100%;
-      mix-blend-mode:screen;
-    }
-    a{color:inherit;text-decoration:none}
-    img{display:block;max-width:100%}
-    .wrap{width:min(calc(100% - 32px), var(--max));margin:0 auto}
-    .topbar{
-      position:sticky;top:0;z-index:60;
-      backdrop-filter:blur(14px);
-      background:rgba(10,7,5,.84);
-      border-bottom:1px solid var(--line);
-      box-shadow:0 8px 24px rgba(0,0,0,.16);
-    }
-    .topbar-inner{
-      min-height:74px;
-      display:flex;align-items:center;justify-content:space-between;gap:16px;
-      position:relative;
-    }
-    .brand{display:flex;align-items:center;gap:14px;min-width:0}
-    .brand-mark{
-      width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
-      font-size:1.45rem;font-weight:800;color:#fff6ec;
-      border:1px solid rgba(255,177,91,.36);
-      background:linear-gradient(180deg, rgba(255,165,86,.2), rgba(255,82,31,.12));
-      box-shadow:0 0 22px rgba(255,136,45,.18), inset 0 0 20px rgba(255,210,160,.04);
-      text-shadow:0 0 10px rgba(255,176,82,.4);
-    }
-    .brand-copy strong{display:block;font-size:1.06rem;letter-spacing:.05em;text-shadow:0 0 12px rgba(255,140,50,.24)}
-    .brand-copy span{display:block;font-size:.84rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .menu-toggle{
-      display:none;border:1px solid var(--line);background:rgba(255,255,255,.03);
-      color:var(--text);border-radius:12px;padding:10px 12px;cursor:pointer;
-    }
-    .nav{display:flex;gap:10px;flex-wrap:wrap}
-    .nav a{padding:10px 14px;border-radius:999px;color:var(--muted);border:1px solid transparent;transition:.2s ease}
-    .nav a:hover,.nav a.active{color:#fff7ef;border-color:var(--line-strong);background:rgba(255,140,50,.08);box-shadow:0 0 18px rgba(255,132,40,.12)}
-
-    .hero{padding:52px 0 22px}
-    .hero-panel,.filter-panel,.guide-card,.empty-panel,.footer-panel,.admin-panel{
-      background:linear-gradient(180deg, rgba(31,20,13,.94), rgba(17,12,9,.98));
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      position:relative;overflow:hidden;
-    }
-    .hero-panel::after,.filter-panel::after,.guide-card::after,.empty-panel::after,.footer-panel::after,.admin-panel::after{
-      content:"";
-      position:absolute;right:-44px;bottom:-44px;width:140px;height:140px;
-      background:radial-gradient(circle, rgba(255,140,50,.14), transparent 70%);
-      pointer-events:none;
-    }
-    .hero-panel{padding:32px}
-    .eyebrow{color:#ffc286;font-size:.88rem;letter-spacing:.18em;text-transform:uppercase}
-    h1{margin:10px 0 14px;font-size:clamp(2rem, 5vw, 3.3rem);line-height:1.08;text-shadow:0 0 14px rgba(255,125,40,.18)}
-    .hero-panel p{color:var(--muted);line-height:1.82;margin:0}
-    .hero-actions,.filter-row,.chip-row,.guide-meta,.admin-actions{display:flex;flex-wrap:wrap;gap:10px}
-    .hero-actions{margin-top:22px}
-    .btn,.chip,.filter-chip{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      min-height:46px;padding:0 16px;border-radius:14px;font-weight:700;
-      border:1px solid rgba(255,165,72,.24);transition:.2s ease;background:rgba(255,255,255,.03);
-      color:var(--text);cursor:pointer;
-    }
-    .btn-primary{background:linear-gradient(135deg, rgba(255,154,61,.22), rgba(255,84,36,.24));box-shadow:0 0 26px rgba(255,118,33,.14)}
-    .btn:hover,.filter-chip:hover{transform:translateY(-2px)}
-    .chip,.filter-chip{min-height:38px;padding:0 12px;font-size:.88rem;font-weight:600;border-radius:999px}
-    .filter-chip.active{color:#fff7ef;border-color:var(--line-strong);background:rgba(255,140,50,.12);box-shadow:0 0 18px rgba(255,132,40,.12)}
-
-    .section{padding:12px 0 26px}
-    .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
-    .section-head h2{margin:0;font-size:clamp(1.35rem, 3vw, 1.9rem)}
-    .section-head p{margin:8px 0 0;color:var(--muted)}
-    .link-more{color:#ffd2aa;font-size:.95rem}
-
-    .filter-panel{padding:20px;margin-bottom:18px}
-    .filter-grid{display:grid;grid-template-columns:1.3fr .9fr .8fr auto;gap:12px;align-items:end}
-    .field{display:grid;gap:8px}
-    .field label{color:#ffd8b4;font-size:.9rem}
-    .field input,.field select{
-      width:100%;min-height:48px;border-radius:14px;border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.04);color:var(--text);padding:0 14px;outline:none;
-    }
-    .field input::placeholder{color:#a98d73}
-
-    .summary-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:14px 0 6px}
-    .summary-bar .count{color:#ffd6b2;font-weight:700}
-    .summary-bar .desc{color:var(--muted);font-size:.92rem}
-
-    .guide-grid{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:16px}
-    .guide-card{padding:18px;display:flex;flex-direction:column;gap:14px;transition:.22s ease}
-    .guide-card:hover{transform:translateY(-4px)}
-    .guide-thumb{
-      width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:16px;
-      border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02)
-    }
-    .badge{
-      display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;
-      font-size:.78rem;color:#ffd7b3;background:rgba(255,146,63,.1);
-      border:1px solid rgba(255,165,72,.2)
-    }
-    .guide-card h3{margin:0;font-size:1.12rem}
-    .guide-card p{margin:0;color:var(--muted);line-height:1.72}
-    .guide-meta{font-size:.86rem;color:#e9c7a4}
-    .guide-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
-
-    .empty-panel,.admin-panel{padding:20px}
-    .empty-panel p,.admin-panel p{color:var(--muted);line-height:1.72}
-
-    .footer{padding:20px 0 34px}
-    .footer-panel{padding:22px}
-    .footer-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}
-    .footer small,.footer li,.footer p{color:var(--muted);line-height:1.7}
-    .footer ul{padding-left:18px;margin:10px 0 0}
-
-    @media (max-width:1024px){
-      .filter-grid,.footer-grid{grid-template-columns:1fr 1fr}
-      .guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    }
-    @media (max-width:760px){
-      .menu-toggle{display:inline-flex}
-      .nav{display:none;position:absolute;top:calc(100% + 10px);right:16px;left:16px;padding:12px;border-radius:18px;background:rgba(16,11,8,.97);border:1px solid var(--line);box-shadow:var(--shadow)}
-      .nav.open{display:grid;grid-template-columns:1fr 1fr}
-      .filter-grid,.footer-grid,.guide-grid{grid-template-columns:1fr}
-      .hero-panel,.filter-panel,.guide-card,.empty-panel,.footer-panel,.admin-panel{padding:18px}
-      .topbar-inner{min-height:64px}
-    }
+    :root{--bg:#0f0a07;--panel:rgba(30,19,12,.92);--line:rgba(255,182,98,.18);--line-strong:rgba(255,175,86,.32);--text:#f8ead6;--muted:#d5b592;--accent-3:#ffd2a7;--shadow:0 18px 42px rgba(0,0,0,.35);--radius:20px;--max:1260px}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:"Noto Serif KR","Malgun Gothic",serif;color:var(--text);background:radial-gradient(circle at top, rgba(255,130,38,.16), transparent 28%),linear-gradient(180deg,#17110d 0%,#0b0806 100%)}
+    a{color:inherit;text-decoration:none} img{display:block;max-width:100%}.wrap{width:min(calc(100% - 32px), var(--max));margin:0 auto}
+    .topbar{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(10,7,5,.84);border-bottom:1px solid var(--line)}
+    .topbar-inner{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative}
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}.brand-mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:1.45rem;font-weight:800;color:#fff6ec;border:1px solid rgba(255,177,91,.36);background:linear-gradient(180deg, rgba(255,165,86,.2), rgba(255,82,31,.12));box-shadow:0 0 22px rgba(255,136,45,.18)}
+    .brand-copy strong{display:block;font-size:1.06rem;letter-spacing:.05em}.brand-copy span{display:block;font-size:.84rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .menu-toggle{display:none;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);border-radius:12px;padding:10px 12px;cursor:pointer}
+    .nav{display:flex;gap:10px;flex-wrap:wrap}.nav a{padding:10px 14px;border-radius:999px;color:var(--muted);border:1px solid transparent;transition:.2s ease}.nav a:hover,.nav a.active{color:#fff7ef;border-color:var(--line-strong);background:rgba(255,140,50,.08)}
+    .hero{padding:44px 0 24px}.hero-panel,.filter-panel,.guide-card,.admin-panel{background:linear-gradient(180deg, rgba(31,20,13,.94), rgba(17,12,9,.98));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .hero-panel,.filter-panel,.admin-panel{padding:24px}.eyebrow{color:#ffc286;font-size:.88rem;letter-spacing:.18em;text-transform:uppercase}
+    h1{margin:10px 0 12px;font-size:clamp(2rem,4.5vw,3.3rem);line-height:1.1}.hero-panel p,.guide-card p,.admin-panel p,.desc,.empty{color:var(--muted);line-height:1.75}
+    .hero-actions,.admin-actions,.chip-row,.summary-bar{display:flex;flex-wrap:wrap;gap:12px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 18px;border-radius:14px;font-weight:700;border:1px solid rgba(255,165,72,.24);cursor:pointer;background:rgba(255,255,255,.03)}
+    .btn-primary{color:#fff8f0;background:linear-gradient(135deg, rgba(255,154,61,.22), rgba(255,84,36,.24))}
+    .section{padding:18px 0 26px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}.section-head h2{margin:0;font-size:clamp(1.4rem,3vw,2rem)}.section-head p{margin:8px 0 0;color:var(--muted)}.link-more{color:#ffd2aa}
+    .filter-grid{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;align-items:end}.field label{display:block;margin:0 0 8px;font-weight:700}.field input,.field select{width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:var(--text);font:inherit}
+    .chip{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--accent-3);cursor:pointer}.chip.active{background:rgba(255,140,50,.1);border-color:rgba(255,165,72,.2)}
+    .summary-bar{justify-content:space-between;align-items:center;margin-top:14px}.count{font-weight:700}
+    .guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}.guide-card{padding:18px;overflow:hidden;position:relative}.guide-card:hover{transform:translateY(-4px);transition:.22s ease}.guide-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:16px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);margin-bottom:14px}
+    .badge{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;font-size:.78rem;color:#ffd7b3;background:rgba(255,146,63,.1);border:1px solid rgba(255,165,72,.2);margin-bottom:10px}.meta{display:flex;gap:10px;flex-wrap:wrap;color:#e9c7a4;font-size:.84rem;margin:10px 0 12px}.mini-link{color:#ffd4ad;font-size:.92rem;font-weight:700}
+    .empty-box{padding:22px;border-radius:18px;border:1px dashed rgba(255,255,255,.12);background:rgba(255,255,255,.02)}
+    @media (max-width:1024px){.guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.filter-grid{grid-template-columns:1fr 1fr}}
+    @media (max-width:760px){.menu-toggle{display:inline-flex}.nav{display:none;position:absolute;top:calc(100% + 10px);right:16px;left:16px;padding:12px;border-radius:18px;background:rgba(16,11,8,.97);border:1px solid var(--line);box-shadow:var(--shadow)}.nav.open{display:grid;grid-template-columns:1fr 1fr}.guide-grid,.filter-grid{grid-template-columns:1fr}.topbar-inner{min-height:64px}.hero-panel,.filter-panel,.admin-panel,.guide-card{padding:18px}}
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="wrap topbar-inner">
-      <a class="brand" href="index.html#home" aria-label="홈으로 이동">
+      <a class="brand" href="index.html" aria-label="홈으로 이동">
         <div class="brand-mark">秀</div>
         <div class="brand-copy">
           <strong>FreeSoo 공략집</strong>
           <span>검색 · 카테고리 필터 · 썸네일 카드형 UI</span>
         </div>
       </a>
-
       <button class="menu-toggle" id="menuToggle" type="button">☰ 메뉴</button>
-
       <nav class="nav" id="mainNav">
         <a href="index.html">홈</a>
         <a href="guide-select.html" class="active">공략집</a>
+        <a href="admin-guides.html">가이드관리</a>
         <a href="skills.html">무공</a>
-        <a href="admin-guides.html">공략 관리</a>
-        <a href="admin-skills.html">무공 관리</a>
+        <a href="admin-skills.html">무공관리</a>
       </nav>
     </div>
   </header>
@@ -223,9 +86,7 @@
             </div>
             <div class="field">
               <label for="categorySelect">카테고리</label>
-              <select id="categorySelect">
-                <option value="all">전체 카테고리</option>
-              </select>
+              <select id="categorySelect"><option value="all">전체 카테고리</option></select>
             </div>
             <div class="field">
               <label for="sortSelect">정렬</label>
@@ -264,192 +125,97 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap footer-panel">
-      <div class="footer-grid">
-        <div>
-          <h3 style="margin-top:0">FreeSoo 공략집</h3>
-          <p>공략집은 메인 포털과 분리된 허브로 두고, 상세 페이지는 guide.html 하나로 통일해 관리하는 구조가 가장 안정적입니다.</p>
-          <small>© FreeSoo All Rights Reserved. Made by. 김히츠</small>
-        </div>
-        <div>
-          <h3 style="margin-top:0">추천 운영 규칙</h3>
-          <ul>
-            <li>공략 ID는 영문 소문자/하이픈 기준으로 통일</li>
-            <li>STEP 이미지 키는 img로 통일</li>
-            <li>날짜는 YYYY-MM-DD 형식 유지</li>
-            <li>카테고리는 guides.json에 있는 값만 재사용</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
-
   <script>
     const menuToggle = document.getElementById('menuToggle');
     const mainNav = document.getElementById('mainNav');
     menuToggle?.addEventListener('click', () => mainNav.classList.toggle('open'));
 
+    const state = { guides: [], filtered: [], category: 'all', keyword: '', sort: 'updated' };
     const searchInput = document.getElementById('searchInput');
     const categorySelect = document.getElementById('categorySelect');
     const sortSelect = document.getElementById('sortSelect');
     const resetBtn = document.getElementById('resetBtn');
     const guideGrid = document.getElementById('guideGrid');
-    const resultCount = document.getElementById('resultCount');
     const emptyState = document.getElementById('emptyState');
+    const resultCount = document.getElementById('resultCount');
     const categoryChips = document.getElementById('categoryChips');
 
-    let allGuides = [];
-
-    function esc(value){
-      return String(value ?? '')
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;');
+    function esc(value){return String(value ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');}
+    function getStepImage(step){return step?.img || step?.image || '';}
+    function normalizeDate(value){return String(value || '').replace(/\./g,'-').replace(/\//g,'-');}
+    function getSearchText(item){
+      const stepText = (Array.isArray(item.steps) ? item.steps : []).map(step => [step.title, step.text].filter(Boolean).join(' ')).join(' ');
+      return [item.title, item.description, item.category, stepText].filter(Boolean).join(' ').toLowerCase();
     }
-
-    function getStepImage(step){
-      return step?.img || step?.image || '';
+    function sortItems(items){
+      const copied = [...items];
+      if(state.sort === 'title') return copied.sort((a,b) => String(a.title || '').localeCompare(String(b.title || ''), 'ko'));
+      if(state.sort === 'steps') return copied.sort((a,b) => (Array.isArray(b.steps) ? b.steps.length : 0) - (Array.isArray(a.steps) ? a.steps.length : 0));
+      return copied.sort((a,b) => normalizeDate(b.updatedAt).localeCompare(normalizeDate(a.updatedAt)));
     }
-
-    function getPreview(item){
-      const firstStep = Array.isArray(item.steps) && item.steps.length ? item.steps[0] : null;
-      return item.thumbnail || getStepImage(firstStep) || '';
+    function renderChips(categories){
+      categoryChips.innerHTML = ['all', ...categories].map(cat => `<button type="button" class="chip ${state.category===cat?'active':''}" data-category="${esc(cat)}">${cat==='all'?'전체':esc(cat)}</button>`).join('');
+      categoryChips.querySelectorAll('.chip').forEach(btn => btn.addEventListener('click', () => {
+        state.category = btn.dataset.category;
+        categorySelect.value = state.category;
+        applyFilters();
+      }));
     }
-
-    function buildSearchText(item){
-      const stepText = (Array.isArray(item.steps) ? item.steps : [])
-        .map(step => `${step.title || ''} ${step.text || ''}`)
-        .join(' ');
-      return `${item.title || ''} ${item.category || ''} ${item.description || ''} ${stepText}`.toLowerCase();
-    }
-
-    function sortItems(items, mode){
-      const cloned = [...items];
-      if(mode === 'title') return cloned.sort((a,b) => String(a.title || '').localeCompare(String(b.title || ''), 'ko'));
-      if(mode === 'steps') return cloned.sort((a,b) => (b.steps?.length || 0) - (a.steps?.length || 0));
-      return cloned.sort((a,b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
-    }
-
-    function renderCategoryOptions(guides){
-      const categories = [...new Set(guides.map(item => item.category).filter(Boolean))].sort((a,b) => a.localeCompare(b, 'ko'));
-      categorySelect.innerHTML = '<option value="all">전체 카테고리</option>' + categories.map(cat => `<option value="${esc(cat)}">${esc(cat)}</option>`).join('');
-      categoryChips.innerHTML = [`<button class="filter-chip active" type="button" data-category="all">전체</button>`]
-        .concat(categories.map(cat => `<button class="filter-chip" type="button" data-category="${esc(cat)}">${esc(cat)}</button>`))
-        .join('');
-
-      categoryChips.querySelectorAll('[data-category]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          categorySelect.value = btn.dataset.category;
-          syncChips();
-          renderGuides();
-        });
-      });
-    }
-
-    function syncChips(){
-      categoryChips.querySelectorAll('[data-category]').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.category === categorySelect.value);
-      });
-    }
-
-    function renderGuides(){
-      const keyword = searchInput.value.trim().toLowerCase();
-      const category = categorySelect.value;
-      const sortMode = sortSelect.value;
-
-      const filtered = sortItems(allGuides.filter(item => {
-        const matchKeyword = !keyword || buildSearchText(item).includes(keyword);
-        const matchCategory = category === 'all' || String(item.category || '') === category;
-        return matchKeyword && matchCategory;
-      }), sortMode);
-
-      resultCount.textContent = `${filtered.length}개 공략`;
-
-      if(!filtered.length){
+    function renderCards(items){
+      resultCount.textContent = `${items.length}개 공략`;
+      if(!items.length){
         guideGrid.innerHTML = '';
         emptyState.style.display = 'block';
-        emptyState.innerHTML = `
-          <div class="empty-panel">
-            <div class="badge">검색 결과 없음</div>
-            <h3 style="margin:0 0 10px">조건에 맞는 공략이 없습니다.</h3>
-            <p>검색어를 줄이거나 카테고리를 전체로 바꿔보세요. 새 공략은 admin-guides.html에서 쉽게 추가할 수 있습니다.</p>
-            <div class="hero-actions">
-              <button class="btn btn-primary" type="button" id="emptyResetBtn">필터 초기화</button>
-              <a class="btn" href="admin-guides.html">공략 등록하기</a>
-            </div>
-          </div>
-        `;
-        document.getElementById('emptyResetBtn')?.addEventListener('click', resetFilters);
+        emptyState.innerHTML = `<div class="empty-box"><strong>검색 결과가 없습니다.</strong><p class="empty">검색어를 바꾸거나 카테고리를 전체로 돌려보세요.</p></div>`;
         return;
       }
-
       emptyState.style.display = 'none';
-      guideGrid.innerHTML = filtered.map(item => {
-        const preview = getPreview(item);
-        const stepCount = Array.isArray(item.steps) ? item.steps.length : 0;
+      guideGrid.innerHTML = items.map(item => {
+        const firstStep = Array.isArray(item.steps) && item.steps.length ? item.steps[0] : null;
+        const preview = item.thumbnail || getStepImage(firstStep) || '';
         return `
           <a class="guide-card" href="guide.html?id=${encodeURIComponent(item.id || '')}">
-            ${preview ? `<img class="guide-thumb" src="${esc(preview)}" alt="${esc(item.title || '공략 이미지')}" loading="lazy">` : `<div class="guide-thumb" style="display:grid;place-items:center;color:#a98d73">NO IMAGE</div>`}
-            <div>
-              <div class="badge">${esc(item.category || 'GUIDE')}</div>
-              <h3>${esc(item.title || '제목 없음')}</h3>
+            ${preview ? `<img src="${esc(preview)}" alt="${esc(item.title || '공략 썸네일')}" loading="lazy">` : ''}
+            <div class="badge">${esc(item.category || 'GUIDE')}</div>
+            <h3>${esc(item.title || '제목 없음')}</h3>
+            <div class="meta">
+              <span>${esc(item.updatedAt || '-')}</span>
+              <span>STEP ${(Array.isArray(item.steps) ? item.steps.length : 0)}개</span>
             </div>
             <p>${esc(item.description || '설명이 없습니다.')}</p>
-            <div class="guide-meta">
-              ${item.updatedAt ? `<span>업데이트 ${esc(item.updatedAt)}</span>` : ''}
-              <span>STEP ${stepCount}개</span>
-            </div>
-            <div class="guide-actions">
-              <span class="btn btn-primary">공략 보기</span>
-            </div>
+            <span class="mini-link">공략 보기 →</span>
           </a>
         `;
       }).join('');
     }
-
-    function resetFilters(){
-      searchInput.value = '';
-      categorySelect.value = 'all';
-      sortSelect.value = 'updated';
-      syncChips();
-      renderGuides();
+    function applyFilters(){
+      const keyword = state.keyword.trim().toLowerCase();
+      let items = [...state.guides];
+      if(state.category !== 'all') items = items.filter(item => String(item.category || '') === state.category);
+      if(keyword) items = items.filter(item => getSearchText(item).includes(keyword));
+      items = sortItems(items);
+      state.filtered = items;
+      renderChips([...new Set(state.guides.map(item => item.category).filter(Boolean))]);
+      renderCards(items);
     }
 
-    searchInput.addEventListener('input', renderGuides);
-    categorySelect.addEventListener('change', () => {
-      syncChips();
-      renderGuides();
-    });
-    sortSelect.addEventListener('change', renderGuides);
-    resetBtn.addEventListener('click', resetFilters);
+    searchInput.addEventListener('input', e => { state.keyword = e.target.value; applyFilters(); });
+    categorySelect.addEventListener('change', e => { state.category = e.target.value; applyFilters(); });
+    sortSelect.addEventListener('change', e => { state.sort = e.target.value; applyFilters(); });
+    resetBtn.addEventListener('click', () => { state.keyword = ''; state.category = 'all'; state.sort = 'updated'; searchInput.value=''; categorySelect.value='all'; sortSelect.value='updated'; applyFilters(); });
 
     fetch('guides.json')
-      .then(res => {
-        if(!res.ok) throw new Error('guides.json 로드 실패');
-        return res.json();
-      })
+      .then(res => { if(!res.ok) throw new Error('guides.json 로드 실패'); return res.json(); })
       .then(data => {
-        allGuides = Array.isArray(data) ? data : [];
-        renderCategoryOptions(allGuides);
-        syncChips();
-        renderGuides();
+        state.guides = Array.isArray(data) ? data : [];
+        const categories = [...new Set(state.guides.map(item => item.category).filter(Boolean))];
+        categorySelect.innerHTML = '<option value="all">전체 카테고리</option>' + categories.map(cat => `<option value="${esc(cat)}">${esc(cat)}</option>`).join('');
+        applyFilters();
       })
       .catch(() => {
         guideGrid.innerHTML = '';
         emptyState.style.display = 'block';
-        emptyState.innerHTML = `
-          <div class="empty-panel">
-            <div class="badge">GUIDES ERROR</div>
-            <h3 style="margin:0 0 10px">guides.json을 불러오지 못했습니다.</h3>
-            <p>guide-select.html과 guides.json이 같은 경로에 있는지 확인하고, JSON 문법 오류가 없는지도 같이 확인해 주세요.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="admin-guides.html">공략 관리자 열기</a>
-              <a class="btn" href="index.html">메인으로</a>
-            </div>
-          </div>
-        `;
+        emptyState.innerHTML = `<div class="empty-box"><strong>guides.json을 불러오지 못했습니다.</strong><p class="empty">파일 경로 또는 JSON 문법을 확인해 주세요.</p></div>`;
       });
   </script>
 </body>

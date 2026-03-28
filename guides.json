@@ -5,7 +5,7 @@
     "category": "컨텐츠 공략",
     "thumbnail": "assets/guides/maze/1.jpg",
     "updatedAt": "2026-03-28",
-    "description": "주 1회 클리어 가능한, 단체 미로 (그룹미로) 진행을 위한 지도 입니다.",
+    "description": "주 1회 클리어 가능한 단체 미로 진행을 위한 지도입니다.",
     "steps": [
       {
         "title": "1번 통로",
@@ -69,7 +69,7 @@
     "steps": [
       {
         "title": "마방진 클리어를 위한 참고",
-        "text": "1번~40번 방까지 미션을 해결하고 40번 방에서 보상을 획득",
+        "text": "1번~40번 방까지 미션을 해결하고 40번 방에서 보상을 획득합니다.",
         "img": "assets/guides/mabang/mabang.png"
       }
     ]

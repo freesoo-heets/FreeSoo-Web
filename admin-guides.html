@@ -5,26 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>FreeSoo 가이드 관리</title>
 <style>
-:root{--bg:#120d09;--panel:rgba(31,20,13,.95);--line:rgba(255,182,98,.18);--text:#f8ead6;--muted:#d5b592;--shadow:0 18px 42px rgba(0,0,0,.35);--radius:18px}
+:root{--bg:#120d09;--panel:rgba(31,20,13,.95);--line:rgba(255,182,98,.18);--text:#f8ead6;--muted:#d5b592;--shadow:0 18px 42px rgba(0,0,0,.35);--radius:18px;--danger:#ff7d7d}
 *{box-sizing:border-box}body{margin:0;font-family:"Noto Serif KR","Malgun Gothic",serif;color:var(--text);background:linear-gradient(180deg,#17110d 0%,#090705 100%)}
-.wrap{width:min(calc(100% - 32px), 1240px);margin:0 auto;padding:28px 0 40px}
-.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.panel{background:linear-gradient(180deg, rgba(31,20,13,.94), rgba(17,12,9,.98));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+a{color:inherit;text-decoration:none}.wrap{width:min(calc(100% - 32px), 1320px);margin:0 auto;padding:28px 0 40px}
+.top-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px}.panel{background:linear-gradient(180deg, rgba(31,20,13,.94), rgba(17,12,9,.98));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
 label{display:block;margin:14px 0 8px;font-weight:700}input,textarea,select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:var(--text);font:inherit}
-textarea{min-height:100px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.step-card{padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.03);margin-top:12px}
-.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:12px;border:1px solid rgba(255,165,72,.24);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer}.primary{background:linear-gradient(135deg, rgba(255,154,61,.22), rgba(255,84,36,.24))}
-pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.25);padding:16px;border-radius:14px;min-height:280px;overflow:auto}
-.small{color:var(--muted);font-size:.92rem;line-height:1.7}.list{display:grid;gap:10px}
-.item{padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
-@media (max-width:900px){.grid,.row{grid-template-columns:1fr}}
+textarea{min-height:100px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:12px;border:1px solid rgba(255,165,72,.24);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer}.primary{background:linear-gradient(135deg, rgba(255,154,61,.22), rgba(255,84,36,.24))}.danger{border-color:rgba(255,125,125,.35);background:rgba(255,100,100,.08)}
+pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.25);padding:16px;border-radius:14px;min-height:240px;overflow:auto}.small{color:var(--muted);font-size:.92rem;line-height:1.7}.list{display:grid;gap:10px}.item{padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+.step-card{padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.03);margin-top:12px}.step-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.step-head strong{font-size:1rem}.preview{margin-top:16px;padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+.preview-card{display:grid;gap:12px}.preview-card img{width:100%;max-height:240px;object-fit:cover;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02)}.preview-step{padding:12px;border-radius:12px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);margin-top:10px}
+.lock-screen{position:fixed;inset:0;background:rgba(8,6,5,.96);display:flex;align-items:center;justify-content:center;padding:20px;z-index:1000}.lock-box{width:min(100%,420px);padding:24px;border-radius:18px;background:linear-gradient(180deg, rgba(31,20,13,.98), rgba(17,12,9,1));border:1px solid var(--line);box-shadow:var(--shadow)}.msg{margin-top:10px;color:var(--danger);min-height:1.5em}
+.hidden{display:none!important}
+@media (max-width:980px){.grid,.row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div id="lockScreen" class="lock-screen">
+  <div class="lock-box">
+    <h1 style="margin-top:0">관리자 페이지</h1>
+    <p class="small">비밀번호를 입력해야 접근할 수 있습니다.</p>
+    <label for="adminPasswordInput">비밀번호</label>
+    <input id="adminPasswordInput" type="password" placeholder="비밀번호 입력" />
+    <div class="btns">
+      <button class="btn primary" id="unlockBtn" type="button">접속</button>
+      <a class="btn" href="index.html">메인으로</a>
+    </div>
+    <div class="msg" id="lockMsg"></div>
+    <div class="item" style="margin-top:14px">비밀번호 설정 위치: 이 파일 하단 스크립트의 <strong>ADMIN_PASSWORD</strong> 값을 직접 변경</div>
+  </div>
+</div>
+
+<div class="wrap" id="appRoot">
+  <div class="top-actions">
+    <a class="btn" href="index.html">메인으로</a>
+    <a class="btn" href="guide-select.html">공략집으로</a>
+    <button class="btn danger" type="button" id="logoutBtn">잠금 해제 종료</button>
+  </div>
+
   <div class="grid">
     <section class="panel">
       <h1 style="margin-top:0">가이드 관리 페이지</h1>
-      <p class="small">정적 사이트용이라 서버에 바로 저장되지는 않지만, 입력만으로 <strong>guides.json용 JSON</strong>을 생성해서 복사/다운로드할 수 있습니다.</p>
+      <p class="small">정적 사이트용이라 서버에 바로 저장되지는 않지만, 입력만으로 <strong>guides.json용 JSON</strong>을 생성하고, 기존 JSON을 붙여넣어 수정할 수 있습니다.</p>
 
       <div class="row">
         <div>
@@ -56,6 +77,7 @@ pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.25);paddin
 
       <div class="btns">
         <button class="btn" type="button" id="addStepBtn">STEP 추가</button>
+        <button class="btn" type="button" id="loadSampleBtn">샘플 불러오기</button>
         <button class="btn primary" type="button" id="makeJsonBtn">JSON 생성</button>
       </div>
 
@@ -63,12 +85,27 @@ pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.25);paddin
     </section>
 
     <section class="panel">
-      <h2 style="margin-top:0">생성 결과</h2>
-      <p class="small">생성된 블록을 복사해서 <strong>guides.json 배열 안</strong>에 넣으면 됩니다.</p>
+      <h2 style="margin-top:0">수정 / 출력 / 미리보기</h2>
+      <p class="small">기존 <strong>guides.json</strong>에서 특정 항목만 붙여넣어 수정할 수 있습니다.</p>
+
+      <label>기존 JSON 붙여넣기 후 수정</label>
+      <textarea id="pasteInput" placeholder='예: { "id": "maze", "title": "단체미로 공략", ... }'></textarea>
+      <div class="btns">
+        <button class="btn" type="button" id="loadJsonBtn">붙여넣은 JSON 불러오기</button>
+        <button class="btn danger" type="button" id="clearFormBtn">폼 초기화</button>
+      </div>
+
+      <label>생성 결과</label>
       <pre id="output">아직 생성된 JSON이 없습니다.</pre>
       <div class="btns">
         <button class="btn" type="button" id="copyBtn">복사</button>
         <button class="btn" type="button" id="downloadBtn">guide-item.json 다운로드</button>
+      </div>
+
+      <div class="preview">
+        <strong>실시간 미리보기</strong>
+        <div class="small">입력 내용은 아래 카드에 바로 반영됩니다.</div>
+        <div id="previewRoot" class="preview-card" style="margin-top:12px"></div>
       </div>
 
       <h3>관리 팁</h3>
@@ -82,74 +119,179 @@ pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.25);paddin
 </div>
 
 <script>
-const stepList = document.getElementById('stepList');
-const output = document.getElementById('output');
-let stepCount = 0;
+  // 여기 비밀번호를 직접 바꾸세요.
+  const ADMIN_PASSWORD = 'CHANGE_ME';
+  const SESSION_KEY = 'freesoo_admin_guides_ok';
 
-function addStep(data = {}){
-  stepCount += 1;
-  const card = document.createElement('div');
-  card.className = 'step-card';
-  card.innerHTML = `
-    <div class="row">
-      <div>
-        <label>STEP 제목</label>
-        <input class="step-title" placeholder="예: 1번 통로" value="${data.title || ''}">
+  const lockScreen = document.getElementById('lockScreen');
+  const appRoot = document.getElementById('appRoot');
+  const adminPasswordInput = document.getElementById('adminPasswordInput');
+  const unlockBtn = document.getElementById('unlockBtn');
+  const lockMsg = document.getElementById('lockMsg');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  function unlock(){
+    lockScreen.classList.add('hidden');
+    appRoot.classList.remove('hidden');
+  }
+  function lock(){
+    lockScreen.classList.remove('hidden');
+    appRoot.classList.add('hidden');
+  }
+  if(sessionStorage.getItem(SESSION_KEY) === '1' && ADMIN_PASSWORD !== 'CHANGE_ME') unlock(); else lock();
+  unlockBtn.addEventListener('click', () => {
+    if(ADMIN_PASSWORD === 'CHANGE_ME'){
+      lockMsg.textContent = '먼저 admin-guides.html의 ADMIN_PASSWORD 값을 바꿔 주세요.';
+      return;
+    }
+    if(adminPasswordInput.value === ADMIN_PASSWORD){
+      sessionStorage.setItem(SESSION_KEY, '1');
+      lockMsg.textContent = '';
+      unlock();
+    } else {
+      lockMsg.textContent = '비밀번호가 올바르지 않습니다.';
+    }
+  });
+  adminPasswordInput.addEventListener('keydown', e => { if(e.key === 'Enter') unlockBtn.click(); });
+  logoutBtn.addEventListener('click', () => { sessionStorage.removeItem(SESSION_KEY); lock(); });
+
+  const stepList = document.getElementById('stepList');
+  const output = document.getElementById('output');
+  const previewRoot = document.getElementById('previewRoot');
+  let stepCount = 0;
+
+  function escHtml(value){
+    return String(value ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+  }
+  function addStep(data = {}){
+    stepCount += 1;
+    const card = document.createElement('div');
+    card.className = 'step-card';
+    card.innerHTML = `
+      <div class="step-head">
+        <strong>STEP ${stepCount}</strong>
+        <button class="btn danger remove-step" type="button">이 STEP 삭제</button>
       </div>
-      <div>
-        <label>이미지 경로</label>
-        <input class="step-img" placeholder="예: assets/guides/maze/1.jpg" value="${data.img || ''}">
+      <div class="row">
+        <div>
+          <label>STEP 제목</label>
+          <input class="step-title" placeholder="예: 1번 통로" value="${escHtml(data.title || '')}">
+        </div>
+        <div>
+          <label>이미지 경로</label>
+          <input class="step-img" placeholder="예: assets/guides/maze/1.jpg" value="${escHtml(data.img || data.image || '')}">
+        </div>
       </div>
-    </div>
-    <label>설명</label>
-    <textarea class="step-text" placeholder="STEP 설명">${data.text || ''}</textarea>
-    <div class="btns">
-      <button class="btn remove-step" type="button">이 STEP 삭제</button>
-    </div>
-  `;
-  card.querySelector('.remove-step').addEventListener('click', () => card.remove());
-  stepList.appendChild(card);
-}
+      <label>설명</label>
+      <textarea class="step-text" placeholder="STEP 설명">${escHtml(data.text || '')}</textarea>
+    `;
+    card.querySelector('.remove-step').addEventListener('click', () => { card.remove(); refreshStepNumbers(); renderPreview(); });
+    card.querySelectorAll('input, textarea').forEach(el => el.addEventListener('input', renderPreview));
+    stepList.appendChild(card);
+    refreshStepNumbers();
+    renderPreview();
+  }
+  function refreshStepNumbers(){
+    [...document.querySelectorAll('.step-card')].forEach((card, idx) => {
+      const title = card.querySelector('.step-head strong');
+      if(title) title.textContent = `STEP ${idx + 1}`;
+    });
+    stepCount = document.querySelectorAll('.step-card').length;
+  }
+  function collect(){
+    return {
+      id: document.getElementById('guideId').value.trim(),
+      title: document.getElementById('title').value.trim(),
+      category: document.getElementById('category').value.trim(),
+      thumbnail: document.getElementById('thumbnail').value.trim(),
+      updatedAt: document.getElementById('updatedAt').value.trim(),
+      description: document.getElementById('description').value.trim(),
+      steps: [...document.querySelectorAll('.step-card')].map(card => ({
+        title: card.querySelector('.step-title').value.trim(),
+        text: card.querySelector('.step-text').value.trim(),
+        img: card.querySelector('.step-img').value.trim()
+      })).filter(step => step.title || step.text || step.img)
+    };
+  }
+  function fillForm(data){
+    document.getElementById('guideId').value = data.id || '';
+    document.getElementById('title').value = data.title || '';
+    document.getElementById('category').value = data.category || '';
+    document.getElementById('thumbnail').value = data.thumbnail || '';
+    document.getElementById('updatedAt').value = data.updatedAt || '';
+    document.getElementById('description').value = data.description || '';
+    stepList.innerHTML = '';
+    stepCount = 0;
+    const steps = Array.isArray(data.steps) && data.steps.length ? data.steps : [{}];
+    steps.forEach(step => addStep(step));
+    renderPreview();
+  }
+  function renderPreview(){
+    const data = collect();
+    const preview = data.thumbnail || data.steps[0]?.img || '';
+    previewRoot.innerHTML = `
+      ${preview ? `<img src="${escHtml(preview)}" alt="썸네일 미리보기" onerror="this.style.display='none'">` : ''}
+      <div class="item">
+        <div><strong>${escHtml(data.title || '제목 없음')}</strong></div>
+        <div class="small">${escHtml(data.category || '카테고리 없음')} · ${escHtml(data.updatedAt || '날짜 없음')}</div>
+        <div class="small" style="margin-top:8px">${escHtml(data.description || '설명 없음')}</div>
+      </div>
+      ${(data.steps || []).map((step, idx) => `
+        <div class="preview-step">
+          <strong>${idx + 1}. ${escHtml(step.title || `STEP ${idx + 1}`)}</strong>
+          <div class="small" style="margin-top:6px">${escHtml(step.text || '설명 없음')}</div>
+          ${step.img ? `<div class="small" style="margin-top:6px">이미지: ${escHtml(step.img)}</div>` : ''}
+        </div>`).join('')}
+    `;
+  }
 
-function collect(){
-  return {
-    id: document.getElementById('guideId').value.trim(),
-    title: document.getElementById('title').value.trim(),
-    category: document.getElementById('category').value.trim(),
-    thumbnail: document.getElementById('thumbnail').value.trim(),
-    updatedAt: document.getElementById('updatedAt').value.trim(),
-    description: document.getElementById('description').value.trim(),
-    steps: [...document.querySelectorAll('.step-card')].map(card => ({
-      title: card.querySelector('.step-title').value.trim(),
-      text: card.querySelector('.step-text').value.trim(),
-      img: card.querySelector('.step-img').value.trim()
-    })).filter(step => step.title || step.text || step.img)
-  };
-}
+  ['guideId','title','category','thumbnail','updatedAt','description'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderPreview);
+  });
 
-document.getElementById('addStepBtn').addEventListener('click', () => addStep());
-document.getElementById('makeJsonBtn').addEventListener('click', () => {
-  const data = collect();
-  output.textContent = JSON.stringify(data, null, 2);
-});
-document.getElementById('copyBtn').addEventListener('click', async () => {
-  const text = output.textContent;
-  if (!text || text.includes('아직 생성')) return;
-  await navigator.clipboard.writeText(text);
-  alert('복사되었습니다.');
-});
-document.getElementById('downloadBtn').addEventListener('click', () => {
-  const text = output.textContent;
-  if (!text || text.includes('아직 생성')) return;
-  const blob = new Blob([text], {type:'application/json;charset=utf-8'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'guide-item.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
-});
+  document.getElementById('addStepBtn').addEventListener('click', () => addStep());
+  document.getElementById('loadSampleBtn').addEventListener('click', () => fillForm({
+    id:'new-guide', title:'새 공략 예시', category:'컨텐츠 공략', thumbnail:'assets/guides/new-guide/1.jpg', updatedAt:new Date().toISOString().slice(0,10), description:'새로운 공략 등록 예시입니다.',
+    steps:[{title:'STEP 1', text:'첫 번째 동선 설명', img:'assets/guides/new-guide/1.jpg'}]
+  }));
+  document.getElementById('makeJsonBtn').addEventListener('click', () => {
+    const data = collect();
+    output.textContent = JSON.stringify(data, null, 2);
+  });
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    const text = output.textContent;
+    if (!text || text.includes('아직 생성')) return;
+    await navigator.clipboard.writeText(text);
+    alert('복사되었습니다.');
+  });
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const text = output.textContent;
+    if (!text || text.includes('아직 생성')) return;
+    const blob = new Blob([text], {type:'application/json;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'guide-item.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('loadJsonBtn').addEventListener('click', () => {
+    const raw = document.getElementById('pasteInput').value.trim();
+    if(!raw){ alert('기존 JSON을 먼저 붙여넣어 주세요.'); return; }
+    try{
+      const parsed = JSON.parse(raw);
+      fillForm(parsed);
+      output.textContent = JSON.stringify(parsed, null, 2);
+    }catch(err){
+      alert('JSON 형식이 올바르지 않습니다. 쉼표, 따옴표, 괄호를 확인해 주세요.');
+    }
+  });
+  document.getElementById('clearFormBtn').addEventListener('click', () => {
+    fillForm({ updatedAt: new Date().toISOString().slice(0,10), steps:[{}] });
+    output.textContent = '아직 생성된 JSON이 없습니다.';
+    document.getElementById('pasteInput').value = '';
+  });
 
-addStep();
+  fillForm({ updatedAt: new Date().toISOString().slice(0,10), steps:[{}] });
 </script>
 </body>
 </html>

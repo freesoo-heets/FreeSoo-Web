@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FreeSoo 秀 | 비공식 홈페이지</title>
   <meta name="description" content="프리수 공지, 이벤트, 공략집, 다운로드, 문의, 무공설명서를 한곳에 모은 비공식 포털" />
+  <meta name="robots" content="index,follow" />
   <style>
     :root{
       --bg:#0f0a07;--bg2:#18100c;--panel:rgba(30,19,12,.92);--panel-2:rgba(23,15,10,.96);
@@ -13,50 +14,72 @@
       --shadow:0 18px 42px rgba(0,0,0,.35);--radius:20px;--max:1260px;
     }
     *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;font-family:"Noto Serif KR","Malgun Gothic",serif;color:var(--text);background:
-      radial-gradient(circle at top, rgba(255,130,38,.16), transparent 28%),
-      radial-gradient(circle at 20% 18%, rgba(255,96,46,.08), transparent 24%),
-      linear-gradient(180deg, #17110d 0%, #0b0806 100%);
+    body{
+      margin:0;font-family:"Noto Serif KR","Malgun Gothic",serif;color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(255,130,38,.16), transparent 28%),
+        radial-gradient(circle at 20% 18%, rgba(255,96,46,.08), transparent 24%),
+        linear-gradient(180deg, #17110d 0%, #0b0806 100%);
     }
-    a{color:inherit;text-decoration:none} img{display:block;max-width:100%}.wrap{width:min(calc(100% - 32px), var(--max));margin:0 auto}
+    body::before{
+      content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;
+      background:
+        linear-gradient(transparent 97%, rgba(255,170,90,.03) 100%),
+        linear-gradient(90deg, transparent 97%, rgba(255,170,90,.02) 100%);
+      background-size:100% 4px,4px 100%;mix-blend-mode:screen;
+    }
+    a{color:inherit;text-decoration:none} img{display:block;max-width:100%}
+    .wrap{width:min(calc(100% - 32px), var(--max));margin:0 auto}
     .topbar{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(10,7,5,.84);border-bottom:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.16)}
     .topbar-inner{min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative}
-    .brand{display:flex;align-items:center;gap:14px;min-width:0}.brand-mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:1.45rem;font-weight:800;color:#fff6ec;border:1px solid rgba(255,177,91,.36);background:linear-gradient(180deg, rgba(255,165,86,.2), rgba(255,82,31,.12));box-shadow:0 0 22px rgba(255,136,45,.18), inset 0 0 20px rgba(255,210,160,.04)}
-    .brand-copy strong{display:block;font-size:1.06rem;letter-spacing:.05em}.brand-copy span{display:block;font-size:.84rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .brand-mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:1.45rem;font-weight:800;color:#fff6ec;border:1px solid rgba(255,177,91,.36);background:linear-gradient(180deg, rgba(255,165,86,.2), rgba(255,82,31,.12));box-shadow:0 0 22px rgba(255,136,45,.18), inset 0 0 20px rgba(255,210,160,.04);text-shadow:0 0 10px rgba(255,176,82,.4)}
+    .brand-copy{min-width:0}.brand-copy strong{display:block;font-size:1.06rem;letter-spacing:.05em;text-shadow:0 0 12px rgba(255,140,50,.24)}
+    .brand-copy span{display:block;font-size:.84rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .menu-toggle{display:none;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);border-radius:12px;padding:10px 12px;cursor:pointer}
     .nav{display:flex;gap:10px;flex-wrap:wrap}.nav a{padding:10px 14px;border-radius:999px;color:var(--muted);border:1px solid transparent;transition:.2s ease}
     .nav a:hover,.nav a.active{color:#fff7ef;border-color:var(--line-strong);background:rgba(255,140,50,.08);box-shadow:0 0 18px rgba(255,132,40,.12)}
+
     .hero{padding:54px 0 28px}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:stretch}
-    .hero-panel,.side-panel,.card,.job-card,.notice-card,.footer-panel,.download-box,.spotlight{background:linear-gradient(180deg, rgba(31,20,13,.94), rgba(17,12,9,.98));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;overflow:hidden}
-    .hero-panel,.side-panel,.card,.job-card,.notice-card,.footer-panel,.download-box,.spotlight{padding:20px}
+    .hero-panel,.side-panel,.card,.job-card,.notice-card,.footer-panel,.download-box,.spotlight,.admin-card{
+      background:linear-gradient(180deg, rgba(31,20,13,.94), rgba(17,12,9,.98));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;overflow:hidden;
+    }
+    .hero-panel::after,.side-panel::after,.card::after,.job-card::after,.notice-card::after,.download-box::after,.spotlight::after,.admin-card::after{
+      content:"";position:absolute;right:-44px;bottom:-44px;width:140px;height:140px;background:radial-gradient(circle, rgba(255,140,50,.14), transparent 70%);pointer-events:none;
+    }
     .hero-panel{padding:34px}.side-panel{padding:24px;display:grid;gap:14px}
     .eyebrow{color:#ffc286;font-size:.88rem;letter-spacing:.18em;text-transform:uppercase}
-    h1{margin:10px 0 14px;font-size:clamp(2.1rem,5vw,3.55rem);line-height:1.08}
-    .hero-panel p,.card p,.notice-card p,.job-card p,.download-note li,.empty,.spotlight p{color:var(--muted);line-height:1.72}
-    .hero-actions,.cta-row,.spot-actions{display:flex;flex-wrap:wrap;gap:12px}
+    h1{margin:10px 0 14px;font-size:clamp(2.1rem,5vw,3.55rem);line-height:1.08;text-shadow:0 0 14px rgba(255,125,40,.18)}
+    .hero-panel p{color:var(--muted);line-height:1.82;margin:0 0 22px}
+    .hero-actions,.cta-row,.spot-actions,.admin-actions{display:flex;flex-wrap:wrap;gap:12px}
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border-radius:14px;font-weight:700;border:1px solid rgba(255,165,72,.24);cursor:pointer;transition:.2s ease}
     .btn-primary{color:#fff8f0;background:linear-gradient(135deg, rgba(255,154,61,.22), rgba(255,84,36,.24));box-shadow:0 0 26px rgba(255,118,33,.14)}
     .btn-secondary{color:var(--text);background:rgba(255,255,255,.03)} .btn:hover{transform:translateY(-2px)}
-    .feature-list,.quick-grid,.notice-grid,.jobs-grid,.download-grid,.community-grid,.spot-grid{display:grid;gap:16px}
+    .feature-list,.quick-grid,.notice-grid,.jobs-grid,.download-grid,.community-grid,.spot-grid,.admin-grid{display:grid;gap:16px}
     .feature-list{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:24px}
-    .quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.notice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .jobs-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.download-grid{grid-template-columns:1.05fr .95fr}.community-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.spot-grid{grid-template-columns:1.05fr .95fr}
-    .feature,.mini-stat,.notice-item,.spot-item,.admin-card{padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+    .quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.notice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.jobs-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.download-grid{grid-template-columns:1.05fr .95fr}.community-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.spot-grid{grid-template-columns:1.05fr .95fr}.admin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .card,.notice-card,.job-card,.spotlight,.admin-card{padding:20px;position:relative;overflow:hidden}
+    .card:hover,.notice-card:hover,.job-card:hover,.spotlight:hover,.admin-card:hover{transform:translateY(-4px);transition:.22s ease}
+    .feature,.mini-stat,.notice-item,.spot-item{padding:16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
     .feature strong,.mini-stat strong,.spot-item strong{display:block;margin-bottom:8px}
     .feature span,.mini-stat span,.spot-item span{color:var(--muted);font-size:.92rem;line-height:1.6}
     section{padding:18px 0 26px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
     .section-head h2{margin:0;font-size:clamp(1.45rem,3vw,2rem)} .section-head p{margin:8px 0 0;color:var(--muted)}
     .link-more{color:#ffd2aa;font-size:.95rem}.badge{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;font-size:.78rem;color:#ffd7b3;background:rgba(255,146,63,.1);border:1px solid rgba(255,165,72,.2);margin-bottom:12px}
-    .card h3,.notice-card h3,.job-card h3,.spotlight h3,.admin-card h3{margin:0 0 10px;font-size:1.14rem}.card .mini-link,.job-card .mini-link{color:#ffd4ad;font-size:.92rem;font-weight:700}
+    .card h3,.notice-card h3,.job-card h3,.spotlight h3,.admin-card h3{margin:0 0 10px;font-size:1.14rem}
+    .card p,.notice-card p,.job-card p,.download-note li,.empty,.spotlight p,.admin-card p{color:var(--muted);line-height:1.72}
+    .card .mini-link,.job-card .mini-link{color:#ffd4ad;font-size:.92rem;font-weight:700}
     .notice-list{display:grid;gap:12px;margin-top:14px}.notice-item h4{margin:0 0 6px;font-size:1rem}.notice-meta{display:flex;gap:10px;flex-wrap:wrap;color:#e9c7a4;font-size:.82rem;margin-bottom:6px}
     .job-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.job-icon{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:rgba(255,153,65,.11);border:1px solid rgba(255,165,72,.2);font-size:1.1rem}
-    .download-note{margin:14px 0 0;padding-left:18px}.download-note li{margin:6px 0}
+    .download-box{padding:24px}.download-note{margin:14px 0 0;padding-left:18px}.download-note li{margin:6px 0}
     .spot-grid img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:16px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02)}
     .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:var(--accent-3);font-size:.84rem}
-    .admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-    .anchor-offset{scroll-margin-top:92px}
+    .admin-summary{margin-top:14px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05)}
+    .footer{padding:22px 0 34px}.footer-panel{padding:22px}.footer-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}.footer small,.footer li,.footer p{color:var(--muted);line-height:1.7}.footer ul{padding-left:18px;margin:10px 0 0}
+    .anchor-offset{scroll-margin-top:92px}.empty{font-size:.94rem}
     @media (max-width:1024px){.hero-grid,.download-grid,.footer-grid,.notice-grid,.community-grid,.spot-grid,.admin-grid{grid-template-columns:1fr}.quick-grid,.jobs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-list{grid-template-columns:1fr}}
-    @media (max-width:760px){.menu-toggle{display:inline-flex}.nav{display:none;position:absolute;top:calc(100% + 10px);right:16px;left:16px;padding:12px;border-radius:18px;background:rgba(16,11,8,.97);border:1px solid var(--line);box-shadow:var(--shadow)}.nav.open{display:grid;grid-template-columns:1fr 1fr}.quick-grid,.jobs-grid,.community-grid,.admin-grid{grid-template-columns:1fr}.topbar-inner{min-height:64px}.hero-panel,.side-panel,.card,.job-card,.notice-card,.download-box,.footer-panel,.spotlight{padding:18px}}
+    @media (max-width:760px){.menu-toggle{display:inline-flex}.nav{display:none;position:absolute;top:calc(100% + 10px);right:16px;left:16px;padding:12px;border-radius:18px;background:rgba(16,11,8,.97);border:1px solid var(--line);box-shadow:var(--shadow)}.nav.open{display:grid;grid-template-columns:1fr 1fr}.quick-grid,.jobs-grid,.community-grid,.admin-grid{grid-template-columns:1fr}.hero-panel,.side-panel,.card,.job-card,.notice-card,.download-box,.footer-panel,.spotlight,.admin-card{padding:18px}.topbar-inner{min-height:64px}}
   </style>
 </head>
 <body>
@@ -72,13 +95,14 @@
       <button class="menu-toggle" id="menuToggle" type="button">☰ 메뉴</button>
       <nav class="nav" id="mainNav">
         <a href="#home" class="active">홈</a>
-        <a href="#news">공지</a>
+        <a href="#spotlight">추천공략</a>
+        <a href="#news">공지/이벤트</a>
         <a href="guide-select.html">공략집</a>
-        <a href="#guide-admin">가이드등록</a>
+        <a href="#guide-admin">가이드관리</a>
         <a href="#jobs">직업</a>
         <a href="#download">다운로드</a>
         <a href="#contact">문의</a>
-        <a href="https://freesoo-skillinfo.netlify.app/" target="_blank" rel="noopener">무공</a>
+        <a href="skills.html">무공</a>
       </nav>
     </div>
   </header>
@@ -89,23 +113,54 @@
         <div class="hero-panel">
           <div class="eyebrow">FreeSoo portal</div>
           <h1>FreeSoo</h1>
-          <p>FreeSoo 모든 유저들을 위한 게임 설명, 공략, 정보제공 등 통합 정보 공유를 위한 사이트 입니다. “문의” 메뉴를 통해 건의하기 부탁드립니다.</p>
+          <p>FreeSoo 모든 유저들을 위한 게임 설명, 공략, 정보제공 등 통합 정보 공유를 위한 사이트입니다. 공략과 공지, 문의 동선을 분리해 처음 오는 유저도 쉽게 찾을 수 있게 구성했습니다.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="guide-select.html">공략집 바로가기</a>
             <a class="btn btn-secondary" href="#news">최신 공지 보기</a>
-            <a class="btn btn-secondary" href="https://freesoo-skillinfo.netlify.app/" target="_blank" rel="noopener">무공설명서 열기</a>
+            <a class="btn btn-secondary" href="skills.html">무공설명서 열기</a>
           </div>
           <div class="feature-list">
-            <div class="feature"><strong>보스 젠 타이머</strong><span>추후 별도 타이머 페이지로 확장 가능하도록 포털 구조 유지.</span></div>
-            <div class="feature"><strong>무공 통합</strong><span>별도 페이지 무공설명서를 내부 페이지로 합치는 확장 구조 대응.</span></div>
-            <div class="feature"><strong>공략 자동화</strong><span>등록/수정 UI를 별도로 두고 JSON만 갱신하는 구조로 관리.</span></div>
+            <div class="feature"><strong>공지 자동 출력</strong><span>notices.json 수정만으로 공지와 이벤트를 분리해서 노출.</span></div>
+            <div class="feature"><strong>공략 자동화</strong><span>guides.json과 관리자 UI를 기반으로 공략 추가/수정.</span></div>
+            <div class="feature"><strong>확장 구조</strong><span>추후 무공/보스 타이머/문의 폼까지 같은 디자인으로 확장 가능.</span></div>
           </div>
         </div>
         <aside class="side-panel">
           <div class="mini-stat"><strong>제작</strong><span>보다 편리하고 즐겁게 게임을 즐길 수 있도록 정보를 정리하는 허브.</span></div>
-          <div class="mini-stat"><strong>콘텐츠 확보</strong><span>공략집, 설명서, 문의, 다운로드 안내를 한곳에서 정리.</span></div>
+          <div class="mini-stat"><strong>콘텐츠</strong><span>공략집, 설명서, 문의, 다운로드 안내를 한곳에서 정리.</span></div>
           <div class="mini-stat"><strong>운영 방향</strong><span>공략집 등록 자동화, 무공 영상 등록 자동화, 관리자 접근성 개선.</span></div>
         </aside>
+      </div>
+    </section>
+
+    <section id="quick" class="anchor-offset">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>빠른 이동</h2>
+            <p>자주 찾는 메뉴를 카드형으로 정리했습니다.</p>
+          </div>
+        </div>
+        <div class="quick-grid">
+          <a class="card" href="skills.html">
+            <div class="badge">⚔ 무공설명서</div>
+            <h3>직업별 무공 바로 확인</h3>
+            <p>사이트 내부 무공 페이지로 바로 이동해 직업별 무공을 확인할 수 있습니다.</p>
+            <span class="mini-link">무공설명서 열기 →</span>
+          </a>
+          <a class="card" href="#news">
+            <div class="badge">NOTICE / EVENT</div>
+            <h3>최신 공지/이벤트</h3>
+            <p>pin 항목, 날짜, 요약 기준으로 홈에서 우선 노출됩니다.</p>
+            <span class="mini-link">공지 영역 보기 →</span>
+          </a>
+          <a class="card" href="guide-select.html">
+            <div class="badge">GUIDE</div>
+            <h3>공략집</h3>
+            <p>컨텐츠 공략, 던전 공략 등 게임플레이에 필요한 다양한 공략 정보 확인하기.</p>
+            <span class="mini-link">공략집 보기 →</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -140,54 +195,225 @@
       </div>
     </section>
 
+    <section id="news" class="anchor-offset">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>최신 소식</h2>
+            <p>공지와 이벤트는 notices.json 수정 후 자동 반영됩니다.</p>
+          </div>
+          <a class="link-more" href="#guide-admin">관리 페이지 안내</a>
+        </div>
+        <div class="notice-grid">
+          <div class="notice-card">
+            <div class="badge">NOTICE</div>
+            <h3>공지사항</h3>
+            <p>점검, 패치, 다운로드 안내 같은 고정 정보를 공지로 관리.</p>
+            <div class="notice-list" id="noticeList"></div>
+          </div>
+          <div class="notice-card">
+            <div class="badge">EVENT</div>
+            <h3>이벤트</h3>
+            <p>기간형 이벤트를 분리해 홈에서 바로 노출되게 했습니다.</p>
+            <div class="notice-list" id="eventList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="guide-admin" class="anchor-offset">
       <div class="wrap">
         <div class="section-head">
           <div>
             <h2>가이드 등록 / 수정</h2>
-            <p>관리자가 쉽게 추가하고, 일반 사용자도 형식을 이해하기 쉬운 카드형 안내 영역입니다.</p>
+            <p>관리자만 접근하도록 비밀번호 게이트를 둘 수 있게 설계했습니다.</p>
           </div>
-          <a class="link-more" href="admin-guides.html">가이드 관리 페이지 열기</a>
+          <a class="link-more" href="admin-guides.html">관리자 페이지 열기</a>
         </div>
         <div class="admin-grid">
           <div class="admin-card">
-            <div class="badge">관리자용</div>
-            <h3>새 공략 등록</h3>
-            <p>제목, 카테고리, 설명, 썸네일, 단계별 이미지와 설명만 입력하면 JSON을 자동 생성합니다.</p>
-            <div class="spot-actions">
-              <a class="btn btn-primary" href="admin-guides.html">등록 페이지 열기</a>
+            <div class="badge">ADMIN</div>
+            <h3>공략 등록/수정 페이지</h3>
+            <p>STEP 추가, STEP 삭제, 실시간 미리보기, 기존 JSON 붙여넣기 후 수정 기능을 사용할 수 있습니다.</p>
+            <div class="admin-actions">
+              <a class="btn btn-primary" href="admin-guides.html">가이드 관리자 열기</a>
+              <a class="btn btn-secondary" href="guide-select.html">사용자용 공략집 보기</a>
             </div>
           </div>
           <div class="admin-card">
-            <div class="badge">사용자용</div>
-            <h3>기존 공략 수정 요청</h3>
-            <p>기존 공략 id를 기준으로 이미지만 교체하거나 설명만 다듬는 식으로 관리하면 수정이 빨라집니다.</p>
-            <div class="chip-row">
-              <div class="chip">id 고정</div>
-              <div class="chip">이미지 교체</div>
-              <div class="chip">설명 수정</div>
-            </div>
+            <div class="badge">PASSWORD</div>
+            <h3>비밀번호 설정 위치</h3>
+            <p><strong>admin-guides.html</strong> 상단 스크립트의 <strong>ADMIN_PASSWORD</strong> 값을 직접 바꾸면 됩니다. 다만 이 방식은 브라우저 전달 파일이므로 강한 보안은 아니고, 접근 억제용입니다.</p>
+            <div class="admin-summary">실제 보호가 필요하면 Netlify의 사이트 비밀번호, Identity, 또는 서버측 인증을 써야 합니다.</div>
           </div>
         </div>
       </div>
     </section>
+
+    <section id="jobs" class="anchor-offset">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>직업 소개 바로가기</h2>
+            <p>프리수의 6직업 구조를 기준으로 직업별 소개/무공 동선을 유지합니다.</p>
+          </div>
+        </div>
+        <div class="jobs-grid">
+          <a class="job-card" href="skills.html#warrior"><div class="job-top"><div class="job-icon">⚔</div><span class="badge">전사</span></div><h3>전사</h3><p>근접 전투 중심 직업. 무공설명서 전사 섹션으로 바로 이동.</p><span class="mini-link">전사 무공 보기 →</span></a>
+          <a class="job-card" href="skills.html#taoist"><div class="job-top"><div class="job-icon">☯</div><span class="badge">도사</span></div><h3>도사</h3><p>보조, 생존, 운영 역할 중심 직업.</p><span class="mini-link">도사 무공 보기 →</span></a>
+          <a class="job-card" href="skills.html#wizard"><div class="job-top"><div class="job-icon">✦</div><span class="badge">술사</span></div><h3>술사</h3><p>광역과 화력 중심 운용 직업.</p><span class="mini-link">술사 무공 보기 →</span></a>
+          <a class="job-card" href="skills.html#assassin"><div class="job-top"><div class="job-icon">🗡</div><span class="badge">자객</span></div><h3>자객</h3><p>기동성과 순간 화력 중심 직업.</p><span class="mini-link">자객 무공 보기 →</span></a>
+          <a class="job-card" href="skills.html#archer"><div class="job-top"><div class="job-icon">🏹</div><span class="badge">궁사</span></div><h3>궁사</h3><p>원거리 지속 화력과 포지셔닝 중심 직업.</p><span class="mini-link">궁사 무공 보기 →</span></a>
+          <a class="job-card" href="skills.html#wonsa"><div class="job-top"><div class="job-icon">✺</div><span class="badge">원사</span></div><h3>원사</h3><p>프리수 특화 지원형 직업. PvP 직접 공격 불가, 버프/디버프/광역 PvE 특화.</p><span class="mini-link">원사 무공 보기 →</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="download" class="anchor-offset">
+      <div class="wrap download-grid">
+        <div class="download-box">
+          <div class="badge">DOWNLOAD</div>
+          <h2>클라이언트 다운로드와 설치 안내</h2>
+          <p class="empty">실제 다운로드 링크만 교체하면 바로 운영 가능합니다.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#" id="clientDownloadBtn">클라이언트 다운로드</a>
+            <a class="btn btn-secondary" href="#" id="installGuideBtn">설치 방법 보기</a>
+            <a class="btn btn-secondary" href="#contact">문의하기</a>
+          </div>
+          <ul class="download-note">
+            <li>압축 해제 위치를 먼저 확인하도록 안내 문구를 유지하세요.</li>
+            <li>보안 프로그램 예외 등록 관련 주의사항을 함께 노출하는 편이 좋습니다.</li>
+            <li>설치 오류 시 문의 채널로 스크린샷 접수를 유도하면 대응 효율이 좋아집니다.</li>
+          </ul>
+        </div>
+        <div class="download-box">
+          <div class="badge">홈페이지 개발 구조</div>
+          <h2>관리 규칙</h2>
+          <ul class="download-note">
+            <li><strong>assets/guides/카테고리/</strong>처럼 공략별 폴더를 고정.</li>
+            <li><strong>guides.json</strong>에서 제목, 설명, 순서, 썸네일 관리.</li>
+            <li><strong>notices.json</strong>은 공지와 이벤트 전용.</li>
+            <li>정적 사이트 특성상 관리자 기능은 JSON 생성/다운로드 방식이 가장 안정적.</li>
+          </ul>
+          <div class="admin-summary">공략 수정은 관리자 페이지에서 미리보기로 확인하고, 저장 결과를 <strong>guides.json</strong>에 붙여넣는 흐름으로 쓰면 실수가 적습니다.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="anchor-offset">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>문의 / 커뮤니티</h2>
+            <p>카카오톡, 디스코드, 문의 폼 링크만 실제 주소로 교체하면 됩니다.</p>
+          </div>
+        </div>
+        <div class="community-grid">
+          <div class="card"><div class="badge">KAKAO</div><h3>카카오톡 오픈채팅</h3><p>설치 문의, 접속 문제, 간단한 질문 대응에 적합한 빠른 채널.</p><a class="btn btn-primary" href="#" id="kakaoBtn">카카오톡 바로가기</a></div>
+          <div class="card"><div class="badge">DISCORD</div><h3>디스코드</h3><p>운영 공지와 커뮤니티 소통용 채널로 활용.</p><a class="btn btn-secondary" href="#" id="discordBtn">디스코드 바로가기</a></div>
+          <div class="card"><div class="badge">FORM</div><h3>문의 폼</h3><p>버그 제보, 건의, 신고, 복구 요청처럼 기록이 필요한 문의에 적합합니다.</p><a class="btn btn-secondary" href="#" id="formBtn">문의 폼 바로가기</a></div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="footer">
+    <div class="wrap footer-panel">
+      <div class="footer-grid">
+        <div>
+          <h3 style="margin-top:0">FreeSoo 秀</h3>
+          <p>FreeSoo에 대한 애정과 유저들이 보다 쉽고 즐겁게 게임을 했으면 하는 마음으로 제작한 웹사이트입니다.</p>
+          <small>© FreeSoo All Rights Reserved. Made by. 김히츠</small>
+        </div>
+        <div>
+          <h3 style="margin-top:0">패치 포인트</h3>
+          <ul>
+            <li>공지/이벤트 섹션 복구</li>
+            <li>추천 공략 연동</li>
+            <li>관리자 페이지 동선 통일</li>
+            <li>메뉴바 명칭 통일</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script>
     const menuToggle = document.getElementById('menuToggle');
     const mainNav = document.getElementById('mainNav');
     menuToggle?.addEventListener('click', () => mainNav.classList.toggle('open'));
 
+    document.querySelectorAll('.nav a[href^="#"]').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+        mainNav.classList.remove('open');
+      });
+    });
+
+    const noticeList = document.getElementById('noticeList');
+    const eventList = document.getElementById('eventList');
     const guideSpotlight = document.getElementById('guideSpotlight');
 
     function esc(value){
-      return String(value ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+      return String(value ?? '')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;');
     }
+
+    function renderNoticeItems(target, items, emptyText){
+      if(!target) return;
+      if(!Array.isArray(items) || items.length === 0){
+        target.innerHTML = `<div class="empty">${emptyText}</div>`;
+        return;
+      }
+      target.innerHTML = items.map(item => `
+        <article class="notice-item">
+          <h4>${esc(item.title || '제목 없음')}</h4>
+          <div class="notice-meta">
+            <span>${esc(item.date || '')}</span>
+            <span>${item.pin ? '고정' : '일반'}</span>
+            ${item.tag ? `<span>${esc(item.tag)}</span>` : ''}
+          </div>
+          <p>${esc(item.summary || '')}</p>
+        </article>
+      `).join('');
+    }
+
+    function normalizeDate(value){
+      return String(value || '').replace(/\./g,'-').replace(/\//g,'-');
+    }
+
+    function sortByPinAndDate(items){
+      return [...items].sort((a,b) => {
+        if(Boolean(b.pin) !== Boolean(a.pin)) return Number(Boolean(b.pin)) - Number(Boolean(a.pin));
+        return normalizeDate(b.date).localeCompare(normalizeDate(a.date));
+      });
+    }
+
     function getStepImage(step){
       return step?.img || step?.image || '';
     }
 
-    fetch('./guides.json')
+    fetch('notices.json')
+      .then(res => {
+        if(!res.ok) throw new Error('notices.json 로드 실패');
+        return res.json();
+      })
+      .then(data => {
+        const notices = sortByPinAndDate(Array.isArray(data.notices) ? data.notices : []);
+        const events = sortByPinAndDate(Array.isArray(data.events) ? data.events : []);
+        renderNoticeItems(noticeList, notices.slice(0, 4), '표시할 공지가 없습니다.');
+        renderNoticeItems(eventList, events.slice(0, 4), '진행 중인 이벤트가 없습니다.');
+      })
+      .catch(() => {
+        renderNoticeItems(noticeList, [], 'notices.json을 찾지 못했습니다.');
+        renderNoticeItems(eventList, [], 'events 데이터를 찾지 못했습니다.');
+      });
+
+    fetch('guides.json')
       .then(res => {
         if(!res.ok) throw new Error('guides.json 로드 실패');
         return res.json();
@@ -196,10 +422,19 @@
         const guides = Array.isArray(data) ? data : [];
         if(!guides.length){
           guideSpotlight.innerHTML = `
-            <div class="spotlight"><div class="badge">GUIDE SPOTLIGHT</div><h3>등록된 공략이 없습니다.</h3><p>guides.json에 공략을 추가하면 이 영역이 자동으로 채워집니다.</p></div>
-            <div class="spotlight"><div class="badge">운영 팁</div><p>assets/guides/공략ID/ 폴더를 만들고 이미지와 JSON만 추가해 주세요.</p></div>`;
+            <div class="spotlight">
+              <div class="badge">GUIDE SPOTLIGHT</div>
+              <h3>등록된 공략이 없습니다.</h3>
+              <p>guides.json에 공략을 추가하면 이 영역이 자동으로 채워집니다.</p>
+            </div>
+            <div class="spotlight">
+              <div class="badge">운영 팁</div>
+              <p>assets/guides/공략ID/ 폴더를 만들고 이미지와 JSON만 추가해 주세요.</p>
+            </div>
+          `;
           return;
         }
+
         const selected = guides.slice(0, 2);
         guideSpotlight.innerHTML = selected.map(item => {
           const firstStep = Array.isArray(item.steps) && item.steps.length ? item.steps[0] : null;
@@ -211,14 +446,22 @@
               <h3>${esc(item.title || '제목 없음')}</h3>
               <p>${esc(item.description || '설명이 없습니다.')}</p>
               <div class="spot-actions"><span class="btn btn-secondary">공략 보기</span></div>
-            </a>`;
+            </a>
+          `;
         }).join('');
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         guideSpotlight.innerHTML = `
-          <div class="spotlight"><div class="badge">GUIDE SPOTLIGHT</div><h3>guides.json을 불러오지 못했습니다.</h3><p>파일 경로보다 먼저 JSON 문법 오류를 확인해 주세요.</p></div>
-          <div class="spotlight"><div class="badge">점검 포인트</div><p>마지막 쉼표, img/image 키 이름, 중괄호 닫힘 여부를 먼저 확인하면 대부분 해결됩니다.</p></div>`;
+          <div class="spotlight">
+            <div class="badge">GUIDE SPOTLIGHT</div>
+            <h3>guides.json을 불러오지 못했습니다.</h3>
+            <p>파일 경로 또는 JSON 문법을 확인해 주세요.</p>
+          </div>
+          <div class="spotlight">
+            <div class="badge">운영 팁</div>
+            <p>guide-select.html, guide.html, guides.json을 같은 루트에 두는 것을 권장합니다.</p>
+          </div>
+        `;
       });
   </script>
 </body>
