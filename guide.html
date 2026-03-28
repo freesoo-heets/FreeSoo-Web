@@ -46,7 +46,11 @@
       document.body.appendChild(viewer);
     }
 
-    fetch('guides.json')
+    function getStepImage(step){
+      return step?.img || step?.image || '';
+    }
+
+    fetch('./guides.json')
       .then(res => {
         if(!res.ok) throw new Error('guides.json 로드 실패');
         return res.json();
@@ -78,14 +82,17 @@
             <a class="btn" href="index.html">메인으로</a>
           </div>
           <div class="steps">
-            ${(Array.isArray(item.steps) ? item.steps : []).map((step, idx) => `
-              <article class="step">
-                <div class="num">${idx + 1}</div>
-                <h3 style="margin:0 0 8px">${esc(step.title || `STEP ${idx + 1}`)}</h3>
-                <p style="color:#d5b592;line-height:1.8">${esc(step.text || '')}</p>
-                ${step.img ? `<img src="${esc(step.img)}" alt="${esc(step.title || `step-${idx+1}`)}" data-src="${esc(step.img)}">` : ''}
-              </article>
-            `).join('') || '<div class="empty">등록된 단계가 없습니다.</div>'}
+            ${(Array.isArray(item.steps) ? item.steps : []).map((step, idx) => {
+              const img = getStepImage(step);
+              return `
+                <article class="step">
+                  <div class="num">${idx + 1}</div>
+                  <h3 style="margin:0 0 8px">${esc(step.title || `STEP ${idx + 1}`)}</h3>
+                  <p style="color:#d5b592;line-height:1.8">${esc(step.text || '')}</p>
+                  ${img ? `<img src="${esc(img)}" alt="${esc(step.title || `step-${idx+1}`)}" data-src="${esc(img)}">` : ''}
+                </article>
+              `;
+            }).join('') || '<div class="empty">등록된 단계가 없습니다.</div>'}
           </div>
         `;
 
@@ -93,8 +100,9 @@
           img.addEventListener('click', () => lightbox(img.dataset.src));
         });
       })
-      .catch(() => {
-        guideRoot.innerHTML = '<div class="empty">guides.json을 불러오지 못했습니다.</div>';
+      .catch((err) => {
+        console.error(err);
+        guideRoot.innerHTML = '<div class="empty">guides.json을 불러오지 못했습니다. 파일 경로 또는 JSON 문법을 확인해 주세요.</div>';
       });
   </script>
 </body>
