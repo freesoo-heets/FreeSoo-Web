@@ -255,10 +255,10 @@
       <div class="wrap hero-grid">
         <div class="hero-panel">
           <div class="eyebrow">FreeSoo portal</div>
-          <h1>공지, 공략, 다운로드를<br>한 화면에서 정리하는 메인 허브</h1>
+          <h1>FreeSoo<br></h1>
           <p>
-            기존 한 페이지 허브 구조는 유지하면서, 공지 자동 출력과 공략 확장성을 강화한 맞춤형 통합 버전입니다.
-            앞으로는 이미지와 JSON만 추가해도 홈과 공략집이 같이 확장되도록 설계했습니다.
+            FreeSoo 모든 유저들을 위한 게임 설명, 공략, 정보제공 등
+            통합 정보 공유를 위한 사이트 입니다. "문의" 메뉴를 통해 건의하기 부탁드립니다.
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="guide-select.html">공략집 바로가기</a>
@@ -267,32 +267,32 @@
           </div>
           <div class="feature-list">
             <div class="feature">
-              <strong>notices.json 자동 출력</strong>
-              <span>홈 공지와 이벤트를 데이터 기반으로 렌더링해 HTML 수정을 최소화합니다.</span>
+              <strong>수정예정1</strong>
+              <span>보스 젠 타이머 홈페이지 적용.</span>
             </div>
             <div class="feature">
-              <strong>guides.json 공략 연동</strong>
-              <span>대표 공략 2개를 메인에서 자동 노출하고 전체 공략집으로 자연스럽게 연결합니다.</span>
+              <strong>수정예정2</strong>
+              <span>별도 페이지로 구성한 무공설명서를 통합페이지로 구성.</span>
             </div>
             <div class="feature">
-              <strong>게임 UI 스타일 강화</strong>
-              <span>먹선+주황 발광 분위기와 카드형 인터랙션으로 포털 느낌보다 게임 허브 느낌을 더 살렸습니다.</span>
+              <strong>수정예정3</strong>
+              <span>아이디어부족......</span>
             </div>
           </div>
         </div>
 
         <aside class="side-panel">
           <div class="mini-stat">
-            <strong>운영 방식</strong>
-            <span>공지 추가는 notices.json, 공략 추가는 guides.json만 수정하면 됩니다.</span>
+            <strong>side panel 1 : 제작 김히츠</strong>
+            <span>보다 편리한, 보다 편한, 보다 쉬운, 보다 즐거운 유저들을 위한 서버를 만들고싶다.</span>
           </div>
           <div class="mini-stat">
-            <strong>관리자 페이지 역할</strong>
-            <span>정적 사이트 특성상 서버에 직접 저장되지는 않지만, JSON 파일을 자동 생성·다운로드하는 도우미로 사용할 수 있습니다.</span>
+            <strong>side panel 2 : 게시글 확보</strong>
+            <span>공략집, 설명서, 문의 등</span>
           </div>
           <div class="mini-stat">
-            <strong>권장 폴더 구조</strong>
-            <span>assets/guides/공략ID/ 안에 이미지를 넣고, JSON에는 제목·설명·순서·썸네일만 기록하는 방식이 가장 안정적입니다.</span>
+            <strong>side panel 3 : 추가필요</strong>
+            <span>공략집 등록 자동화 기능, 무공 영상 등록 자동화 기능 개발</span>
           </div>
         </aside>
       </div>
@@ -303,7 +303,7 @@
         <div class="section-head">
           <div>
             <h2>빠른 이동</h2>
-            <p>기존 사이트의 빠른 접근 장점을 유지하면서 관리 단위를 분리했습니다.</p>
+            <p>각 메뉴로 빠른 이동을 할 수 있도록 기능 분리.</p>
           </div>
         </div>
         <div class="quick-grid">
@@ -315,14 +315,14 @@
           </a>
           <a class="card" href="#news">
             <div class="badge">NOTICE / EVENT</div>
-            <h3>최신 공지와 이벤트 자동 출력</h3>
+            <h3>최신 공지/이벤트</h3>
             <p>pin 항목, 날짜, 요약을 기준으로 홈 화면에서 우선 노출되도록 구성했습니다.</p>
             <span class="mini-link">공지 영역 보기 →</span>
           </a>
           <a class="card" href="guide-select.html">
             <div class="badge">GUIDE</div>
-            <h3>공략집 허브로 분리</h3>
-            <p>사곡왕릉, 미로, 보스 위치 공략처럼 이미지형 공략을 같은 구조로 계속 늘릴 수 있습니다.</p>
+            <h3>공략집</h3>
+            <p>컨텐츠 공략, 던전 공략 등 게임플레이에 필요한 다양한 공략 정보 확인하기.</p>
             <span class="mini-link">공략집 보기 →</span>
           </a>
         </div>
@@ -365,7 +365,7 @@
         <div class="section-head">
           <div>
             <h2>최신 소식</h2>
-            <p>공지와 이벤트는 notices.json만 수정하면 자동 반영됩니다.</p>
+            <p>공지와 이벤트는 notices.json 에서 수정 → 자동 반영</p>
           </div>
           <a class="link-more" href="admin.html">관리 페이지 열기</a>
         </div>
@@ -373,13 +373,13 @@
           <div class="notice-card">
             <div class="badge">NOTICE</div>
             <h3>공지사항</h3>
-            <p>운영 공지, 점검, 패치, 다운로드 안내 같은 고정 정보는 공지 타입으로 관리합니다.</p>
+            <p>점검, 패치, 다운로드 안내 같은 고정 정보를 공지로 관리.</p>
             <div class="notice-list" id="noticeList"></div>
           </div>
           <div class="notice-card">
             <div class="badge">EVENT</div>
             <h3>이벤트</h3>
-            <p>기간형 정보는 이벤트로 분리해 홈에서 바로 노출되게 했습니다.</p>
+            <p>기간형 이벤트를 분리, 홈에서 바로 노출되게 했습니다.</p>
             <div class="notice-list" id="eventList"></div>
           </div>
         </div>
@@ -440,7 +440,7 @@
         <div class="download-box">
           <div class="badge">DOWNLOAD</div>
           <h2>클라이언트 다운로드와 설치 안내</h2>
-          <p class="empty">아래 링크는 실제 주소로만 교체하면 바로 운영 가능합니다.</p>
+          <p class="empty">다운로드 링크 좀 고쳐주세요 운영자님;;;</p>
           <div class="cta-row">
             <a class="btn btn-primary" href="#" id="clientDownloadBtn">클라이언트 다운로드</a>
             <a class="btn btn-secondary" href="#" id="installGuideBtn">설치 방법 보기</a>
@@ -454,17 +454,17 @@
         </div>
 
         <div class="download-box">
-          <div class="badge">운영 팁</div>
-          <h2>권장 파일 구조</h2>
+          <div class="badge">홈페이지 개발 구조</div>
+          <h2>까먹지말자</h2>
           <ul class="download-note">
-            <li><strong>assets/guides/maze/</strong>처럼 공략별 폴더를 고정합니다.</li>
-            <li><strong>guides.json</strong>에서 제목, 설명, 순서, 썸네일을 관리합니다.</li>
-            <li><strong>notices.json</strong>은 홈 공지와 이벤트 카드에서 공통 사용합니다.</li>
-            <li>이미지가 많아지면 JPG/WebP 혼용으로 용량을 줄이는 편이 유리합니다.</li>
+            <li><strong>assets/guides/카테고리/</strong>처럼 공략별 폴더.</li>
+            <li><strong>guides.json</strong>에서 제목, 설명, 순서, 썸네일 관리</li>
+            <li><strong>notices.json</strong>은 공지와 이벤트</li>
+            <li>수정/배포를 자주하지 말도록...</li>
           </ul>
           <div class="admin-summary">
-            정적 사이트라서 <strong>관리자 페이지가 서버에 직접 저장</strong>할 수는 없습니다.
-            대신 JSON 파일을 자동 생성해서 <strong>다운로드 후 GitHub에 업로드</strong>하는 흐름으로 쓰면 가장 안정적입니다.
+            어쩌구저쩌구 <strong>강조할 말을</strong>쓰면은
+            어쩌구저쩌꾸 <strong>강조해서 말을 써주고</strong>글을 남길수있지.
           </div>
         </div>
       </div>
@@ -482,13 +482,13 @@
           <div class="card">
             <div class="badge">KAKAO</div>
             <h3>카카오톡 오픈채팅</h3>
-            <p>설치 문의, 접속 문제, 간단한 질문 대응에 적합한 빠른 채널입니다.</p>
+            <p>도파민 단톡방 운영중 많관부.</p>
             <a class="btn btn-primary" href="#" id="kakaoBtn">카카오톡 바로가기</a>
           </div>
           <div class="card">
             <div class="badge">DISCORD</div>
             <h3>디스코드</h3>
-            <p>운영 공지, 커뮤니티, 파일 공유가 필요한 경우 적합합니다.</p>
+            <p>디스코드 링크는 최대 7일 유효하므로 올릴수없음;;</p>
             <a class="btn btn-secondary" href="#" id="discordBtn">디스코드 바로가기</a>
           </div>
           <div class="card">
@@ -507,13 +507,13 @@
       <div class="footer-grid">
         <div>
           <h3 style="margin-top:0">FreeSoo 秀</h3>
-          <p>한 페이지 허브 구조를 유지하면서 공지 자동 출력, 공략 분리, 관리자 보조 페이지를 추가한 통합 버전입니다.</p>
+          <p>FreeSoo에 대한 애정과 유저들이 보다 쉽고 즐겁게 게임을 했으면 하는 마음으로 제작한 웹사이트 입니다.</p>
           <small>© FreeSoo All Rights Reserved. Made by. 김히츠</small>
         </div>
         <div>
-          <h3 style="margin-top:0">이번 적용 내용</h3>
+          <h3 style="margin-top:0">패치 노트</h3>
           <ul>
-            <li>index.html 맞춤 리팩토링</li>
+            <li>index.html 리팩토링</li>
             <li>notices.json 자동 UI 출력</li>
             <li>guides.json 연동 대표 공략</li>
             <li>admin.html JSON 자동 생성/다운로드</li>
