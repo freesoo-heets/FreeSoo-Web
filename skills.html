@@ -1,27 +1,91 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FreeSoo 무공 설명서</title><link rel="stylesheet" href="assets/site.css"><script src="site-config.js"></script><script src="assets/site.js"></script></head><body><header class="topbar"><div class="wrap topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">秀</div><div class="brand-copy"><strong>FreeSoo 비공식 포털</strong><span>공지 · 공략집 · 무공 · 다운로드 · 문의 · 관리자</span></div></a><button class="menu-toggle" id="menuToggle" type="button">☰ 메뉴</button><nav class="nav" id="mainNav"><a href="index.html" data-nav="home">홈</a><a href="index.html#news" data-nav="news">공지</a><a href="guide-select.html" data-nav="guides">공략집</a><a href="skills.html" data-nav="skills">무공</a><a href="index.html#download" data-nav="download">다운로드</a><a href="index.html#contact" data-nav="contact">문의</a><a href="admin-guides.html" data-nav="admin-guides">가이드 관리</a><a href="admin-skills.html" data-nav="admin-skills">무공 관리</a></nav></div></header><main class="section"><div class="wrap"><div class="hero-panel"><div class="eyebrow">skills</div><h1>무공 설명서</h1><p>R2 CDN 경로를 기본으로 사용하며, 영상이 없으면 자동으로 숨겨집니다.</p><div class="grid-4"><input id="q" class="input" placeholder="무공명 / 설명 / 태그 검색"><select id="jobFilter" class="select"><option value="">전체 직업</option></select><select id="typeFilter" class="select"><option value="">전체 분류</option><option>공격</option><option>CC</option><option>버프</option><option>유틸</option><option>이동</option><option>소환</option><option>디버프</option></select><select id="tagFilter" class="select"><option value="">전체 태그</option><option>딜</option><option>CC</option><option>버프</option><option>유틸</option><option>이동</option><option>소환</option><option>디버프</option></select></div><div class="controls" style="margin-top:12px"><span class="chip">CDN: <span id="cdnText"></span></span><span class="chip">영상 없으면 자동 숨김</span></div></div><div class="section-head" style="margin-top:16px"><div><h2>무공 목록</h2><p class="count" id="countText"></p></div></div><div id="skillCards" class="cards"></div></div></main><script>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FreeSoo 무공 설명서</title><link rel="stylesheet" href="assets/site.css"><script src="site-config.js"></script><script src="assets/site.js"></script><style>
+.media-wrap{margin-top:12px}.video-shell{position:relative;border-radius:18px;overflow:hidden;background:#0b0806;border:1px solid rgba(255,255,255,.08);min-height:220px;display:flex;align-items:center;justify-content:center}.card-thumb{width:100%;height:220px;object-fit:cover;display:block;filter:saturate(.92)}.video-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.44));cursor:pointer;transition:.2s ease}.video-overlay:hover{background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.34))}.play-badge{width:74px;height:74px;border-radius:999px;display:grid;place-items:center;background:rgba(18,10,6,.72);border:1px solid rgba(255,185,106,.34);box-shadow:0 0 22px rgba(255,132,40,.16);backdrop-filter:blur(6px)}.play-badge::before{content:"";display:block;width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:20px solid #ffe4c5;margin-left:5px}.video-actions{position:absolute;right:10px;bottom:10px;display:flex;gap:8px;z-index:3}.video-mini-btn{min-height:36px;padding:0 12px;border-radius:12px;border:1px solid rgba(255,185,106,.28);background:rgba(15,10,7,.78);color:#ffe2bf;cursor:pointer}.skill-video{width:100%;height:220px;object-fit:cover;display:block;background:#000}.video-fallback{padding:18px}.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:20px;z-index:2000}.lightbox-panel{width:min(1100px,96vw);background:linear-gradient(180deg, rgba(31,20,13,.98), rgba(17,12,9,.98));border:1px solid rgba(255,185,106,.2);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.45);overflow:hidden}.lightbox-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.06)}.lightbox-title{font-weight:700}.lightbox-close{min-height:38px;padding:0 14px;border-radius:12px;border:1px solid rgba(255,185,106,.28);background:rgba(255,255,255,.03);color:#ffe2bf;cursor:pointer}.lightbox video{display:block;width:100%;max-height:78vh;background:#000}.meta-line{margin-top:8px;color:var(--muted,#d5b592)}@media (max-width:760px){.card-thumb,.skill-video,.video-shell{min-height:190px;height:190px}.play-badge{width:64px;height:64px}.play-badge::before{border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:17px solid #ffe4c5}}</style></head><body><header class="topbar"><div class="wrap topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">秀</div><div class="brand-copy"><strong>FreeSoo 비공식 포털</strong><span>공지 · 공략집 · 무공 · 다운로드 · 문의 · 관리자</span></div></a><button class="menu-toggle" id="menuToggle" type="button">☰ 메뉴</button><nav class="nav" id="mainNav"><a href="index.html" data-nav="home">홈</a><a href="index.html#news" data-nav="news">공지</a><a href="guide-select.html" data-nav="guides">공략집</a><a href="skills.html" data-nav="skills">무공</a><a href="index.html#download" data-nav="download">다운로드</a><a href="index.html#contact" data-nav="contact">문의</a><a href="admin-guides.html" data-nav="admin-guides">가이드 관리</a><a href="admin-skills.html" data-nav="admin-skills">무공 관리</a></nav></div></header><main class="section"><div class="wrap"><div class="hero-panel"><div class="eyebrow">skills</div><h1>무공 설명서</h1><p>썸네일을 먼저 보여주고, 재생 버튼을 눌렀을 때만 영상을 로딩합니다. 영상이 없으면 자동으로 숨겨집니다.</p><div class="grid-4"><input id="q" class="input" placeholder="무공명 / 설명 / 태그 검색"><select id="jobFilter" class="select"><option value="">전체 직업</option></select><select id="typeFilter" class="select"><option value="">전체 분류</option><option>공격</option><option>CC</option><option>버프</option><option>유틸</option><option>이동</option><option>소환</option><option>디버프</option></select><select id="tagFilter" class="select"><option value="">전체 태그</option><option>딜</option><option>CC</option><option>버프</option><option>유틸</option><option>이동</option><option>소환</option><option>디버프</option></select></div><div class="controls" style="margin-top:12px"><span class="chip">CDN: <span id="cdnText"></span></span><span class="chip">자동재생 꺼짐</span><span class="chip">lazy load 적용</span></div></div><div class="section-head" style="margin-top:16px"><div><h2>무공 목록</h2><p class="count" id="countText"></p></div></div><div id="skillCards" class="cards"></div></div></main><script>
 document.querySelector('[data-nav="skills"]').classList.add('active');
 let jobs=[];
 const params=new URLSearchParams(location.search);
 const jobParam=params.get('job');
 document.getElementById('cdnText').textContent = Freesoo.cfg.CDN_BASE || '로컬 경로';
-function bindMediaFallbacks(){
-  document.querySelectorAll('.skill-video').forEach(video=>{
-    const wrap = video.closest('.media-wrap');
-    const fallback = wrap?.querySelector('.video-fallback');
-    const hideVideo = () => {
-      video.style.display='none';
-      if(fallback) fallback.style.display='block';
-    };
-    video.addEventListener('error', hideVideo, { once:true });
-    video.addEventListener('loadeddata', ()=>{
-      if(fallback) fallback.style.display='none';
-      video.style.display='block';
-    }, { once:true });
-  });
-  document.querySelectorAll('.card-thumb').forEach(img=>{
-    img.addEventListener('error', ()=> img.style.display='none', { once:true });
+
+function createMediaMarkup(s, video, thumb){
+  const safeName = Freesoo.esc(s.name || '무공 영상');
+  const thumbHtml = thumb ? `<img class="card-thumb" src="${thumb}" alt="${safeName}" loading="lazy">` : `<div class="video-fallback muted">등록된 썸네일이 없습니다.</div>`;
+  return `
+    <div class="media-wrap" data-video="${video}" data-title="${safeName}">
+      <div class="video-shell">
+        ${thumbHtml}
+        <div class="video-overlay" role="button" tabindex="0" aria-label="${safeName} 재생">
+          <div class="play-badge"></div>
+        </div>
+        <div class="video-actions">
+          <button type="button" class="video-mini-btn js-expand">크게 보기</button>
+        </div>
+      </div>
+      <div class="video-fallback muted" style="display:none">등록된 영상이 없습니다.</div>
+    </div>`;
+}
+
+function openLightbox(src, title){
+  const viewer=document.createElement('div');
+  viewer.className='lightbox';
+  viewer.innerHTML=`<div class="lightbox-panel"><div class="lightbox-head"><div class="lightbox-title">${title}</div><button type="button" class="lightbox-close">닫기</button></div><video src="${src}" controls preload="metadata" playsinline></video></div>`;
+  const close=()=>viewer.remove();
+  viewer.addEventListener('click', e=>{ if(e.target===viewer) close(); });
+  viewer.querySelector('.lightbox-close').addEventListener('click', close);
+  document.addEventListener('keydown', function escClose(ev){ if(ev.key==='Escape'){ close(); document.removeEventListener('keydown', escClose);} });
+  document.body.appendChild(viewer);
+}
+
+function mountVideo(mediaWrap){
+  if(mediaWrap.dataset.failed === '1') return;
+  if(mediaWrap.dataset.loaded === '1') {
+    const video=mediaWrap.querySelector('video');
+    if(video) video.play().catch(()=>{});
+    return;
+  }
+  const src=mediaWrap.dataset.video;
+  const title=mediaWrap.dataset.title || '무공 영상';
+  const shell=mediaWrap.querySelector('.video-shell');
+  const fallback=mediaWrap.querySelector('.video-fallback');
+  const overlay=mediaWrap.querySelector('.video-overlay');
+  const thumb=mediaWrap.querySelector('.card-thumb');
+  const video=document.createElement('video');
+  video.className='skill-video';
+  video.src=src;
+  video.controls=true;
+  video.preload='metadata';
+  video.playsInline=true;
+  video.setAttribute('playsinline','');
+  video.addEventListener('loadedmetadata', ()=>{
+    mediaWrap.dataset.loaded='1';
+    if(thumb) thumb.style.display='none';
+    if(overlay) overlay.style.display='none';
+  }, {once:true});
+  video.addEventListener('error', ()=>{
+    mediaWrap.dataset.failed='1';
+    if(thumb) thumb.style.display='none';
+    if(overlay) overlay.style.display='none';
+    video.remove();
+    if(fallback) fallback.style.display='block';
+  }, {once:true});
+  shell.prepend(video);
+  video.play().catch(()=>{});
+  video.addEventListener('click', ()=>openLightbox(src, title));
+}
+
+function bindMediaControls(){
+  document.querySelectorAll('.media-wrap').forEach(mediaWrap=>{
+    const overlay=mediaWrap.querySelector('.video-overlay');
+    const expandBtn=mediaWrap.querySelector('.js-expand');
+    const title=mediaWrap.dataset.title || '무공 영상';
+    const src=mediaWrap.dataset.video;
+    overlay?.addEventListener('click', ()=>mountVideo(mediaWrap));
+    overlay?.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); mountVideo(mediaWrap); }});
+    expandBtn?.addEventListener('click', ()=>openLightbox(src, title));
+    const thumb=mediaWrap.querySelector('.card-thumb');
+    thumb?.addEventListener('error', ()=> thumb.style.display='none', { once:true });
   });
 }
+
 function render(){
   const q=(document.getElementById('q').value||'').toLowerCase().trim();
   const jf=document.getElementById('jobFilter').value;
@@ -36,10 +100,10 @@ function render(){
   document.getElementById('countText').textContent=`총 ${filtered.length}개`;
   document.getElementById('skillCards').innerHTML=filtered.length?filtered.map(s=>{
     const video=Freesoo.resolveMedia(s.video || `video/${s.jobId}_${s.name}.mp4`);
-    const thumb=Freesoo.resolveMedia(s.thumbnail || '');
-    return `<article class="card"><div class="badge">${Freesoo.esc(s.jobName)} · ${Freesoo.esc(s.type||'무공')}</div><h3>${Freesoo.esc(s.name)}</h3><p>${Freesoo.esc(s.desc||'')}</p><div class="controls">${(s.tags||[]).map(t=>`<span class="chip">${Freesoo.esc(t)}</span>`).join('')}</div><div style="margin-top:12px"></div><div class="media-wrap">${thumb?`<img class="card-thumb" src="${thumb}" alt="">`:''}<video class="skill-video" src="${video}" controls preload="metadata" playsinline poster="${thumb||''}"></video><div class="video-fallback muted" style="display:none;margin-top:8px">등록된 영상이 없습니다.</div></div><div class="muted" style="margin-top:8px">${Freesoo.esc(video)}</div></article>`;
+    const thumb=Freesoo.resolveMedia(s.thumbnail || `thumb/${s.jobId}_${s.name}.jpg`);
+    return `<article class="card"><div class="badge">${Freesoo.esc(s.jobName)} · ${Freesoo.esc(s.type||'무공')}</div><h3>${Freesoo.esc(s.name)}</h3><p>${Freesoo.esc(s.desc||'')}</p><div class="controls">${(s.tags||[]).map(t=>`<span class="chip">${Freesoo.esc(t)}</span>`).join('')}</div>${createMediaMarkup(s, video, thumb)}<div class="meta-line">클릭 전까지 영상을 불러오지 않습니다.</div></article>`;
   }).join(''):'<div class="empty">조건에 맞는 무공이 없습니다.</div>';
-  bindMediaFallbacks();
+  bindMediaControls();
 }
 fetch('data/skills.json').then(r=>r.json()).then(data=>{
   jobs=data.jobs||[];
