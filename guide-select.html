@@ -1,1 +1,113 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>FreeSoo 공략집</title><link rel="stylesheet" href="assets/site.css"><script src="site-config.js"></script><script src="assets/site.js"></script></head><body><header class="topbar"><div class="wrap topbar-inner"><a class="brand" href="index.html"><div class="brand-mark">秀</div><div class="brand-copy"><strong>FreeSoo 비공식 포털</strong><span>공지 · 공략집 · 무공 · 다운로드 · 문의 · 관리자</span></div></a><button class="menu-toggle" id="menuToggle" type="button">☰ 메뉴</button><nav class="nav" id="mainNav"><a href="index.html" data-nav="home">홈</a><a href="index.html#news" data-nav="news">공지</a><a href="guide-select.html" data-nav="guides">공략집</a><a href="skills.html" data-nav="skills">무공</a><a href="index.html#download" data-nav="download">다운로드</a><a href="index.html#contact" data-nav="contact">문의</a><a href="admin-guides.html" data-nav="admin-guides">가이드 관리</a><a href="admin-skills.html" data-nav="admin-skills">무공 관리</a></nav></div></header><main class="section"><div class="wrap"><div class="hero-panel"><div class="eyebrow">guides</div><h1>공략집</h1><p>검색, 카테고리 필터, 카드형 UI로 정리한 공략 허브입니다.</p><div class="grid-3"><input id="q" class="input" placeholder="제목 / 설명 / 단계 텍스트 검색"><select id="cat" class="select"><option value="">전체 카테고리</option></select><select id="sort" class="select"><option value="latest">최신순</option><option value="name">이름순</option><option value="steps">STEP 많은 순</option></select></div></div><div class="section-head" style="margin-top:16px"><div><h2>공략 목록</h2><p class="count" id="countText"></p></div><a href="admin-guides.html" class="btn btn-secondary">가이드 관리</a></div><div id="cards" class="cards"></div></div></main><script>document.querySelector('[data-nav="guides"]').classList.add('active');let list=[];function render(){const q=(document.getElementById('q').value||'').toLowerCase().trim();const c=document.getElementById('cat').value;const s=document.getElementById('sort').value;let arr=list.filter(g=>{const text=[g.title,g.description].concat((g.steps||[]).map(x=>`${x.title||''} ${x.text||''}`)).join(' ').toLowerCase();return (!q||text.includes(q))&&(!c||g.category===c);});if(s==='name') arr.sort((a,b)=>String(a.title||'').localeCompare(String(b.title||''))); else if(s==='steps') arr.sort((a,b)=>(b.steps?.length||0)-(a.steps?.length||0)); else arr.sort((a,b)=>String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));document.getElementById('countText').textContent=`총 ${arr.length}개`;document.getElementById('cards').innerHTML=arr.length?arr.map(g=>{const img=g.thumbnail || (g.steps&&g.steps[0]&&(g.steps[0].img||g.steps[0].image)) || '';return `<a class="card" href="guide.html?id=${encodeURIComponent(g.id)}"><img class="card-thumb" src="${Freesoo.esc(img)}" alt=""><div class="badge">${Freesoo.esc(g.category||'GUIDE')}</div><h3>${Freesoo.esc(g.title)}</h3><p>${Freesoo.esc(g.description||'')}</p><div class="count">STEP ${g.steps?.length||0} · 업데이트 ${Freesoo.esc(g.updatedAt||'-')}</div></a>`;}).join(''):'<div class="empty">공략이 없습니다.</div>';}fetch('guides.json').then(r=>r.json()).then(data=>{list=data||[];const cats=[...new Set(list.map(g=>g.category).filter(Boolean))];const sel=document.getElementById('cat');cats.forEach(c=>sel.insertAdjacentHTML('beforeend', `<option>${Freesoo.esc(c)}</option>`));render();});['q','cat','sort'].forEach(id=>{document.getElementById(id).addEventListener(id==='q'?'input':'change', render);});</script></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="assets/site.css" />
+<script src="site-config.js"></script>
+<script src="assets/site.js"></script>
+  <title>FreeSoo 공략집</title>
+  <meta name="description" content="프리수 공략 목록과 카테고리별 가이드를 볼 수 있는 페이지" />
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <div class="brand-mark">秀</div>
+      <div class="brand-copy">
+        <strong>FreeSoo 비공식 포털</strong>
+        <span>공지 · 공략집 · 무공 · 다운로드 · 문의</span>
+      </div>
+    </a>
+    <button class="menu-toggle" id="menuToggle" type="button">☰ 메뉴</button>
+    <nav class="nav" id="mainNav">
+      <a href="index.html" data-nav="home">홈</a>
+      <a href="index.html#news" data-nav="news">공지</a>
+      <a href="guide-select.html" data-nav="guides">공략집</a>
+      <a href="skills.html" data-nav="skills">무공</a>
+      <a href="index.html#download" data-nav="download">다운로드</a>
+      <a href="index.html#contact" data-nav="contact">문의</a>
+    </nav>
+  </div>
+</header>
+  <main class="section">
+    <div class="wrap">
+      <div class="hero-panel">
+        <div class="eyebrow">guide archive</div>
+        <h1>공략집</h1>
+        <p>검색, 카테고리 필터, 최신순 정렬로 원하는 공략을 빠르게 찾을 수 있습니다.</p>
+      </div>
+      <div class="filter-box" style="margin-top: 16px;">
+        <div class="grid-3">
+          <input id="guideSearch" class="input" placeholder="공략 제목 / 설명 / STEP 내용 검색" />
+          <select id="guideCategory" class="select"><option value="">전체 카테고리</option></select>
+          <select id="guideSort" class="select">
+            <option value="updated">최신순</option>
+            <option value="title">이름순</option>
+            <option value="steps">STEP 많은 순</option>
+          </select>
+        </div>
+      </div>
+      <div class="section-head" style="margin-top: 16px;">
+        <div><h2>공략 목록</h2><p class="count" id="guideCount">총 0개</p></div>
+      </div>
+      <div id="guideCards" class="cards"></div>
+    </div>
+  </main>
+
+  <script>
+    Freesoo.initMenu('guides');
+    let guides = [];
+
+    function getGuidePreview(guide) {
+      return guide.thumbnail || (guide.steps && guide.steps[0] && (guide.steps[0].img || guide.steps[0].image)) || '';
+    }
+
+    function renderGuides() {
+      const keyword = (document.getElementById('guideSearch').value || '').trim().toLowerCase();
+      const category = document.getElementById('guideCategory').value;
+      const sortType = document.getElementById('guideSort').value;
+      let filtered = [...guides].filter(guide => {
+        const stepText = (guide.steps || []).map(step => [step.title, step.text].join(' ')).join(' ');
+        const text = [guide.title, guide.description, guide.category, stepText].join(' ').toLowerCase();
+        return (!keyword || text.includes(keyword)) && (!category || guide.category === category);
+      });
+      if (sortType === 'title') filtered.sort((a, b) => String(a.title || '').localeCompare(String(b.title || '')));
+      else if (sortType === 'steps') filtered.sort((a, b) => (b.steps?.length || 0) - (a.steps?.length || 0));
+      else filtered.sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
+      document.getElementById('guideCount').textContent = `총 ${filtered.length}개`;
+      document.getElementById('guideCards').innerHTML = filtered.length
+        ? filtered.map(guide => `
+            <a class="card" href="guide.html?id=${encodeURIComponent(guide.id)}">
+              ${getGuidePreview(guide) ? `<img class="card-thumb" src="${Freesoo.esc(getGuidePreview(guide))}" alt="${Freesoo.esc(guide.title)}">` : ''}
+              <div class="badge">${Freesoo.esc(guide.category || 'GUIDE')}</div>
+              <h3>${Freesoo.esc(guide.title)}</h3>
+              <p>${Freesoo.esc(guide.description || '')}</p>
+              <div class="count">STEP ${guide.steps?.length || 0}</div>
+            </a>
+          `).join('')
+        : '<div class="empty">조건에 맞는 공략이 없습니다.</div>';
+    }
+
+    fetch('guides.json')
+      .then(r => r.json())
+      .then(data => {
+        guides = data || [];
+        const categories = [...new Set(guides.map(item => item.category).filter(Boolean))];
+        const select = document.getElementById('guideCategory');
+        categories.forEach(category => {
+          select.insertAdjacentHTML('beforeend', `<option value="${Freesoo.esc(category)}">${Freesoo.esc(category)}</option>`);
+        });
+        renderGuides();
+      })
+      .catch(() => {
+        document.getElementById('guideCards').innerHTML = '<div class="empty">guides.json을 불러오지 못했습니다.</div>';
+      });
+
+    ['guideSearch', 'guideCategory', 'guideSort'].forEach(id => {
+      document.getElementById(id).addEventListener('input', renderGuides);
+      document.getElementById(id).addEventListener('change', renderGuides);
+    });
+  </script>
+</body>
+</html>

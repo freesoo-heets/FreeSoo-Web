@@ -1,5 +1,5 @@
 window.FREESOO_CONFIG = {
-  CDN_BASE: 'https://pub-8e36794667c0423b98bfb8d89cc28616.r2.dev',
-  UPLOAD_API_BASE: '',
+  /* R2나 CDN을 쓸 때만 여기에 주소를 넣으세요. 예: https://example.r2.dev */
+  CDN_BASE: '',
   WEB_ANALYTICS_SNIPPET: ''
 };
