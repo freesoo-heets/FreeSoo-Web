@@ -1,535 +1,358 @@
 {
-  "updatedAt": "2026-03-29",
-  "source": "FreeSoo무공설명서-김히츠.html 기반 변환",
-  "videoBaseMode": "legacy",
-  "videoRule": "video/{jobId}_{skillName}.mp4",
   "jobs": [
     {
       "id": "common",
       "name": "공통",
-      "icon": "◎",
-      "summary": "모든 직업이 공통으로 활용하는 이동·유틸 무공",
-      "videoMode": "legacy",
-      "videoPattern": "video/common_{name}.mp4",
       "skills": [
         {
-          "id": "common-001",
           "name": "이형환위",
+          "desc": "이동 : 지정한 위치로 이동",
           "type": "이동",
-          "summary": "지정한 위치로 이동",
-          "description": "이동 : 지정한 위치로 이동",
           "tags": [
             "이동"
-          ],
-          "video": "video/common_이형환위.mp4",
-          "thumbnail": "thumbs/common_이형환위.jpg"
+          ]
         },
         {
-          "id": "common-002",
           "name": "흡기공",
+          "desc": "유틸 : 체력을 모두 회복합니다.",
           "type": "유틸",
-          "summary": "체력을 모두 회복합니다.",
-          "description": "유틸 : 체력을 모두 회복합니다.",
           "tags": [
             "유틸"
-          ],
-          "video": "video/common_흡기공.mp4",
-          "thumbnail": "thumbs/common_흡기공.jpg"
+          ]
         }
       ]
     },
     {
       "id": "warrior",
       "name": "전사",
-      "icon": "⚔",
-      "summary": "근접 전투 중심 직업",
-      "videoMode": "legacy",
-      "videoPattern": "video/warrior_{name}.mp4",
       "skills": [
         {
-          "id": "warrior-001",
           "name": "탄강기",
+          "desc": "CC : 범위 공격 + 부격효과(공격무공 못씀)",
           "type": "CC",
-          "summary": "범위 공격 + 부격효과(공격무공 못씀)",
-          "description": "CC : 범위 공격 + 부격효과(공격무공 못씀)",
           "tags": [
             "CC"
-          ],
-          "video": "video/warrior_탄강기.mp4",
-          "thumbnail": "thumbs/warrior_탄강기.jpg"
+          ]
         },
         {
-          "id": "warrior-002",
           "name": "금강불괴",
+          "desc": "버프 : 방어력, 마법방어력 증가, HP 증가",
           "type": "버프",
-          "summary": "방어력, 마법방어력 증가, HP 증가",
-          "description": "버프 : 방어력, 마법방어력 증가, HP 증가",
           "tags": [
             "버프"
-          ],
-          "video": "video/warrior_금강불괴.mp4",
-          "thumbnail": "thumbs/warrior_금강불괴.jpg"
+          ]
         },
         {
-          "id": "warrior-003",
           "name": "사염검술",
+          "desc": "버프 : 공격강화",
           "type": "버프",
-          "summary": "공격강화",
-          "description": "버프 : 공격강화",
           "tags": [
             "버프"
-          ],
-          "video": "video/warrior_사염검술.mp4",
-          "thumbnail": "thumbs/warrior_사염검술.jpg"
+          ]
         },
         {
-          "id": "warrior-004",
           "name": "참파격",
+          "desc": "이동 : 적에게 이동, 도주가 가능",
           "type": "이동",
-          "summary": "적에게 이동, 도주가 가능",
-          "description": "이동 : 적에게 이동, 도주가 가능",
           "tags": [
             "이동"
-          ],
-          "video": "video/warrior_참파격.mp4",
-          "thumbnail": "thumbs/warrior_참파격.jpg"
+          ]
         },
         {
-          "id": "warrior-005",
           "name": "반공",
+          "desc": "공격 : 4초간 입는 데미지를 반사",
           "type": "공격",
-          "summary": "4초간 입는 데미지를 반사",
-          "description": "공격 : 4초간 입는 데미지를 반사",
           "tags": [
-            "공격"
-          ],
-          "video": "video/warrior_반공.mp4",
-          "thumbnail": "thumbs/warrior_반공.jpg"
+            "딜"
+          ]
         },
         {
-          "id": "warrior-006",
           "name": "백강사자후",
-          "type": "공격",
-          "summary": "4초간 상대방을 제압 - 특정무공 사용불가, 이동만 가능",
-          "description": "공격 : 4초간 상대방을 제압 - 특정무공 사용불가, 이동만 가능",
+          "desc": "공격 : 4초간 상대방을 제압",
+          "type": "CC",
           "tags": [
-            "공격"
-          ],
-          "video": "video/warrior_백강사자후.mp4",
-          "thumbnail": "thumbs/warrior_백강사자후.jpg"
+            "CC"
+          ]
         }
       ]
     },
     {
       "id": "taoist",
       "name": "도사",
-      "icon": "☯",
-      "summary": "회복·정화·지원 중심 직업",
-      "videoMode": "legacy",
-      "videoPattern": "video/taoist_{name}.mp4",
       "skills": [
         {
-          "id": "taoist-001",
           "name": "혼령소환술",
+          "desc": "소환 : 혼령 소환, 빨독",
           "type": "소환",
-          "summary": "혼령 소환, 빨독",
-          "description": "소환 : 혼령 소환, 빨독",
           "tags": [
             "소환"
-          ],
-          "video": "video/taoist_혼령소환술.mp4",
-          "thumbnail": "thumbs/taoist_혼령소환술.jpg"
+          ]
         },
         {
-          "id": "taoist-002",
           "name": "음양오행진",
+          "desc": "공격 : 범위 장판",
           "type": "공격",
-          "summary": "범위 장판",
-          "description": "공격 : 범위 장판",
           "tags": [
-            "공격"
-          ],
-          "video": "video/taoist_음양오행진.mp4",
-          "thumbnail": "thumbs/taoist_음양오행진.jpg"
+            "딜"
+          ]
         },
         {
-          "id": "taoist-003",
           "name": "신전이술",
+          "desc": "유틸 : 주변 아군 회복 + 선천기공",
           "type": "유틸",
-          "summary": "주변 아군 회복 + 선천기공",
-          "description": "유틸 : 주변 아군 회복 + 선천기공",
           "tags": [
-            "유틸"
-          ],
-          "video": "video/taoist_신전이술.mp4",
-          "thumbnail": "thumbs/taoist_신전이술.jpg"
+            "유틸",
+            "버프"
+          ]
         },
         {
-          "id": "taoist-004",
           "name": "암독운계",
-          "type": "공격",
-          "summary": "1인 타겟 중독,마비 공격",
-          "description": "공격 : 1인 타겟 중독,마비 공격",
+          "desc": "공격 : 1인 타겟 중독,마비 공격",
+          "type": "디버프",
           "tags": [
-            "공격"
-          ],
-          "video": "video/taoist_암독운계.mp4",
-          "thumbnail": "thumbs/taoist_암독운계.jpg"
+            "디버프",
+            "CC"
+          ]
         },
         {
-          "id": "taoist-005",
           "name": "풍비",
-          "type": "이동,유틸",
-          "summary": "이동 + 주변 아군 정화 or 적군과 자리 교체",
-          "description": "이동,유틸 : 이동 + 주변 아군 정화 or 적군과 자리 교체",
+          "desc": "이동,유틸 : 이동 + 주변 아군 정화 or 적군과 자리 교체",
+          "type": "이동",
           "tags": [
             "이동",
             "유틸"
-          ],
-          "video": "video/taoist_풍비.mp4",
-          "thumbnail": "thumbs/taoist_풍비.jpg"
+          ]
         },
         {
-          "id": "taoist-006",
           "name": "만효부",
+          "desc": "유틸 : 아군 범위 정화&선천, 적군 확률 피해감소 70% 무효화",
           "type": "유틸",
-          "summary": "아군 범위 정화&선천, 적군 확률 피해감소 70% 무효화",
-          "description": "유틸 : 아군 범위 정화&선천, 적군 확률 피해감소 70% 무효화",
           "tags": [
-            "유틸"
-          ],
-          "video": "video/taoist_만효부.mp4",
-          "thumbnail": "thumbs/taoist_만효부.jpg"
+            "유틸",
+            "디버프"
+          ]
         }
       ]
     },
     {
       "id": "sorcerer",
       "name": "술사",
-      "icon": "✦",
-      "summary": "광역 화력과 제어 중심 직업",
-      "videoMode": "legacy",
-      "videoPattern": "video/sorcerer_{name}.mp4",
       "skills": [
         {
-          "id": "sorcerer-001",
           "name": "화마염폭",
-          "type": "지속",
-          "summary": "불꽃 장판",
-          "description": "지속 : 불꽃 장판",
+          "desc": "지속 : 불꽃 장판",
+          "type": "공격",
           "tags": [
-            "지속"
-          ],
-          "video": "video/sorcerer_화마염폭.mp4",
-          "thumbnail": "thumbs/sorcerer_화마염폭.jpg"
+            "딜"
+          ]
         },
         {
-          "id": "sorcerer-002",
           "name": "뢰선풍",
+          "desc": "유틸 : 주변마비 + 이동기",
           "type": "유틸",
-          "summary": "주변마비 + 이동기(소환수 제거)",
-          "description": "유틸 : 주변마비 + 이동기(소환수 제거)",
           "tags": [
-            "유틸"
-          ],
-          "video": "video/sorcerer_뢰선풍.mp4",
-          "thumbnail": "thumbs/sorcerer_뢰선풍.jpg"
+            "유틸",
+            "CC"
+          ]
         },
         {
-          "id": "sorcerer-003",
           "name": "역혈마공",
+          "desc": "공격 : 주변범위 데미지",
           "type": "공격",
-          "summary": "주변범위 데미지",
-          "description": "공격 : 주변범위 데미지",
           "tags": [
-            "공격"
-          ],
-          "video": "video/sorcerer_역혈마공.mp4",
-          "thumbnail": "thumbs/sorcerer_역혈마공.jpg"
+            "딜"
+          ]
         },
         {
-          "id": "sorcerer-004",
           "name": "낙뢰",
+          "desc": "공격 : 범위 내 강력한 번개를 떨어트림",
           "type": "공격",
-          "summary": "범위 내 강력한 번개를 떨어트림",
-          "description": "공격 : 범위 내 강력한 번개를 떨어트림",
           "tags": [
-            "공격"
-          ],
-          "video": "video/sorcerer_낙뢰.mp4",
-          "thumbnail": "thumbs/sorcerer_낙뢰.jpg"
+            "딜"
+          ]
         },
         {
-          "id": "sorcerer-005",
           "name": "환영술",
-          "type": "유틸",
-          "summary": "본인과 같은 무공을 쓰는 환영을 소환",
-          "description": "유틸 : 본인과 같은 무공을 쓰는 환영을 소환",
+          "desc": "유틸 : 본인과 같은 무공을 쓰는 환영을 소환",
+          "type": "소환",
           "tags": [
-            "유틸"
-          ],
-          "video": "video/sorcerer_환영술.mp4",
-          "thumbnail": "thumbs/sorcerer_환영술.jpg"
+            "소환"
+          ]
         },
         {
-          "id": "sorcerer-006",
           "name": "흡마염풍",
-          "type": "범위공격",
-          "summary": "화마의 기운을 회오리 형태로 구현하여 타겟을 끌어당깁니다.",
-          "description": "범위공격 : 화마의 기운을 회오리 형태로 구현하여 타겟을 끌어당깁니다.",
+          "desc": "범위공격 : 화마의 기운을 회오리 형태로 구현",
+          "type": "공격",
           "tags": [
-            "범위공격"
-          ],
-          "video": "video/sorcerer_흡마염풍.mp4",
-          "thumbnail": "thumbs/sorcerer_흡마염풍.jpg"
+            "딜"
+          ]
         }
       ]
     },
     {
       "id": "assassin",
       "name": "자객",
-      "icon": "🗡",
-      "summary": "기동성과 순간 화력 중심 직업",
-      "videoMode": "legacy",
-      "videoPattern": "video/assassin_{name}.mp4",
       "skills": [
         {
-          "id": "assassin-001",
           "name": "낭기식",
+          "desc": "CC : 주변 범위 마비",
           "type": "CC",
-          "summary": "주변 범위 마비",
-          "description": "CC : 주변 범위 마비",
           "tags": [
             "CC"
-          ],
-          "video": "video/assassin_낭기식.mp4",
-          "thumbnail": "thumbs/assassin_낭기식.jpg"
+          ]
         },
         {
-          "id": "assassin-002",
           "name": "월영무",
+          "desc": "유틸 : 은신 돌입",
           "type": "유틸",
-          "summary": "은신 돌입",
-          "description": "유틸 : 은신 돌입",
           "tags": [
             "유틸"
-          ],
-          "video": "video/assassin_월영무.mp4",
-          "thumbnail": "thumbs/assassin_월영무.jpg"
+          ]
         },
         {
-          "id": "assassin-003",
           "name": "살풍",
+          "desc": "공격 : 강력한 데미지 + 피흡",
           "type": "공격",
-          "summary": "강력한 데미지 + 피흡",
-          "description": "공격 : 강력한 데미지 + 피흡",
           "tags": [
-            "공격"
-          ],
-          "video": "video/assassin_살풍.mp4",
-          "thumbnail": "thumbs/assassin_살풍.jpg"
+            "딜"
+          ]
         },
         {
-          "id": "assassin-004",
           "name": "교악",
-          "type": "공격",
-          "summary": "범위데미지, 방어무공(주막,금강술 등) 해제(확률)",
-          "description": "공격 : 범위데미지, 방어무공(주막,금강술 등) 해제(확률)",
+          "desc": "공격 : 범위데미지, 방어무공 해제(확률)",
+          "type": "디버프",
           "tags": [
-            "공격"
-          ],
-          "video": "video/assassin_교악.mp4",
-          "thumbnail": "thumbs/assassin_교악.jpg"
+            "디버프",
+            "딜"
+          ]
         },
         {
-          "id": "assassin-005",
           "name": "무달경",
+          "desc": "이동 : 타겟의 뒤로 순간이동",
           "type": "이동",
-          "summary": "타겟의 뒤로 순간이동",
-          "description": "이동 : 타겟의 뒤로 순간이동",
           "tags": [
             "이동"
-          ],
-          "video": "video/assassin_무달경.mp4",
-          "thumbnail": "thumbs/assassin_무달경.jpg"
+          ]
         },
         {
-          "id": "assassin-006",
           "name": "영화연격",
-          "type": "이동,공격",
-          "summary": "일시적으로 피해를 받지 않고, 타겟을 피격 (타겟 주변 1칸 랜덤 착지)",
-          "description": "이동,공격 : 일시적으로 피해를 받지 않고, 타겟을 피격 (타겟 주변 1칸 랜덤 착지)",
+          "desc": "이동,공격 : 일시적으로 피해를 받지 않고 타겟을 피격",
+          "type": "공격",
           "tags": [
             "이동",
-            "공격"
-          ],
-          "video": "video/assassin_영화연격.mp4",
-          "thumbnail": "thumbs/assassin_영화연격.jpg"
+            "딜"
+          ]
         }
       ]
     },
     {
       "id": "archer",
       "name": "궁사",
-      "icon": "🏹",
-      "summary": "원거리 견제와 상태 이상 중심 직업",
-      "videoMode": "legacy",
-      "videoPattern": "video/archer_{name}.mp4",
       "skills": [
         {
-          "id": "archer-001",
           "name": "낭아섬",
-          "type": "공격",
-          "summary": "적군 MP 소모 + 마비",
-          "description": "공격 : 적군 MP 소모 + 마비",
+          "desc": "공격 : 적군 MP 소모 + 마비",
+          "type": "CC",
           "tags": [
-            "공격"
-          ],
-          "video": "video/archer_낭아섬.mp4",
-          "thumbnail": "thumbs/archer_낭아섬.jpg"
+            "CC"
+          ]
         },
         {
-          "id": "archer-002",
           "name": "혈룡섬비급",
+          "desc": "공격 : 주변 범위 데미지 + 빙결",
           "type": "공격",
-          "summary": "주변 범위 데미지 + 빙결",
-          "description": "공격 : 주변 범위 데미지 + 빙결",
           "tags": [
-            "공격"
-          ],
-          "video": "video/archer_혈룡섬비급.mp4",
-          "thumbnail": "thumbs/archer_혈룡섬비급.jpg"
+            "딜",
+            "CC"
+          ]
         },
         {
-          "id": "archer-003",
           "name": "몽안술",
-          "type": "유틸",
-          "summary": "시야 차단",
-          "description": "유틸 : 시야 차단",
+          "desc": "유틸 : 시야 차단",
+          "type": "디버프",
           "tags": [
-            "유틸"
-          ],
-          "video": "video/archer_몽안술.mp4",
-          "thumbnail": "thumbs/archer_몽안술.jpg"
+            "디버프"
+          ]
         },
         {
-          "id": "archer-004",
           "name": "십이사격",
-          "type": "유틸",
-          "summary": "타겟의 버프해제(금강불괴, 주술의막 등)",
-          "description": "유틸 : 타겟의 버프해제(금강불괴, 주술의막 등)",
+          "desc": "유틸 : 타겟의 버프해제",
+          "type": "디버프",
           "tags": [
-            "유틸"
-          ],
-          "video": "video/archer_십이사격.mp4",
-          "thumbnail": "thumbs/archer_십이사격.jpg"
+            "디버프"
+          ]
         },
         {
-          "id": "archer-005",
           "name": "옥쇄술",
-          "type": "유틸",
-          "summary": "타겟의 발을 묶어 이동기 제한",
-          "description": "유틸 : 타겟의 발을 묶어 이동기 제한",
+          "desc": "유틸 : 타겟의 발을 묶어 이동기 제한",
+          "type": "CC",
           "tags": [
-            "유틸"
-          ],
-          "video": "video/archer_옥쇄술.mp4",
-          "thumbnail": "thumbs/archer_옥쇄술.jpg"
+            "CC"
+          ]
         },
         {
-          "id": "archer-006",
           "name": "낙뢰살",
+          "desc": "공격 : 타겟 빛 주변 범위에 낙뢰를 발생시킵니다.",
           "type": "공격",
-          "summary": "타겟 빛 주변 범위에 낙뢰를 발생시킵니다.",
-          "description": "공격 : 타겟 빛 주변 범위에 낙뢰를 발생시킵니다.",
           "tags": [
-            "공격"
-          ],
-          "video": "video/archer_낙뢰살.mp4",
-          "thumbnail": "thumbs/archer_낙뢰살.jpg"
+            "딜"
+          ]
         }
       ]
     },
     {
       "id": "magic",
       "name": "원사",
-      "icon": "✺",
-      "summary": "프리수 특화 지원형 직업",
-      "videoMode": "legacy",
-      "videoPattern": "video/magic_{name}.mp4",
       "skills": [
         {
-          "id": "magic-001",
           "name": "천지검기",
+          "desc": "공격 : 범위 무공",
           "type": "공격",
-          "summary": "범위 무공",
-          "description": "공격 : 범위 무공",
           "tags": [
-            "공격"
-          ],
-          "video": "video/magic_천지검기.mp4",
-          "thumbnail": "thumbs/magic_천지검기.jpg"
+            "딜"
+          ]
         },
         {
-          "id": "magic-002",
           "name": "용천우신조",
+          "desc": "버프 : HP MP 무공 강화",
           "type": "버프",
-          "summary": "HP MP 무공 강화",
-          "description": "버프 : HP MP 무공 강화",
           "tags": [
             "버프"
-          ],
-          "video": "video/magic_용천우신조.mp4",
-          "thumbnail": "thumbs/magic_용천우신조.jpg"
+          ]
         },
         {
-          "id": "magic-003",
           "name": "회풍강막",
+          "desc": "버프 : 무적 방어막",
           "type": "버프",
-          "summary": "무적 방어막",
-          "description": "버프 : 무적 방어막",
           "tags": [
             "버프"
-          ],
-          "video": "video/magic_회풍강막.mp4",
-          "thumbnail": "thumbs/magic_회풍강막.jpg"
+          ]
         },
         {
-          "id": "magic-004",
           "name": "전고사려",
+          "desc": "공격 : 넓은 범위 내 전체 몹에게 공격",
           "type": "공격",
-          "summary": "넓은 범위 내 전체 몹에게 공격",
-          "description": "공격 : 넓은 범위 내 전체 몹에게 공격",
           "tags": [
-            "공격"
-          ],
-          "video": "video/magic_전고사려.mp4",
-          "thumbnail": "thumbs/magic_전고사려.jpg"
+            "딜"
+          ]
         },
         {
-          "id": "magic-005",
           "name": "사취",
+          "desc": "버프 : 타직업의 무공을 빌려서 사용",
           "type": "버프",
-          "summary": "타직업의 무공을 빌려서 사용(탄강기,참파격/주술의막,뢰선풍/혼령,신전이술/낭기식,월영무/풍탄보,낭아섬)",
-          "description": "버프 : 타직업의 무공을 빌려서 사용(탄강기,참파격/주술의막,뢰선풍/혼령,신전이술/낭기식,월영무/풍탄보,낭아섬)",
           "tags": [
-            "버프"
-          ],
-          "video": "video/magic_사취.mp4",
-          "thumbnail": "thumbs/magic_사취.jpg"
+            "버프",
+            "유틸"
+          ]
         },
         {
-          "id": "magic-006",
           "name": "압수",
-          "type": "디버프,이동",
-          "summary": "회풍강막 해체&사취 해체, 타겟으로 이동",
-          "description": "디버프,이동 : 회풍강막 해체&사취 해체, 타겟으로 이동",
+          "desc": "디버프,이동 : 회풍강막 해체&사취 해체, 타겟으로 이동",
+          "type": "디버프",
           "tags": [
             "디버프",
             "이동"
-          ],
-          "video": "video/magic_압수.mp4",
-          "thumbnail": "thumbs/magic_압수.jpg"
+          ]
         }
       ]
     }
