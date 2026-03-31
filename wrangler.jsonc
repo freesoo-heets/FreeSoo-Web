@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "freesoo-upload",
+  "main": "worker/upload-worker.js",
+  "compatibility_date": "2026-03-31",
+  "r2_buckets": [{"binding": "MEDIA_BUCKET", "bucket_name": "freesoo-video"}],
+  "vars": {"BUCKET_NAME": "freesoo-video"}
+}
