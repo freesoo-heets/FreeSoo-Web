@@ -38,5 +38,20 @@
         "img": "assets/guides/sagok/main.png"
       }
     ]
+  },
+  {
+    "id": "mabang",
+    "title": "마방진 - 매주 1회(월요일 00시 초기화)",
+    "category": "컨텐츠 공략",
+    "thumbnail": "assets/guides/mabang/mabang.png",
+    "updatedAt": "2026-03-28",
+    "description": "마방진 클리어를 위한 가이드 문서",
+    "steps": [
+      {
+        "title": "마방진 클리어를 위한 참고",
+        "text": "1번~40번 방까지 미션을 해결하고 40번 방에서 보상을 획득",
+        "img": "assets/guides/mabang/mabang.png"
+      }
+    ]
   }
 ]
