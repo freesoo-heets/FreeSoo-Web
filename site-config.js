@@ -1,5 +1,5 @@
 window.FREESOO_CONFIG = {
-  CDN_BASE: 'https://cdn.example.com',
+  CDN_BASE: 'https://pub-8e36794667c0423b98bfb8d89cc28616.r2.dev',
   UPLOAD_API_BASE: 'https://freesoo-upload.example.workers.dev',
   WEB_ANALYTICS_SNIPPET: ''
 };
