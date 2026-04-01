@@ -37,14 +37,8 @@
         <h1>무공 설명서</h1>
         <p>썸네일을 먼저 보여주고, 재생 버튼을 눌렀을 때만 영상을 로딩합니다. 영상이 없으면 자동으로 숨깁니다.</p>
         <div class="grid-4">
-          <input id="q" class="input" placeholder="무공명 / 설명 / 태그 검색" />
+          <input id="q" class="input" placeholder="무공명 / 설명 검색" />
           <select id="jobFilter" class="select"><option value="">전체 직업</option></select>
-          <select id="typeFilter" class="select">
-            <option value="">전체 분류</option><option>공격</option><option>CC</option><option>버프</option><option>유틸</option><option>이동</option><option>소환</option><option>디버프</option>
-          </select>
-          <select id="tagFilter" class="select">
-            <option value="">전체 태그</option><option>딜</option><option>CC</option><option>버프</option><option>유틸</option><option>이동</option><option>소환</option><option>디버프</option>
-          </select>
         </div>
         <div class="chip-row" style="margin-top: 12px;">
           <span class="chip">CDN: <span id="cdnText"></span></span>
@@ -156,24 +150,22 @@
     function renderSkills() {
       const keyword = (document.getElementById('q').value || '').trim().toLowerCase();
       const jobFilter = document.getElementById('jobFilter').value;
-      const typeFilter = document.getElementById('typeFilter').value;
-      const tagFilter = document.getElementById('tagFilter').value;
       const merged = [];
       jobs.forEach(job => {
         (job.skills || []).forEach(skill => merged.push({ ...skill, jobId: job.id, jobName: job.name }));
       });
       const filtered = merged.filter(skill => {
         const haystack = [skill.name, skill.desc, (skill.tags || []).join(' '), skill.jobName].join(' ').toLowerCase();
-        return (!keyword || haystack.includes(keyword)) && (!jobFilter || skill.jobId === jobFilter) && (!typeFilter || skill.type === typeFilter) && (!tagFilter || (skill.tags || []).includes(tagFilter));
+        return (!keyword || haystack.includes(keyword)) &&
+       (!jobFilter || skill.jobId === jobFilter);
       });
       document.getElementById('countText').textContent = `총 ${filtered.length}개`;
       document.getElementById('skillCards').innerHTML = filtered.length
         ? filtered.map(skill => `
             <article class="skill-card">
-              <div class="badge">${Freesoo.esc(skill.jobName)} · ${Freesoo.esc(skill.type || '무공')}</div>
+              <div class="badge">${Freesoo.esc(skill.jobName)}</div>
               <h3>${Freesoo.esc(skill.name)}</h3>
               <p class="muted">${Freesoo.esc(skill.desc || '')}</p>
-              <div class="chip-row">${(skill.tags || []).map(tag => `<span class="chip">${Freesoo.esc(tag)}</span>`).join('')}</div>
               ${createMediaMarkup(skill)}
             </article>
           `).join('')
@@ -193,8 +185,8 @@
         renderSkills();
       });
 
-    ['q', 'jobFilter', 'typeFilter', 'tagFilter'].forEach(id => {
-      document.getElementById(id).addEventListener('input', renderSkills);
+    ['q', 'jobFilter'].forEach(id => {
+      document.getElementById(id).addEventListener('input', renderSkills); 
       document.getElementById(id).addEventListener('change', renderSkills);
     });
   </script>
