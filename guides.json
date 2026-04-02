@@ -24,6 +24,20 @@
       }
     ]
   },
+    {
+    "id": "miro",
+    "title": "개인미로 클리어 공략 영상",
+    "category": "컨텐츠 공략",
+    "updatedAt": "2026-03-28",
+    "description": "개인미로 클리어 영상(w.케이크장인)",
+    "steps": [
+      {
+        "title": "개인미로 클리어 영상",
+        "text": "영상을 참고하시고, 따라하시면 개인미로를 쉽게 클리어 할 수 있습니다.",
+        "link": "https://youtu.be/I1qPVdBdrf8?si=101pp5Ft7jIbEc-R"
+      }
+    ]
+  },
   {
     "id": "sagok",
     "title": "사곡왕릉 가는 방법",
