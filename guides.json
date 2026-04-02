@@ -24,11 +24,10 @@
       }
     ]
   },
-    {
+  {
     "id": "miro",
     "title": "개인미로 클리어 공략 영상",
     "category": "컨텐츠 공략",
-    "thumbnail": "https://youtu.be/I1qPVdBdrf8?si=101pp5Ft7jIbEc-R",
     "updatedAt": "2026-03-28",
     "description": "개인미로 클리어 영상(w.케이크장인)",
     "steps": [
