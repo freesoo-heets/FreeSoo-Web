@@ -1,118 +1,556 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="assets/site.css" />
-<script src="site-config.js"></script>
-<script src="assets/site.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FreeSoo 공략 상세</title>
-  <meta name="description" content="단계별 이미지와 설명으로 구성된 프리수 공략 상세 페이지" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top, rgba(255, 140, 0, 0.12), transparent 30%),
+        linear-gradient(180deg, #101010 0%, #181818 100%);
+      color: #f5f5f5;
+      font-family: "Noto Sans KR", sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #ffcc80;
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-1px);
+    }
+
+    .page-badge {
+      font-size: 12px;
+      color: #bbb;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .guide-hero {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 26px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.22);
+    }
+
+    .guide-category {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffd28b;
+      background: rgba(255, 153, 0, 0.12);
+      border: 1px solid rgba(255, 166, 0, 0.18);
+    }
+
+    .guide-title {
+      margin: 0 0 12px;
+      font-size: 34px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .guide-meta {
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 14px;
+    }
+
+    .guide-desc {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #ddd;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .step-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+    }
+
+    .step-inner {
+      padding: 22px;
+    }
+
+    .step-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #111;
+      background: linear-gradient(180deg, #ffd27a, #ffad33);
+      margin-bottom: 12px;
+    }
+
+    .step-title {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.4;
+    }
+
+    .step-text {
+      font-size: 15px;
+      line-height: 1.9;
+      color: #d5d5d5;
+      margin-bottom: 18px;
+      white-space: pre-line;
+    }
+
+    .step-media {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .step-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .step-media:hover img {
+      transform: scale(1.02);
+    }
+
+    .video-badge {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255,255,255,0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      backdrop-filter: blur(4px);
+    }
+
+    .video-badge::before {
+      content: "";
+      display: block;
+      margin-left: 5px;
+      width: 0;
+      height: 0;
+      border-left: 24px solid #fff;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+    }
+
+    .step-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #2a2a2a, #202020);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    .step-link-btn:hover {
+      transform: translateY(-1px);
+      background: linear-gradient(180deg, #333, #252525);
+    }
+
+    .empty-box {
+      padding: 28px;
+      text-align: center;
+      color: #ccc;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.88);
+      padding: 20px;
+      z-index: 9999;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-box {
+      position: relative;
+      width: min(100%, 980px);
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+
+    .modal-box iframe,
+    .modal-box img {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      background: #fff;
+      color: #111;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .footer-space {
+      height: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        padding: 16px 12px 40px;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .guide-hero {
+        padding: 18px;
+      }
+
+      .guide-title {
+        font-size: 25px;
+      }
+
+      .guide-desc {
+        font-size: 15px;
+      }
+
+      .step-inner {
+        padding: 18px;
+      }
+
+      .step-title {
+        font-size: 20px;
+      }
+
+      .step-text {
+        font-size: 14px;
+      }
+
+      .video-badge {
+        width: 64px;
+        height: 64px;
+      }
+
+      .video-badge::before {
+        border-left: 20px solid #fff;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+      }
+    }
+  </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="wrap topbar-inner">
-    <a class="brand" href="index.html">
-      <div class="brand-mark">秀</div>
-      <div class="brand-copy">
-        <strong>FreeSoo 비공식 포털</strong>
-        <span>공지 · 공략집 · 무공 · 다운로드 · 문의</span>
-      </div>
-    </a>
-    <button class="menu-toggle" id="menuToggle" type="button">☰ 메뉴</button>
-    <nav class="nav" id="mainNav">
-      <a href="index.html" data-nav="home">홈</a>
-      <a href="index.html#news" data-nav="news">공지</a>
-      <a href="guide-select.html" data-nav="guides">공략집</a>
-      <a href="skills.html" data-nav="skills">무공</a>
-      <a href="index.html#download" data-nav="download">다운로드</a>
-      <a href="index.html#contact" data-nav="contact">문의</a>
-    </nav>
-  </div>
-</header>
-  <main class="section">
-    <div class="wrap">
-      <div id="guideRoot" class="hero-panel"><div class="empty">공략을 불러오는 중...</div></div>
+  <div class="wrap">
+    <div class="top-bar">
+      <a href="guide-select.html" class="back-btn">← 공략 목록으로</a>
+      <div class="page-badge">FreeSoo Guide</div>
     </div>
-  </main>
 
-  <div id="imageViewer" class="viewer">
-    <div class="viewer-panel">
-      <div class="viewer-head">
-        <strong id="imageViewerTitle">공략 이미지</strong>
-        <button type="button" class="btn btn-secondary" id="imageViewerClose">닫기</button>
-      </div>
-      <img id="imageViewerImg" src="" alt="공략 이미지" style="width:100%; max-height:78vh; object-fit:contain; background:#000;" />
+    <div id="guideDetail">
+      <div class="empty-box">가이드를 불러오는 중입니다...</div>
+    </div>
+
+    <div class="footer-space"></div>
+  </div>
+
+  <!-- 영상 모달 -->
+  <div id="videoModal" class="modal" onclick="handleModalBackdrop(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeVideoModal()">닫기</button>
+      <iframe
+        id="videoFrame"
+        src=""
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- 이미지 확대 모달 -->
+  <div id="imageModal" class="modal" onclick="handleImageBackdrop(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeImageModal()">닫기</button>
+      <img id="imageFrame" src="" alt="확대 이미지">
     </div>
   </div>
 
   <script>
-    Freesoo.initMenu('guides');
-    const params = new URLSearchParams(location.search);
-    const guideId = params.get('id');
-    const guideRoot = document.getElementById('guideRoot');
-    const imageViewer = document.getElementById('imageViewer');
-    const imageViewerImg = document.getElementById('imageViewerImg');
-    const imageViewerTitle = document.getElementById('imageViewerTitle');
-
-    function openImageViewer(src, title) {
-      imageViewerImg.src = src;
-      imageViewerTitle.textContent = title || '공략 이미지';
-      imageViewer.classList.add('open');
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
     }
-    function closeImageViewer() {
-      imageViewer.classList.remove('open');
-      imageViewerImg.src = '';
-    }
-    document.getElementById('imageViewerClose').addEventListener('click', closeImageViewer);
-    imageViewer.addEventListener('click', e => { if (e.target === imageViewer) closeImageViewer(); });
 
-    fetch('guides.json')
-      .then(r => r.json())
-      .then(list => {
-        const guide = (list || []).find(item => String(item.id) === String(guideId));
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function getYoutubeId(url) {
+      if (!url) return null;
+
+      const patterns = [
+        /youtu\.be\/([^?&/]+)/,
+        /youtube\.com\/watch\?v=([^?&/]+)/,
+        /youtube\.com\/embed\/([^?&/]+)/,
+        /youtube\.com\/shorts\/([^?&/]+)/
+      ];
+
+      for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match && match[1]) return match[1];
+      }
+
+      return null;
+    }
+
+    function isYoutubeUrl(url) {
+      return !!getYoutubeId(url);
+    }
+
+    function getYoutubeThumbnail(url) {
+      const id = getYoutubeId(url);
+      if (!id) return null;
+      return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    }
+
+    function getYoutubeEmbedUrl(url) {
+      const id = getYoutubeId(url);
+      if (!id) return null;
+      return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+    }
+
+    function openVideoModal(url) {
+      const embedUrl = getYoutubeEmbedUrl(url);
+      if (!embedUrl) {
+        window.open(url, "_blank");
+        return;
+      }
+
+      document.getElementById("videoFrame").src = embedUrl;
+      document.getElementById("videoModal").classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeVideoModal() {
+      document.getElementById("videoFrame").src = "";
+      document.getElementById("videoModal").classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    function handleModalBackdrop(event) {
+      if (event.target.id === "videoModal") {
+        closeVideoModal();
+      }
+    }
+
+    function openImageModal(src) {
+      document.getElementById("imageFrame").src = src;
+      document.getElementById("imageModal").classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeImageModal() {
+      document.getElementById("imageFrame").src = "";
+      document.getElementById("imageModal").classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    function handleImageBackdrop(event) {
+      if (event.target.id === "imageModal") {
+        closeImageModal();
+      }
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeVideoModal();
+        closeImageModal();
+      }
+    });
+
+    function renderStepMedia(step) {
+      if (step.img) {
+        return `
+          <div class="step-media" onclick="openImageModal('${escapeHtml(step.img)}')">
+            <img src="${escapeHtml(step.img)}" alt="${escapeHtml(step.title || "가이드 이미지")}" loading="lazy">
+          </div>
+        `;
+      }
+
+      if (step.link && isYoutubeUrl(step.link)) {
+        const thumb = getYoutubeThumbnail(step.link);
+        return `
+          <div class="step-media" onclick="openVideoModal('${escapeHtml(step.link)}')">
+            <img src="${escapeHtml(thumb)}" alt="${escapeHtml(step.title || "유튜브 영상")}" loading="lazy">
+            <div class="video-badge"></div>
+          </div>
+        `;
+      }
+
+      if (step.link) {
+        return `
+          <a class="step-link-btn" href="${escapeHtml(step.link)}" target="_blank" rel="noopener noreferrer">
+            링크 열기
+          </a>
+        `;
+      }
+
+      return "";
+    }
+
+    function renderGuide(guide) {
+      const container = document.getElementById("guideDetail");
+      const steps = Array.isArray(guide.steps) ? guide.steps : [];
+
+      container.innerHTML = `
+        <section class="guide-hero">
+          <div class="guide-category">${escapeHtml(guide.category || "공략")}</div>
+          <h1 class="guide-title">${escapeHtml(guide.title || "제목 없음")}</h1>
+          <div class="guide-meta">업데이트: ${escapeHtml(guide.updatedAt || "-")}</div>
+          <div class="guide-desc">${escapeHtml(guide.description || "")}</div>
+        </section>
+
+        <section class="steps">
+          ${
+            steps.length
+              ? steps.map((step, index) => `
+                <article class="step-card">
+                  <div class="step-inner">
+                    <div class="step-index">STEP ${index + 1}</div>
+                    <h2 class="step-title">${escapeHtml(step.title || `단계 ${index + 1}`)}</h2>
+                    <div class="step-text">${escapeHtml(step.text || "")}</div>
+                    ${renderStepMedia(step)}
+                  </div>
+                </article>
+              `).join("")
+              : `<div class="empty-box">등록된 단계가 없습니다.</div>`
+          }
+        </section>
+      `;
+    }
+
+    async function loadGuide() {
+      const id = getQueryParam("id");
+
+      try {
+        const res = await fetch("./guides.json");
+        const guides = await res.json();
+
+        const guide = guides.find(item => item.id === id);
+
         if (!guide) {
-          guideRoot.innerHTML = `
-            <div class="badge">GUIDE</div>
-            <h1>공략을 찾을 수 없습니다.</h1>
-            <p class="muted">guide.html?id=공략ID 형태로 접근해야 합니다.</p>
-            <div class="controls">
-              <a class="btn btn-primary" href="guide-select.html">공략집으로</a>
-              <a class="btn btn-secondary" href="index.html">메인으로</a>
-            </div>
+          document.getElementById("guideDetail").innerHTML = `
+            <div class="empty-box">해당 가이드를 찾을 수 없습니다.</div>
           `;
           return;
         }
-        guideRoot.innerHTML = `
-          <div class="badge">${Freesoo.esc(guide.category || 'GUIDE')}</div>
-          <h1>${Freesoo.esc(guide.title)}</h1>
-          <p class="muted">${Freesoo.esc(guide.description || '')}</p>
-          <div class="chip-row" style="margin-top: 12px;">
-            <span class="chip">업데이트: ${Freesoo.esc(guide.updatedAt || '-')}</span>
-            <span class="chip">STEP 수: ${guide.steps?.length || 0}</span>
-          </div>
-          <div class="controls" style="margin-top: 16px;">
-            <a class="btn btn-primary" href="guide-select.html">공략집으로</a>
-            <a class="btn btn-secondary" href="index.html">메인으로</a>
-          </div>
-          <div class="steps" style="margin-top: 20px;">
-            ${(guide.steps || []).map((step, index) => `
-              <article class="step-card">
-                <div class="step-num">${index + 1}</div>
-                <h3>${Freesoo.esc(step.title || `STEP ${index + 1}`)}</h3>
-                <p class="muted">${Freesoo.esc(step.text || '')}</p>
-                ${(step.img || step.image) ? `<img class="step-image" src="${Freesoo.esc(step.img || step.image)}" alt="${Freesoo.esc(step.title || `STEP ${index + 1}`)}">` : ''}
-              </article>
-            `).join('') || '<div class="empty">등록된 단계가 없습니다.</div>'}
-          </div>
+
+        renderGuide(guide);
+      } catch (error) {
+        console.error(error);
+        document.getElementById("guideDetail").innerHTML = `
+          <div class="empty-box">가이드를 불러오는 중 오류가 발생했습니다.</div>
         `;
-        guideRoot.querySelectorAll('.step-image').forEach(img => {
-          img.addEventListener('click', () => openImageViewer(img.src, img.alt));
-        });
-      })
-      .catch(() => {
-        guideRoot.innerHTML = '<div class="empty">guides.json을 불러오지 못했습니다.</div>';
-      });
+      }
+    }
+
+    loadGuide();
   </script>
 </body>
 </html>
