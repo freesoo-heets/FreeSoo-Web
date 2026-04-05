@@ -9,18 +9,38 @@
     "steps": [
       {
         "title": "1번 통로",
-        "text": "입구 기준 첫 번째 이동 루트입니다.",
+        "text": "입구 기준 첫 번째 이동 루트로 기본 동선 파악에 중요한 구간입니다.",
         "img": "assets/guides/maze/1.jpg"
       },
       {
-        "title": "지름길",
-        "text": "1번통로에서 2번통로로 이어지는 핵심 지름길입니다.",
+        "title": "지름길 통로",
+        "text": "다음 통로 이동을 빠르게 이어주는 핵심 지름길 구간입니다.",
         "img": "assets/guides/maze/2.jpg"
       },
       {
         "title": "2번 통로",
-        "text": "두 번째 주요 이동 경로입니다.",
+        "text": "두 번째 주요 이동 경로로 다른 통로와 연결되는 중간 단계입니다.",
         "img": "assets/guides/maze/3.jpg"
+      },
+      {
+        "title": "3번 통로",
+        "text": "중앙에서 이어지는 이동 경로로 방향 혼동이 많은 구간입니다.",
+        "img": "assets/guides/maze/4.jpg"
+      },
+      {
+        "title": "미로수렵지",
+        "text": "사냥 및 이동이 동시에 이루어지는 핵심 지역입니다.",
+        "img": "assets/guides/maze/5.jpg"
+      },
+      {
+        "title": "4번 통로",
+        "text": "후반 이동 루트로 출구 방향과 연결되는 중요한 통로입니다.",
+        "img": "assets/guides/maze/6.jpg"
+      },
+      {
+        "title": "미로마룡 위치",
+        "text": "최종 목표 위치로 보스 및 핵심 도착 지점입니다.",
+        "img": "assets/guides/maze/7.jpg"
       }
     ]
   },
