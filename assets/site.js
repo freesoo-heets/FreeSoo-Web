@@ -1,5 +1,16 @@
 window.Freesoo = {
   cfg: window.FREESOO_CONFIG || {},
+  async fetchContent(section, fallbackPath) {
+    try {
+      const response = await fetch('/api/content?section=' + encodeURIComponent(section), {cache:'no-store'});
+      if (!response.ok) throw new Error('Supabase unavailable');
+      return response.json();
+    } catch {
+      const local = await fetch(fallbackPath);
+      if (!local.ok) throw new Error('콘텐츠 로드 실패');
+      return local.json();
+    }
+  },
   getLocal(key, fallback = null) {
     try { const raw = localStorage.getItem('freesoo:' + key); return raw === null ? fallback : JSON.parse(raw); }
     catch { return fallback; }
