@@ -12,8 +12,8 @@ window.Freesoo = {
     }
   },
   async fetchContent(section, fallbackPath) {
-    try {const r=await fetch('/api/content?section='+encodeURIComponent(section),{cache:'no-store'});if(!r.ok)throw Error('Supabase unavailable');return r.json();}
-    catch {const r=await fetch(fallbackPath);if(!r.ok)throw Error('콘텐츠 로드 실패');return r.json();}
+    try {const r=await fetch('/api/content?section='+encodeURIComponent(section),{cache:'no-store'});if(!r.ok)throw Error('Supabase unavailable');return r;}
+    catch {const r=await fetch(fallbackPath);if(!r.ok)throw Error('콘텐츠 로드 실패');return r;}
   },
   getLocal(key, fallback = null) {
     try { const raw = localStorage.getItem('freesoo:' + key); return raw === null ? fallback : JSON.parse(raw); }
