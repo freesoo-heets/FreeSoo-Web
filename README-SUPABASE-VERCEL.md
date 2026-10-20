@@ -11,3 +11,6 @@
 10. After verifying content and media, disable/retire Cloudflare Worker/R2 separately and rotate any previously exposed credentials.
 Security: `site_admins` is managed through SQL Editor only. Storage write and table changes use authenticated admin RLS. Never put service_role keys in HTML or public environment variables.
 Notes: Static JSON files remain as rollback backups. The public pages may fall back to those files during staged migration. The legacy admin pages are not part of the new system; use `admin-console.html`.
+
+## Preview deployment checkpoint (2026-10-20)
+The connected Vercel project uses `main` for production. Review this feature branch via a Vercel Preview deployment before merging PR #1. The source repository is `freesoo-heets/FreeSoo-Web`. Do not merge until environment variables, API and admin checks pass.
