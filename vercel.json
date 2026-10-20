@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "functions": { "api/*.js": { "maxDuration": 10 } },
+  "headers": [
+    { "source": "/admin-console.html", "headers": [{ "key": "Cache-Control", "value": "no-store" }, { "key": "X-Content-Type-Options", "value": "nosniff" }] }
+  ]
+}
