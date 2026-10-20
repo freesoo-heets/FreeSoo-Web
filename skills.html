@@ -173,7 +173,7 @@
       bindMediaEvents();
     }
 
-    fetch('data/skills.json')
+    Freesoo.fetchContent('skills', 'data/skills.json')
       .then(r => r.json())
       .then(data => {
         jobs = data.jobs || [];
