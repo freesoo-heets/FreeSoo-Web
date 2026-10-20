@@ -43,6 +43,8 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
 
+  if (url.pathname.startsWith('/api/') || url.pathname.includes('admin-')) return;
+
   // GET만 처리
   if (req.method !== 'GET') return;
 
