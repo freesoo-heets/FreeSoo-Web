@@ -89,7 +89,7 @@
         : '<div class="empty">조건에 맞는 공략이 없습니다.</div>';
     }
 
-    fetch('guides.json')
+    Freesoo.fetchContent('guides', 'guides.json')
       .then(r => r.json())
       .then(data => {
         guides = data || [];
