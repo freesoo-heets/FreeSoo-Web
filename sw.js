@@ -45,6 +45,7 @@ self.addEventListener('fetch', event => {
 
   if (url.pathname.startsWith('/api/') || url.pathname.includes('admin-')) return;
 
+  if (url.pathname.startsWith('/api/') || url.pathname.includes('admin-')) return;
   // GET만 처리
   if (req.method !== 'GET') return;
 
