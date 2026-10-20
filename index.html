@@ -175,7 +175,7 @@
         : '<div class="empty">항목이 없습니다.</div>';
     }
 
-    fetch('notices.json')
+    Freesoo.fetchContent('notices', 'notices.json')
       .then(r => r.json())
       .then(data => {
         renderNoticeList(document.getElementById('noticeList'), (data.notices || []).sort(Freesoo.pinDateSort).slice(0, 3));
@@ -186,7 +186,7 @@
         renderNoticeList(document.getElementById('eventList'), []);
       });
 
-    fetch('guides.json')
+    Freesoo.fetchContent('guides', 'guides.json')
       .then(r => r.json())
       .then(list => {
         const el = document.getElementById('guideSpot');
@@ -206,7 +206,7 @@
         document.getElementById('guideSpot').innerHTML = '<div class="empty">공략 데이터를 불러오지 못했습니다.</div>';
       });
 
-    fetch('data/skills.json')
+    Freesoo.fetchContent('skills', 'data/skills.json')
       .then(r => r.json())
       .then(data => {
         const cards = [];
