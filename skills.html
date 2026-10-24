@@ -33,23 +33,23 @@
   <main class="section">
     <div class="wrap">
       <div class="hero-panel">
-        <div class="eyebrow">skills</div>
+        <div class="eyebrow">NEO PORTAL · SKILL LIBRARY</div>
         <h1>무공 설명서</h1>
-        <p>썸네일을 먼저 보여주고, 재생 버튼을 눌렀을 때만 영상을 로딩합니다. 영상이 없으면 자동으로 숨깁니다.</p>
-        <div class="grid-4">
-          <input id="q" class="input" placeholder="무공명 / 설명 검색" />
-          <select id="jobFilter" class="select"><option value="">전체 직업</option></select>
+        <p>직업과 무공을 검색하고 영상을 확인하세요. 연결된 영상은 1:1 화면에 크게 표시되며, 미등록 영상은 준비 중으로 안내합니다.</p>
+        <div class="skills-toolbar">
+          <input id="q" class="input" type="search" aria-label="무공 검색" placeholder="무공명 · 설명 · 태그 검색" />
+          <select id="jobFilter" class="select" aria-label="직업별 필터"><option value="">전체 직업</option></select>
         </div>
         <div class="chip-row" style="margin-top: 12px;">
-          <span class="chip">CDN: <span id="cdnText"></span></span>
+          <span class="chip">미디어 경로: <span id="cdnText"></span></span>
           <span class="chip">자동재생 꺼짐</span>
           <span class="chip">라이트박스 지원</span>
         </div>
       </div>
       <div class="section-head" style="margin-top: 16px;">
-        <div><h2>무공 목록</h2><p class="count" id="countText">총 0개</p></div>
+        <div><h2>무공 목록</h2><p class="count" id="countText">불러오는 중</p></div>
       </div>
-      <div id="skillCards" class="skills-grid"></div>
+      <div id="skillCards" class="skills-grid" aria-live="polite"><div class="empty">무공 정보를 불러오는 중입니다.</div></div>
     </div>
   </main>
 
@@ -59,7 +59,7 @@
         <strong id="viewerTitle">무공 영상</strong>
         <button type="button" class="btn btn-secondary" id="viewerClose">닫기</button>
       </div>
-      <video id="viewerVideo" controls preload="metadata" playsinline></video>
+      <video id="viewerVideo" controls preload="metadata" playsinline aria-label="무공 영상 확대 보기"></video>
     </div>
   </div>
 
@@ -72,38 +72,48 @@
     const viewerTitle = document.getElementById('viewerTitle');
     let jobs = [];
 
-    document.getElementById('cdnText').textContent = window.FREESOO_CONFIG?.CDN_BASE || '로컬 경로';
+    document.getElementById('cdnText').textContent = window.FREESOO_CONFIG?.CDN_BASE || '사이트 상대 경로';
 
     function openViewer(src, title) {
       viewerTitle.textContent = title || '무공 영상';
       viewerVideo.src = src;
       viewer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      viewerVideo.play().catch(() => {});
     }
     function closeViewer() {
       viewerVideo.pause();
       viewerVideo.removeAttribute('src');
       viewerVideo.load();
       viewer.classList.remove('open');
+      document.body.style.overflow = '';
     }
     document.getElementById('viewerClose').addEventListener('click', closeViewer);
     viewer.addEventListener('click', e => { if (e.target === viewer) closeViewer(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && viewer.classList.contains('open')) closeViewer(); });
 
     function createMediaMarkup(skill) {
-      const videoPath = Freesoo.resolveMedia(skill.video || `video/${skill.jobId}_${skill.name}.mp4`);
-      const thumbPath = Freesoo.resolveMedia(skill.thumbnail || `thumb/${skill.jobId}_${skill.name}.jpg`);
+      const rawVideo = typeof skill.video === 'string' ? skill.video.trim() : '';
+      const rawThumb = typeof skill.thumbnail === 'string' ? skill.thumbnail.trim() : '';
+      // Only present playable controls for explicitly linked files.
+      // Legacy filename conventions remain available to administrators for migration.
+      if (!rawVideo) return '<div class="video-pending" role="status"><span>VIDEO PENDING</span><strong>영상 준비 중</strong><small>무공 설명은 정상적으로 이용할 수 있습니다.</small></div>';
+      const videoPath = Freesoo.resolveMedia(rawVideo);
+      const poster = rawThumb ? '<img class="video-poster" src="' + Freesoo.esc(Freesoo.resolveMedia(rawThumb)) + '" alt="' + Freesoo.esc(skill.name) + ' 썸네일" loading="lazy">' : '';
       return `
         <div class="media-wrap" data-video="${Freesoo.esc(videoPath)}" data-title="${Freesoo.esc(skill.name)}">
           <div class="video-shell">
-            <img class="video-poster" src="${Freesoo.esc(thumbPath)}" alt="${Freesoo.esc(skill.name)} 썸네일" loading="lazy">
-            <div class="video-overlay" role="button" tabindex="0"><div class="play-badge"></div></div>
+            ${poster}
+            <div class="video-overlay" role="button" tabindex="0" aria-label="${Freesoo.esc(skill.name)} 영상 재생"><div class="play-badge"></div></div>
           </div>
-          <div class="video-fallback muted hidden">등록된 영상이 없습니다.</div>
+          <div class="video-fallback muted hidden" role="status">영상 파일을 불러올 수 없습니다. 관리자에서 경로를 확인해주세요.</div>
         </div>
       `;
     }
 
     function loadCardVideo(mediaWrap) {
-      if (!mediaWrap || mediaWrap.dataset.loaded === '1') return;
+      if (!mediaWrap || mediaWrap.dataset.loaded === '1' || mediaWrap.dataset.loading === '1') return;
+      mediaWrap.dataset.loading = '1';
       const videoSrc = mediaWrap.dataset.video;
       const title = mediaWrap.dataset.title || '무공 영상';
       const shell = mediaWrap.querySelector('.video-shell');
@@ -118,6 +128,7 @@
       video.src = videoSrc;
       video.addEventListener('loadedmetadata', () => {
         mediaWrap.dataset.loaded = '1';
+        delete mediaWrap.dataset.loading;
         if (poster) poster.style.display = 'none';
         if (overlay) overlay.style.display = 'none';
       }, { once: true });
@@ -125,9 +136,10 @@
         if (poster) poster.style.display = 'none';
         if (overlay) overlay.style.display = 'none';
         video.remove();
+        delete mediaWrap.dataset.loading;
         fallback?.classList.remove('hidden');
       }, { once: true });
-      video.addEventListener('click', () => openViewer(videoSrc, title));
+      video.addEventListener('dblclick', () => openViewer(videoSrc, title));
       shell.prepend(video);
       video.play().catch(() => {});
     }
@@ -173,7 +185,7 @@
       bindMediaEvents();
     }
 
-    fetch('data/skills.json')
+    Freesoo.fetchContent('skills', 'data/skills.json')
       .then(r => r.json())
       .then(data => {
         jobs = data.jobs || [];
@@ -183,6 +195,10 @@
         });
         if (preselectedJob) jobFilter.value = preselectedJob;
         renderSkills();
+      })
+      .catch(() => {
+        document.getElementById('countText').textContent = '데이터 로딩 실패';
+        document.getElementById('skillCards').innerHTML = '<div class="empty">무공 정보를 불러오지 못했습니다. 새로고침하여 다시 시도해주세요.</div>';
       });
 
     ['q', 'jobFilter'].forEach(id => {

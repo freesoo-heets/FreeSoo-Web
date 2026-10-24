@@ -32,34 +32,27 @@
 </header>
 
   <main>
-    <!-- 메인 소개 영역 -->
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div class="hero-panel">
-          <div class="eyebrow">FreeSoo portal</div>
-          <h1>FreeSoo</h1>
-          <p>
-            모든 유저들을 위한 정보공유형 포털입니다.<br>
-            공지, 공략집, 무공 설명서, 다운로드, 문의를 한곳에서 볼 수 있도록 구성했습니다.
-          </p>
-          <div class="controls">
-            <a class="btn btn-primary" href="guide-select.html">공략집</a>
-            <a class="btn btn-secondary" href="skills.html">무공 설명서</a>
+    <!-- Game portal hero / quick navigation -->
+    <section class="hero portal-hero">
+      <div class="wrap portal-hero-grid">
+        <div class="hero-panel portal-feature">
+          <div class="portal-kicker"><span class="live-dot"></span> FREESOO / GAME INTELLIGENCE HUB</div>
+          <h1>게임 정보,<br><span class="lime-text">한눈에 플레이.</span></h1>
+          <p>필요한 공략부터 직업별 무공 영상까지.<br>플레이에 집중할 수 있도록 핵심 정보를 모았습니다.</p>
+          <div class="controls portal-actions">
+            <a class="btn btn-primary" href="guide-select.html">공략 탐색 →</a>
+            <a class="btn btn-secondary" href="skills.html">무공 영상 보기 ↗</a>
           </div>
+          <div class="portal-feature-bottom"><span>GUIDES & SKILLS</span><span>EXPLORE YOUR NEXT MOVE ↗</span></div>
         </div>
-
-        <aside class="side-panel">
-          <div class="info-card">
-            <strong>운영 핵심</strong>
-            <p>코드는 GitHub/Netlify에 두고, 영상은 R2 분리하여 저장.</p>
-          </div>
-          <div class="info-card">
-            <strong>코딩 방식</strong>
-            <p>notices.json / guides.json / data/skills.json 수정 >> 공지, 공략, 무공 데이터 자동 반영.</p>
-          </div>
+        <aside class="portal-shortcuts" aria-label="빠른 메뉴">
+          <a href="guide-select.html" class="portal-shortcut"><span class="shortcut-icon">01</span><span><strong>공략 데이터베이스</strong><small>플레이 가이드 · 단계별 공략</small></span><span class="shortcut-arrow">↗</span></a>
+          <a href="skills.html" class="portal-shortcut"><span class="shortcut-icon">02</span><span><strong>무공 아카이브</strong><small>직업별 무공 · 1:1 영상 미리보기</small></span><span class="shortcut-arrow">↗</span></a>
+          <a href="#news" class="portal-shortcut"><span class="shortcut-icon">03</span><span><strong>공지 & 이벤트</strong><small>새 소식 · 업데이트 확인</small></span><span class="shortcut-arrow">↗</span></a>
         </aside>
       </div>
     </section>
+    <div class="wrap"><div class="portal-ticker"><span class="ticker-label">PORTAL ONLINE</span><span>FreeSoo 게임 가이드 & 무공 허브</span><span class="ticker-end">EXPLORE · LEARN · PLAY</span></div></div>
 
     <!-- 공지 / 이벤트 영역 -->
     <section class="section" id="news">
@@ -67,7 +60,7 @@
         <div class="section-head">
           <div>
             <h2>최신 소식</h2>
-            <p class="muted">notices.json에서 자동 로드</p>
+            <p class="muted">새롭게 등록된 소식을 확인하세요</p>
           </div>
         </div>
         <div class="grid-2">
@@ -88,8 +81,8 @@
       <div class="wrap">
         <div class="section-head">
           <div>
-            <h2>추천 공략</h2>
-            <p class="muted">guides.json 기준 대표 공략</p>
+            <h2>공략 라이브러리</h2>
+            <p class="muted">모험에 도움이 되는 공략 모음</p>
           </div>
           <a href="guide-select.html" class="btn btn-secondary">전체 보기</a>
         </div>
@@ -102,7 +95,7 @@
       <div class="wrap">
         <div class="section-head">
           <div>
-            <h2>추천 무공</h2>
+            <h2>무공 영상 아카이브</h2>
             <p class="muted">직업별 주요 무공 빠른 이동</p>
           </div>
           <a href="skills.html" class="btn btn-secondary">무공 전체 보기</a>
@@ -111,44 +104,19 @@
       </div>
     </section>
 
-    <!-- 다운로드 / 안내 -->
-    <section class="section" id="download">
-      <div class="wrap grid-2">
-        <div class="download-box">
-          <div class="badge">DOWNLOAD</div>
-          <h2>배포 체크</h2>
-          <ul>
-            <li>이미지 경로가 guides.json과 실제 파일 위치가 같은지 확인</li>
-            <li>무공 영상 파일명이 직업키_무공명.mp4 규칙과 같은지 확인</li>
-            <li>배포 후 Ctrl + Shift + R로 캐시 갱신 확인</li>
-          </ul>
-        </div>
-        <div class="download-box">
-          <div class="badge">운영 팁</div>
-          <h2>관리 구조</h2>
-          <p>공략은 <strong>guides.json</strong>, 무공은 <strong>data/skills.json</strong>, 공지는 <strong>notices.json</strong>에서 관리하면 됩니다.</p>
+    <section class="section portal-bottom" id="download">
+      <div class="wrap">
+        <div class="portal-bottom-banner">
+          <div><span class="eyebrow">YOUR NEXT MOVE</span><h2>다음 플레이를 준비하세요.</h2><p>막히는 구간은 공략집에서, 무공 활용은 영상 설명서에서 확인할 수 있습니다.</p></div>
+          <div class="controls"><a class="btn btn-primary" href="guide-select.html">공략집 바로가기 →</a><a class="btn btn-secondary" href="skills.html">무공 설명서 ↗</a></div>
         </div>
       </div>
     </section>
 
-    <!-- 문의 영역 -->
-    <section class="section" id="contact">
-      <div class="wrap grid-3">
-        <div class="card">
-          <div class="badge">문의</div>
-          <h3>카카오톡</h3>
-          <p>오픈채팅 링크 입력 시 연동</p>
-        </div>
-        <div class="card">
-          <div class="badge">문의</div>
-          <h3>디스코드</h3>
-          <p>초대 링크 또는 서버 안내 링크 연동.</p>
-        </div>
-        <div class="card">
-          <div class="badge">관리</div>
-          <h3>수정 대상 파일</h3>
-          <p>index.html / skills.html / guide-select.html / guide.html / JSON 파일만 수정하면 됩니다.</p>
-        </div>
+    <section class="section portal-contact" id="contact">
+      <div class="wrap portal-contact-row">
+        <div><span class="eyebrow">FREESOO PORTAL</span><h2>함께 만드는 게임 정보 허브</h2><p class="muted">공략 및 무공 정보는 지속적으로 업데이트됩니다.</p></div>
+        <a href="admin-console.html" class="btn btn-secondary">관리자 페이지 ↗</a>
       </div>
     </section>
   </main>
@@ -175,7 +143,7 @@
         : '<div class="empty">항목이 없습니다.</div>';
     }
 
-    fetch('notices.json')
+    Freesoo.fetchContent('notices', 'notices.json')
       .then(r => r.json())
       .then(data => {
         renderNoticeList(document.getElementById('noticeList'), (data.notices || []).sort(Freesoo.pinDateSort).slice(0, 3));
@@ -186,7 +154,7 @@
         renderNoticeList(document.getElementById('eventList'), []);
       });
 
-    fetch('guides.json')
+    Freesoo.fetchContent('guides', 'guides.json')
       .then(r => r.json())
       .then(list => {
         const el = document.getElementById('guideSpot');
@@ -206,7 +174,7 @@
         document.getElementById('guideSpot').innerHTML = '<div class="empty">공략 데이터를 불러오지 못했습니다.</div>';
       });
 
-    fetch('data/skills.json')
+    Freesoo.fetchContent('skills', 'data/skills.json')
       .then(r => r.json())
       .then(data => {
         const cards = [];
