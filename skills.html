@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="assets/site.css" />
 <script src="site-config.js"></script>
 <script src="assets/site.js"></script>
+<style>html:not(.member-ready) body{visibility:hidden}</style>
   <title>FreeSoo 무공 설명서</title>
   <meta name="description" content="직업별 무공 설명서와 영상 미리보기를 제공하는 페이지" />
 </head>
@@ -30,6 +31,7 @@
     </nav>
   </div>
 </header>
+  <div class="wrap member-nav"><div id="memberActions" class="member-actions"></div></div>
   <main class="section">
     <div class="wrap">
       <div class="hero-panel">
@@ -65,7 +67,9 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
+    import {requireMember,fetchMemberContent} from './assets/member-auth.js';
+    if(await requireMember()){
     Freesoo.initMenu('skills');
     const params = new URLSearchParams(location.search);
     const preselectedJob = params.get('job') || '';
@@ -192,8 +196,8 @@
       bindMediaEvents();
     }
 
-    Freesoo.fetchContent('skills', 'data/skills.json')
-      .then(r => r.json())
+    fetchMemberContent('skills')
+      .then(r => (typeof r.json === 'function' ? r.json() : r))
       .then(data => {
         jobs = data.jobs || [];
         const jobFilter = document.getElementById('jobFilter');
@@ -212,6 +216,7 @@
       document.getElementById(id).addEventListener('input', renderSkills); 
       document.getElementById(id).addEventListener('change', renderSkills);
     });
+    }
   </script>
 </body>
 </html>
