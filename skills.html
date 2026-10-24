@@ -41,7 +41,7 @@
           <select id="jobFilter" class="select" aria-label="직업별 필터"><option value="">전체 직업</option></select>
         </div>
         <div class="chip-row" style="margin-top: 12px;">
-          <span class="chip">CDN: <span id="cdnText"></span></span>
+          <span class="chip">미디어 경로: <span id="cdnText"></span></span>
           <span class="chip">자동재생 꺼짐</span>
           <span class="chip">라이트박스 지원</span>
         </div>
@@ -72,7 +72,7 @@
     const viewerTitle = document.getElementById('viewerTitle');
     let jobs = [];
 
-    document.getElementById('cdnText').textContent = window.FREESOO_CONFIG?.CDN_BASE || '로컬 경로';
+    document.getElementById('cdnText').textContent = window.FREESOO_CONFIG?.CDN_BASE || '사이트 상대 경로';
 
     function openViewer(src, title) {
       viewerTitle.textContent = title || '무공 영상';
