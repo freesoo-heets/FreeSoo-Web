@@ -311,3 +311,114 @@ body { font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif; l
 @media (prefers-reduced-motion: reduce) {
   .btn,.card,.notice-card,.skill-card,.step-card { transition: none; }
 }
+
+
+/* ==========================================================
+   JADE CHRONICLE · FreeSoo design system v1
+   Ink / Jade / Antique Gold · responsive, shared UI
+   ========================================================== */
+:root {
+  --bg: #091714; --bg-2: #0e201b; --panel: #11251f; --panel-2: #0c1b17;
+  --line: rgba(145,194,165,.20); --line-strong: rgba(190,170,112,.46);
+  --text: #f1f0df; --muted: #aec5b8; --accent: #96d9b6; --accent-2: #cdbb82;
+  --shadow: 0 14px 36px rgba(0,0,0,.22); --radius: 18px;
+}
+html { color-scheme: dark; }
+body {
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(34,96,73,.35), transparent 39%),
+    radial-gradient(ellipse at 100% 20%, rgba(113,99,46,.12), transparent 34%),
+    linear-gradient(160deg,#0d241e 0%,#091713 48%,#09120f 100%);
+  color: var(--text);
+  letter-spacing: -.015em;
+}
+body::before { opacity: .15; mix-blend-mode: normal;
+  background-image: repeating-linear-gradient(90deg,transparent 0 88px,rgba(144,188,162,.055) 89px 90px);
+  background-size: auto; }
+.topbar {
+  background: rgba(7,24,19,.90); border-bottom: 1px solid var(--line);
+  box-shadow: 0 6px 20px rgba(0,0,0,.10);
+}
+.brand-mark {
+  background: linear-gradient(145deg,#164436,#102a24); color: #d7e9cf;
+  border: 1px solid #547d60; box-shadow: inset 0 0 0 3px rgba(255,255,255,.025);
+  font-family: "Noto Serif KR",serif;
+}
+.brand-copy strong { color: #f4f1dc; letter-spacing: -.025em; }
+.brand-copy span { color: #9ab6a8; }
+.nav a { color: #b6cabc; }
+.nav a:hover,.nav a.active {
+  color: #f1f4dc; border-color: rgba(147,207,165,.32);
+  background: rgba(95,157,116,.15); box-shadow: none;
+}
+.hero-panel,.side-panel,.notice-card,.card,.download-box,.footer-panel,.filter-box,.viewer-panel,.skill-card,.step-card {
+  background: linear-gradient(155deg,rgba(23,48,39,.98),rgba(12,30,25,.98));
+  border-color: var(--line); box-shadow: var(--shadow);
+}
+.hero-panel::after,.side-panel::after,.notice-card::after,.card::after,.download-box::after,.footer-panel::after,.filter-box::after,.viewer-panel::after,.skill-card::after,.step-card::after {
+  background: radial-gradient(circle,rgba(128,183,133,.10),transparent 70%);
+}
+.hero-panel { padding: clamp(24px,4vw,46px); }
+.hero-panel .eyebrow, .eyebrow { color: #cabb83; letter-spacing: .20em; font-size: .76rem; font-weight: 700; }
+.hero-panel h1,.guide-title {
+  color: #f7f3dd; font-family: "Noto Serif KR","Nanum Myeongjo",serif; letter-spacing: -.055em;
+}
+.hero-panel h1 { font-size: clamp(2.3rem,5.5vw,4.4rem); }
+.hero-panel p { color: #b4cebf; max-width: 66ch; }
+.badge,.chip {
+  color: #c8e6c9; background: rgba(109,174,134,.10);
+  border: 1px solid rgba(134,194,147,.23);
+}
+.badge { letter-spacing: .055em; }
+.btn { transition: background .2s ease, border-color .2s ease, transform .2s ease; text-align:center; }
+.btn-primary {
+  color: #09271d; background: linear-gradient(135deg,#a9d8aa,#7ab89e);
+  border-color: #9bd4b1; box-shadow: none;
+}
+.btn-primary:hover { background: #c0e8be; }
+.btn-secondary { color: #d4e6d7; background: rgba(133,182,149,.075); border-color: var(--line); }
+.btn-secondary:hover { background: rgba(133,182,149,.16); border-color: var(--line-strong); }
+.input,.select {
+  color: var(--text); background: #0c211a; border-color: rgba(145,194,165,.28);
+}
+.input::placeholder { color:#849e90; }
+.select option { background:#10271f; color:#f0f5e9; }
+.input:focus,.select:focus { border-color:#aad4a9; }
+.count { color:#c6dca3; }
+.notice-item,.info-card { border-color:rgba(148,191,160,.14); background:rgba(101,145,116,.065); }
+.info-card strong { color:#e0edd2; }
+.card-thumb,.step-image,.video-shell { border-color:var(--line); }
+.video-shell { background:#06100d; border-radius:14px; }
+.video-poster,.skill-video { background:#06100d; object-fit:contain; }
+.video-overlay { background:linear-gradient(180deg,rgba(6,19,12,.05),rgba(4,17,12,.55)); }
+.video-overlay:hover { background:linear-gradient(180deg,rgba(6,19,12,.03),rgba(4,17,12,.35)); }
+.play-badge { background:rgba(9,40,30,.82); border-color:#91c49d; box-shadow:0 8px 22px rgba(0,0,0,.22); }
+.play-badge::before { border-left-color:#d6edd3; }
+.section-head { margin-bottom:20px; }
+.section-head h2 { color:#f4edd6; font-family:"Noto Serif KR","Nanum Myeongjo",serif; }
+.card h3,.skill-card h3,.notice-card h3 { color:#ecf1df; }
+.card p,.skill-card p,.download-box p { color:var(--muted); }
+.card,.skill-card,.notice-card { transition:border-color .22s,transform .22s; }
+.card:hover,.skill-card:hover { border-color:rgba(162,205,164,.40); }
+.skills-grid { gap:22px; }
+.skill-card { padding:24px; }
+.footer-panel { border-top:1px solid var(--line); }
+.menu-toggle { color:#dbe8d7; background:#173b2f; border-color:var(--line); }
+.admin-layout textarea,.admin-layout input {
+  background:#091b16 !important; border:1px solid rgba(153,193,162,.3) !important;
+  color:#eef2dd !important; border-radius:12px; 
+}
+.admin-layout nav button { text-align:left; justify-content:flex-start; }
+.admin-layout nav button[data-section]:focus { border-color:var(--accent); }
+#login label { display:block; margin:14px 0; color:var(--muted); }
+#login input { display:block; margin-top:7px; }
+#status,#loginStatus,#mediaResult { overflow-wrap:anywhere; }
+#media { margin:12px 0; width:100%; }
+#mediaResult a { color:#b8e8ba; text-decoration:underline; }
+@media(max-width:760px) {
+  .hero-panel { padding:24px; }
+  .skills-grid { gap:16px; }
+  .skill-card { padding:17px; }
+  .nav { background:#0b241c; }
+  .admin-layout nav button { text-align:center; justify-content:center; }
+}
