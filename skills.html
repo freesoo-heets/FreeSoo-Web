@@ -47,9 +47,9 @@
         </div>
       </div>
       <div class="section-head" style="margin-top: 16px;">
-        <div><h2>무공 목록</h2><p class="count" id="countText">총 0개</p></div>
+        <div><h2>무공 목록</h2><p class="count" id="countText">불러오는 중</p></div>
       </div>
-      <div id="skillCards" class="skills-grid"></div>
+      <div id="skillCards" class="skills-grid" aria-live="polite"><div class="empty">무공 정보를 불러오는 중입니다.</div></div>
     </div>
   </main>
 
@@ -107,7 +107,8 @@
     }
 
     function loadCardVideo(mediaWrap) {
-      if (!mediaWrap || mediaWrap.dataset.loaded === '1') return;
+      if (!mediaWrap || mediaWrap.dataset.loaded === '1' || mediaWrap.dataset.loading === '1') return;
+      mediaWrap.dataset.loading = '1';
       const videoSrc = mediaWrap.dataset.video;
       const title = mediaWrap.dataset.title || '무공 영상';
       const shell = mediaWrap.querySelector('.video-shell');
@@ -122,6 +123,7 @@
       video.src = videoSrc;
       video.addEventListener('loadedmetadata', () => {
         mediaWrap.dataset.loaded = '1';
+        delete mediaWrap.dataset.loading;
         if (poster) poster.style.display = 'none';
         if (overlay) overlay.style.display = 'none';
       }, { once: true });
@@ -129,6 +131,7 @@
         if (poster) poster.style.display = 'none';
         if (overlay) overlay.style.display = 'none';
         video.remove();
+        delete mediaWrap.dataset.loading;
         fallback?.classList.remove('hidden');
       }, { once: true });
       video.addEventListener('dblclick', () => openViewer(videoSrc, title));
@@ -187,6 +190,10 @@
         });
         if (preselectedJob) jobFilter.value = preselectedJob;
         renderSkills();
+      })
+      .catch(() => {
+        document.getElementById('countText').textContent = '데이터 로딩 실패';
+        document.getElementById('skillCards').innerHTML = '<div class="empty">무공 정보를 불러오지 못했습니다. 새로고침하여 다시 시도해주세요.</div>';
       });
 
     ['q', 'jobFilter'].forEach(id => {
