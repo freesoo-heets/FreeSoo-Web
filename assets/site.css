@@ -452,3 +452,8 @@ border-color:rgba(189,243,91,.28)!important;isolation:isolate;}
 .media-link-helper .grid-2{gap:12px;}
 .media-link-helper button{justify-self:start;}
 @media(max-width:760px){.media-link-helper{padding:14px;}.media-link-helper .grid-2{grid-template-columns:1fr;}.media-link-helper button{justify-self:stretch;}}
+
+/* Production QA: video coverage filters */
+.skills-toolbar{grid-template-columns:minmax(0,2fr) minmax(150px,1fr) minmax(150px,1fr);}
+.media-summary{margin:13px 0 0;color:#c4ec97;font-size:.88rem;font-weight:650;}
+@media(max-width:760px){.skills-toolbar{grid-template-columns:1fr;}}
