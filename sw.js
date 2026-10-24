@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v7';
+const CACHE_VERSION = 'v8-member';
 const STATIC_CACHE = `freesoo-static-${CACHE_VERSION}`;
 const DATA_CACHE = `freesoo-data-${CACHE_VERSION}`;
 
