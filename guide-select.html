@@ -49,9 +49,9 @@
         </div>
       </div>
       <div class="section-head" style="margin-top: 16px;">
-        <div><h2>공략 목록</h2><p class="count" id="guideCount">총 0개</p></div>
+        <div><h2>공략 목록</h2><p class="count" id="guideCount">불러오는 중</p></div>
       </div>
-      <div id="guideCards" class="cards"></div>
+      <div id="guideCards" class="cards" aria-live="polite"><div class="empty">공략을 불러오는 중입니다.</div></div>
     </div>
   </main>
 
@@ -101,7 +101,8 @@
         renderGuides();
       })
       .catch(() => {
-        document.getElementById('guideCards').innerHTML = '<div class="empty">guides.json을 불러오지 못했습니다.</div>';
+        document.getElementById('guideCount').textContent = '데이터 로딩 실패';
+        document.getElementById('guideCards').innerHTML = '<div class="empty">공략 데이터를 불러오지 못했습니다. 새로고침하여 다시 시도해주세요.</div>';
       });
 
     ['guideSearch', 'guideCategory', 'guideSort'].forEach(id => {
