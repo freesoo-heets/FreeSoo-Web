@@ -35,7 +35,7 @@
       <div class="hero-panel">
         <div class="eyebrow">NEO PORTAL · SKILL LIBRARY</div>
         <h1>무공 설명서</h1>
-        <p>직업과 무공을 검색하고 영상을 확인하세요. 영상은 1:1 화면에 크게 표시되며 재생 전에는 데이터를 불러오지 않습니다.</p>
+        <p>직업과 무공을 검색하고 영상을 확인하세요. 연결된 영상은 1:1 화면에 크게 표시되며, 미등록 영상은 준비 중으로 안내합니다.</p>
         <div class="skills-toolbar">
           <input id="q" class="input" type="search" aria-label="무공 검색" placeholder="무공명 · 설명 · 태그 검색" />
           <select id="jobFilter" class="select" aria-label="직업별 필터"><option value="">전체 직업</option></select>
@@ -93,15 +93,20 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && viewer.classList.contains('open')) closeViewer(); });
 
     function createMediaMarkup(skill) {
-      const videoPath = Freesoo.resolveMedia(skill.video || `video/${skill.jobId}_${skill.name}.mp4`);
-      const thumbPath = Freesoo.resolveMedia(skill.thumbnail || `thumb/${skill.jobId}_${skill.name}.jpg`);
+      const rawVideo = typeof skill.video === 'string' ? skill.video.trim() : '';
+      const rawThumb = typeof skill.thumbnail === 'string' ? skill.thumbnail.trim() : '';
+      // Only present playable controls for explicitly linked files.
+      // Legacy filename conventions remain available to administrators for migration.
+      if (!rawVideo) return '<div class="video-pending" role="status"><span>VIDEO PENDING</span><strong>영상 준비 중</strong><small>무공 설명은 정상적으로 이용할 수 있습니다.</small></div>';
+      const videoPath = Freesoo.resolveMedia(rawVideo);
+      const poster = rawThumb ? '<img class="video-poster" src="' + Freesoo.esc(Freesoo.resolveMedia(rawThumb)) + '" alt="' + Freesoo.esc(skill.name) + ' 썸네일" loading="lazy">' : '';
       return `
         <div class="media-wrap" data-video="${Freesoo.esc(videoPath)}" data-title="${Freesoo.esc(skill.name)}">
           <div class="video-shell">
-            <img class="video-poster" src="${Freesoo.esc(thumbPath)}" alt="${Freesoo.esc(skill.name)} 썸네일" loading="lazy">
+            ${poster}
             <div class="video-overlay" role="button" tabindex="0" aria-label="${Freesoo.esc(skill.name)} 영상 재생"><div class="play-badge"></div></div>
           </div>
-          <div class="video-fallback muted hidden" role="status">영상 파일을 불러올 수 없습니다.</div>
+          <div class="video-fallback muted hidden" role="status">영상 파일을 불러올 수 없습니다. 관리자에서 경로를 확인해주세요.</div>
         </div>
       `;
     }
