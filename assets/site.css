@@ -440,3 +440,15 @@ border-color:rgba(189,243,91,.28)!important;isolation:isolate;}
 #skillCards .skill-card{align-self:start;}
 @media(max-width:940px){.portal-hero-grid{grid-template-columns:1fr;}.portal-shortcuts{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto;}.portal-shortcut{padding:16px;gap:10px;}.portal-shortcut .shortcut-icon{flex-basis:34px;height:34px;}.shortcut-arrow{display:none;}.portal-bottom-banner{flex-direction:column;align-items:flex-start;}}
 @media(max-width:700px){.portal-hero{padding:17px 0 8px;}.portal-feature{min-height:350px;padding:26px 22px;}.portal-feature h1{font-size:clamp(2.2rem,10vw,3.2rem);}.portal-feature-bottom{flex-wrap:wrap;font-size:.6rem;}.portal-shortcuts{grid-template-columns:1fr;}.portal-shortcut{padding:16px 17px;}.shortcut-arrow{display:block;}.portal-ticker{font-size:.75rem;}.ticker-end{display:none;}.portal-bottom-banner{padding:24px 19px;}.portal-contact-row{align-items:flex-start;flex-direction:column;}.section-head{align-items:center;}.section-head .btn{width:auto;font-size:.78rem;padding:0 12px;}.notice-card,.filter-box{padding:17px;}}
+
+
+/* STEP 8 - missing media indication and administrator video linking */
+.video-pending{aspect-ratio:1/1;width:100%;margin-top:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;padding:22px;border:1px dashed rgba(189,243,91,.28);border-radius:12px;background:linear-gradient(145deg,#181f21,#101517);}
+.video-pending span{color:#bdf35b;font-size:.68rem;letter-spacing:.15em;font-weight:800;}
+.video-pending strong{color:#eff2e8;font-size:1.15rem;}
+.video-pending small{color:#9ba69d;line-height:1.6;}
+.media-link-helper{margin-top:20px;padding:20px;background:rgba(189,243,91,.035);border:1px solid rgba(189,243,91,.18);border-radius:12px;display:grid;gap:12px;}
+.media-link-helper h3,.media-link-helper p{margin:0;}
+.media-link-helper .grid-2{gap:12px;}
+.media-link-helper button{justify-self:start;}
+@media(max-width:760px){.media-link-helper{padding:14px;}.media-link-helper .grid-2{grid-template-columns:1fr;}.media-link-helper button{justify-self:stretch;}}
