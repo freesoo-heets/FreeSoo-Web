@@ -53,7 +53,7 @@
       <div class="section-head" style="margin-top: 16px;">
         <div><h2>공략 목록</h2><p class="count" id="guideCount">불러오는 중</p></div>
       </div>
-      <div id="guideCards" class="cards" aria-live="polite"><div class="empty">공략을 불러오는 중입니다.</div></div>
+      <div class="controls" style="margin-bottom:16px"><button id="favoritesOnly" type="button" class="btn btn-secondary" aria-pressed="false">☆ 즐겨찾기만 보기</button></div><div id="guideCards" class="cards" aria-live="polite"><div class="empty">공략을 불러오는 중입니다.</div></div>
     </div>
   </main>
 
@@ -62,6 +62,13 @@
     if(await requireMember()){
     Freesoo.initMenu('guides');
     let guides = [];
+    let favoriteIds = new Set();
+    let favoriteOnly = false;
+    const {authClient} = await import('./assets/member-auth.js');
+    const {data:{user:favoriteUser}} = await authClient.auth.getUser();
+    async function refreshFavorites(){const {data,error}=await authClient.from('member_favorites').select('guide_id');if(!error)favoriteIds=new Set((data||[]).map(x=>x.guide_id));renderGuides();}
+    document.getElementById('favoritesOnly').onclick=()=>{favoriteOnly=!favoriteOnly;document.getElementById('favoritesOnly').setAttribute('aria-pressed',String(favoriteOnly));document.getElementById('favoritesOnly').textContent=favoriteOnly?'★ 즐겨찾기만 보는 중':'☆ 즐겨찾기만 보기';renderGuides();};
+    document.getElementById('guideCards').addEventListener('click',async e=>{const button=e.target.closest('[data-favorite]');if(!button)return;e.preventDefault();const id=button.dataset.favorite;if(!favoriteUser)return;let error;if(favoriteIds.has(id)){({error}=await authClient.from('member_favorites').delete().eq('guide_id',id).eq('user_id',favoriteUser.id));}else{({error}=await authClient.from('member_favorites').insert({guide_id:id,user_id:favoriteUser.id}));}if(error){alert('즐겨찾기 저장 실패: '+error.message);return;}await refreshFavorites();});
 
     function getGuidePreview(guide) {
       return guide.thumbnail || (guide.steps && guide.steps[0] && (guide.steps[0].img || guide.steps[0].image)) || '';
@@ -74,7 +81,7 @@
       let filtered = [...guides].filter(guide => {
         const stepText = (guide.steps || []).map(step => [step.title, step.text].join(' ')).join(' ');
         const text = [guide.title, guide.description, guide.category, stepText].join(' ').toLowerCase();
-        return (!keyword || text.includes(keyword)) && (!category || guide.category === category);
+        return (!keyword || text.includes(keyword)) && (!category || guide.category === category) && (!favoriteOnly || favoriteIds.has(String(guide.id)));
       });
       if (sortType === 'title') filtered.sort((a, b) => String(a.title || '').localeCompare(String(b.title || '')));
       else if (sortType === 'steps') filtered.sort((a, b) => (b.steps?.length || 0) - (a.steps?.length || 0));
@@ -82,13 +89,13 @@
       document.getElementById('guideCount').textContent = `총 ${filtered.length}개`;
       document.getElementById('guideCards').innerHTML = filtered.length
         ? filtered.map(guide => `
-            <a class="card" href="guide.html?id=${encodeURIComponent(guide.id)}">
+            <div class="guide-tile"><button type="button" class="favorite-star" data-favorite="${Freesoo.esc(guide.id)}" aria-label="${Freesoo.esc(guide.title)} 즐겨찾기">${favoriteIds.has(String(guide.id)) ? "★" : "☆"}</button><a class="card" href="guide.html?id=${encodeURIComponent(guide.id)}">
               ${getGuidePreview(guide) ? `<img class="card-thumb" src="${Freesoo.esc(getGuidePreview(guide))}" alt="${Freesoo.esc(guide.title)}">` : ''}
               <div class="badge">${Freesoo.esc(guide.category || 'GUIDE')}</div>
               <h3>${Freesoo.esc(guide.title)}</h3>
               <p>${Freesoo.esc(guide.description || '')}</p>
               <div class="count">STEP ${guide.steps?.length || 0}</div>
-            </a>
+            </a></div>
           `).join('')
         : '<div class="empty">조건에 맞는 공략이 없습니다.</div>';
     }
@@ -103,6 +110,7 @@
           select.insertAdjacentHTML('beforeend', `<option value="${Freesoo.esc(category)}">${Freesoo.esc(category)}</option>`);
         });
         renderGuides();
+        refreshFavorites();
       })
       .catch(() => {
         document.getElementById('guideCount').textContent = '데이터 로딩 실패';
