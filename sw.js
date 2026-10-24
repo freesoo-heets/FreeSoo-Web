@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v7';
 const STATIC_CACHE = `freesoo-static-${CACHE_VERSION}`;
 const DATA_CACHE = `freesoo-data-${CACHE_VERSION}`;
 
@@ -43,9 +43,7 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
 
-  if (url.pathname.startsWith('/api/') || url.pathname.includes('admin-')) return;
-
-  if (url.pathname.startsWith('/api/') || url.pathname.includes('admin-')) return;
+  if (url.origin !== self.location.origin || url.pathname.startsWith('/api/') || url.pathname.includes('admin')) return;
   // GET만 처리
   if (req.method !== 'GET') return;
 
