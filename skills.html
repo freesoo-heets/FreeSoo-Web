@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="assets/site.css" />
 <script src="site-config.js"></script>
 <script src="assets/site.js"></script>
+<style>html:not(.member-ready) body{visibility:hidden}</style>
   <title>FreeSoo 무공 설명서</title>
   <meta name="description" content="직업별 무공 설명서와 영상 미리보기를 제공하는 페이지" />
 </head>
@@ -30,6 +31,7 @@
     </nav>
   </div>
 </header>
+  <div class="wrap member-nav"><div id="memberActions" class="member-actions"></div></div>
   <main class="section">
     <div class="wrap">
       <div class="hero-panel">
@@ -39,7 +41,9 @@
         <div class="skills-toolbar">
           <input id="q" class="input" type="search" aria-label="무공 검색" placeholder="무공명 · 설명 · 태그 검색" />
           <select id="jobFilter" class="select" aria-label="직업별 필터"><option value="">전체 직업</option></select>
+          <select id="videoFilter" class="select" aria-label="영상 연결 상태"><option value="">전체 영상 상태</option><option value="linked">영상 연결됨</option><option value="pending">영상 미연결</option></select>
         </div>
+        <p class="media-summary" id="mediaSummary" role="status">영상 연결 현황을 확인 중입니다.</p>
         <div class="chip-row" style="margin-top: 12px;">
           <span class="chip">미디어 경로: <span id="cdnText"></span></span>
           <span class="chip">자동재생 꺼짐</span>
@@ -63,7 +67,9 @@
     </div>
   </div>
 
-  <script>
+  <script type="module">
+    import {requireMember,fetchMemberContent} from './assets/member-auth.js';
+    if(await requireMember()){
     Freesoo.initMenu('skills');
     const params = new URLSearchParams(location.search);
     const preselectedJob = params.get('job') || '';
@@ -162,16 +168,21 @@
     function renderSkills() {
       const keyword = (document.getElementById('q').value || '').trim().toLowerCase();
       const jobFilter = document.getElementById('jobFilter').value;
+      const videoFilter = document.getElementById('videoFilter').value;
       const merged = [];
       jobs.forEach(job => {
         (job.skills || []).forEach(skill => merged.push({ ...skill, jobId: job.id, jobName: job.name }));
       });
       const filtered = merged.filter(skill => {
         const haystack = [skill.name, skill.desc, (skill.tags || []).join(' '), skill.jobName].join(' ').toLowerCase();
+        const linked = typeof skill.video === 'string' && skill.video.trim().length > 0;
         return (!keyword || haystack.includes(keyword)) &&
-       (!jobFilter || skill.jobId === jobFilter);
+          (!jobFilter || skill.jobId === jobFilter) &&
+          (!videoFilter || (videoFilter === 'linked' ? linked : !linked));
       });
-      document.getElementById('countText').textContent = `총 ${filtered.length}개`;
+      const linkedCount = merged.filter(s => typeof s.video === 'string' && s.video.trim()).length;
+      document.getElementById('mediaSummary').textContent = `영상 URL 연결 ${linkedCount}개 / 전체 ${merged.length}개 · 미연결 ${merged.length - linkedCount}개`;
+      document.getElementById('countText').textContent = `검색 결과 ${filtered.length}개`;
       document.getElementById('skillCards').innerHTML = filtered.length
         ? filtered.map(skill => `
             <article class="skill-card">
@@ -185,8 +196,8 @@
       bindMediaEvents();
     }
 
-    Freesoo.fetchContent('skills', 'data/skills.json')
-      .then(r => r.json())
+    fetchMemberContent('skills')
+      .then(r => (typeof r.json === 'function' ? r.json() : r))
       .then(data => {
         jobs = data.jobs || [];
         const jobFilter = document.getElementById('jobFilter');
@@ -201,10 +212,11 @@
         document.getElementById('skillCards').innerHTML = '<div class="empty">무공 정보를 불러오지 못했습니다. 새로고침하여 다시 시도해주세요.</div>';
       });
 
-    ['q', 'jobFilter'].forEach(id => {
+    ['q', 'jobFilter', 'videoFilter'].forEach(id => {
       document.getElementById(id).addEventListener('input', renderSkills); 
       document.getElementById(id).addEventListener('change', renderSkills);
     });
+    }
   </script>
 </body>
 </html>

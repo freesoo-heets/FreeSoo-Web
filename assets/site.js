@@ -1,9 +1,6 @@
 window.Freesoo = {
   cfg: window.FREESOO_CONFIG || {},
-  async fetchContent(section, fallbackPath) {
-    try {const r=await fetch('/api/content?section='+encodeURIComponent(section),{cache:'no-store'});if(!r.ok)throw Error('Supabase unavailable');return r;}
-    catch {const r=await fetch(fallbackPath);if(!r.ok)throw Error('콘텐츠 로드 실패');return r;}
-  },
+  async fetchContent() { throw new Error('로그인 후 콘텐츠 API를 이용하세요.'); },
   getLocal(key, fallback = null) {
     try { const raw = localStorage.getItem('freesoo:' + key); return raw === null ? fallback : JSON.parse(raw); }
     catch { return fallback; }
