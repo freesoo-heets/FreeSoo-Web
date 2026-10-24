@@ -8,7 +8,7 @@ export async function requireMember() {
  if(error||!user){ location.replace('login.html?next='+encodeURIComponent(location.pathname+location.search)); return false; }
  document.documentElement.classList.add('member-ready');
  const slot=document.getElementById('memberActions');
- if(slot){const email=document.createElement('span');email.textContent=user.email||'회원';slot.append(email);const out=document.createElement('button');out.className='btn btn-secondary';out.textContent='로그아웃';out.addEventListener('click',async()=>{await authClient.auth.signOut();location.replace('login.html');});slot.append(out);}
+ if(slot){const email=document.createElement('span');email.textContent=user.email||'회원';slot.append(email);const profile=document.createElement('a');profile.href='mypage.html';profile.className='btn btn-secondary';profile.textContent='마이페이지';slot.append(profile);const out=document.createElement('button');out.className='btn btn-secondary';out.textContent='로그아웃';out.addEventListener('click',async()=>{await authClient.auth.signOut();location.replace('login.html');});slot.append(out);}
  return true;
 }
 export async function fetchMemberContent(section) {
