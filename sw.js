@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v8-member';
+const CACHE_VERSION = 'v9-secure';
 const STATIC_CACHE = `freesoo-static-${CACHE_VERSION}`;
 const DATA_CACHE = `freesoo-data-${CACHE_VERSION}`;
 
@@ -49,7 +49,7 @@ self.addEventListener('fetch', event => {
 
   // HTML 문서: network-first
   if (req.mode === 'navigate' || req.destination === 'document') {
-    event.respondWith(networkFirst(req, STATIC_CACHE));
+    // Never cache account or authenticated HTML responses.
     return;
   }
 
@@ -79,7 +79,7 @@ async function networkFirst(request, cacheName) {
   const cache = await caches.open(cacheName);
   try {
     const fresh = await fetch(request);
-    cache.put(request, fresh.clone());
+    if(fresh.ok) cache.put(request, fresh.clone());
     return fresh;
   } catch (err) {
     const cached = await cache.match(request);
@@ -94,6 +94,6 @@ async function cacheFirst(request, cacheName) {
   if (cached) return cached;
 
   const fresh = await fetch(request);
-  cache.put(request, fresh.clone());
+  if(fresh.ok) cache.put(request, fresh.clone());
   return fresh;
 }
