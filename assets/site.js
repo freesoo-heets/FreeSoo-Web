@@ -1,17 +1,6 @@
 window.Freesoo = {
   cfg: window.FREESOO_CONFIG || {},
   async fetchContent(section, fallbackPath) {
-    try {
-      const response = await fetch('/api/content?section=' + encodeURIComponent(section), {cache:'no-store'});
-      if (!response.ok) throw new Error('Supabase unavailable');
-      return response.json();
-    } catch {
-      const local = await fetch(fallbackPath);
-      if (!local.ok) throw new Error('콘텐츠 로드 실패');
-      return local.json();
-    }
-  },
-  async fetchContent(section, fallbackPath) {
     try {const r=await fetch('/api/content?section='+encodeURIComponent(section),{cache:'no-store'});if(!r.ok)throw Error('Supabase unavailable');return r;}
     catch {const r=await fetch(fallbackPath);if(!r.ok)throw Error('콘텐츠 로드 실패');return r;}
   },
@@ -53,7 +42,16 @@ window.Freesoo = {
   initMenu(activeKey) {
     const menuToggle = document.getElementById('menuToggle');
     const nav = document.getElementById('mainNav');
-    menuToggle?.addEventListener('click', () => nav?.classList.toggle('open'));
+    menuToggle?.setAttribute('aria-expanded', 'false');
+    menuToggle?.setAttribute('aria-controls', 'mainNav');
+    menuToggle?.addEventListener('click', () => {
+      const opened = nav?.classList.toggle('open') || false;
+      menuToggle.setAttribute('aria-expanded', String(opened));
+    });
+    nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      menuToggle?.setAttribute('aria-expanded','false');
+    }));
     if (activeKey) {
       document.querySelector(`[data-nav="${activeKey}"]`)?.classList.add('active');
     }
