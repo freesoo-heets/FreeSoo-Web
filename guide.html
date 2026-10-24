@@ -377,7 +377,9 @@ body{background:radial-gradient(ellipse at 92% 0%,rgba(187,243,89,.07),transpare
     </div>
   </div>
 
-  <script>
+  <style>html:not(.member-ready) body{visibility:hidden}</style><script type="module">
+    import {requireMember,fetchMemberContent} from "./assets/member-auth.js";
+    if (await requireMember()) {
     function getQueryParam(name) {
       const url = new URL(window.location.href);
       return url.searchParams.get(name);
@@ -541,8 +543,7 @@ body{background:radial-gradient(ellipse at 92% 0%,rgba(187,243,89,.07),transpare
       const id = getQueryParam("id");
 
       try {
-        const res = await fetch("./guides.json");
-        const guides = await res.json();
+        const guides = await fetchMemberContent("guides");
 
         const guide = guides.find(item => item.id === id);
 
@@ -563,6 +564,7 @@ body{background:radial-gradient(ellipse at 92% 0%,rgba(187,243,89,.07),transpare
     }
 
     loadGuide();
+    }
   </script>
 </body>
 </html>
