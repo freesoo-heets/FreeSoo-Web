@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="assets/site.css" />
 <script src="site-config.js"></script>
 <script src="assets/site.js"></script>
+<style>html:not(.member-ready) body{visibility:hidden}</style>
   <title>FreeSoo 정보공유 포털</title>
   <meta name="description" content="프리수 공지, 공략집, 무공, 다운로드, 문의를 한곳에 모은 통합 포털" />
 </head>
@@ -31,6 +32,7 @@
   </div>
 </header>
 
+  <div class="wrap member-nav"><div id="memberActions" class="member-actions"></div></div>
   <main>
     <!-- Game portal hero / quick navigation -->
     <section class="hero portal-hero">
@@ -127,7 +129,9 @@
     </div>
   </footer>
 
-  <script>
+  <script type="module">
+    import {requireMember,fetchMemberContent} from './assets/member-auth.js';
+    if(await requireMember()){
     Freesoo.initMenu('home');
 
     function renderNoticeList(target, items) {
@@ -143,8 +147,8 @@
         : '<div class="empty">항목이 없습니다.</div>';
     }
 
-    Freesoo.fetchContent('notices', 'notices.json')
-      .then(r => r.json())
+    fetchMemberContent('notices')
+      .then(r => (typeof r.json === 'function' ? r.json() : r))
       .then(data => {
         renderNoticeList(document.getElementById('noticeList'), (data.notices || []).sort(Freesoo.pinDateSort).slice(0, 3));
         renderNoticeList(document.getElementById('eventList'), (data.events || []).sort(Freesoo.pinDateSort).slice(0, 3));
@@ -154,8 +158,8 @@
         renderNoticeList(document.getElementById('eventList'), []);
       });
 
-    Freesoo.fetchContent('guides', 'guides.json')
-      .then(r => r.json())
+    fetchMemberContent('guides')
+      .then(r => (typeof r.json === 'function' ? r.json() : r))
       .then(list => {
         const el = document.getElementById('guideSpot');
         el.innerHTML = (list || []).slice(0, 3).map(g => {
@@ -174,8 +178,8 @@
         document.getElementById('guideSpot').innerHTML = '<div class="empty">공략 데이터를 불러오지 못했습니다.</div>';
       });
 
-    Freesoo.fetchContent('skills', 'data/skills.json')
-      .then(r => r.json())
+    fetchMemberContent('skills')
+      .then(r => (typeof r.json === 'function' ? r.json() : r))
       .then(data => {
         const cards = [];
         (data.jobs || []).forEach(job => {
@@ -195,6 +199,7 @@
       .catch(() => {
         document.getElementById('skillSpot').innerHTML = '<div class="empty">무공 데이터를 불러오지 못했습니다.</div>';
       });
+    }
   </script>
 </body>
 </html>
