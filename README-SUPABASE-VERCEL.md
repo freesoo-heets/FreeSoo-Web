@@ -14,3 +14,6 @@ Notes: Static JSON files remain as rollback backups. The public pages may fall b
 
 ## Preview deployment checkpoint (2026-10-20)
 The connected Vercel project uses `main` for production. Review this feature branch via a Vercel Preview deployment before merging PR #1. The source repository is `freesoo-heets/FreeSoo-Web`. Do not merge until environment variables, API and admin checks pass.
+
+## Preview configuration validation
+Vercel variables `SUPABASE_URL` and `SUPABASE_ANON_KEY` must target both Production and Preview. After changing targets, create a new Preview deployment because existing deployments do not inherit later environment changes.
